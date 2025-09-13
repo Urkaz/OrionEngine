@@ -5,7 +5,7 @@ set(LIBRARY_HEADERS)
 add_executable(${SANDBOX_NAME} ${LIBRARY_SOURCES} ${LIBRARY_HEADERS})
 target_include_directories(${SANDBOX_NAME} PUBLIC)
 
-target_link_libraries(${SANDBOX_NAME} PRIVATE ${ENGINE_NAME})
+target_link_libraries(${SANDBOX_NAME} PUBLIC ${ENGINE_NAME})
 
 setup_output_dirs(${SANDBOX_NAME})
 
@@ -32,4 +32,5 @@ if(${ENABLE_CLANG_TIDY})
 endif()
 
 # Temp
-add_compile_definitions("EMBER_PLATFORM_WINDOWS=1")
+add_compile_definitions("AE_PLATFORM_WINDOWS=1")
+add_compile_definitions("AE_ENABLE_LOGS=1")

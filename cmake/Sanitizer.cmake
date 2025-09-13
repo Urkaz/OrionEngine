@@ -3,8 +3,7 @@ function(add_sanitizer_flags)
         return()
     endif()
 
-    if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES
-                                                "GNU")
+    if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
         add_compile_options("-fno-omit-frame-pointer")
         add_link_options("-fno-omit-frame-pointer")
 
@@ -21,6 +20,7 @@ function(add_sanitizer_flags)
         endif()
 
         if(ENABLE_SANITIZE_LEAK)
+            message(STATUS "Activating Leak Sanitizer")
             add_compile_options("-fsanitize=leak")
             add_link_options("-fsanitize=leak")
         endif()

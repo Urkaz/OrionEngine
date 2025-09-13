@@ -24,8 +24,7 @@ function(add_cmake_format_target)
         foreach(cmake_file ${CMAKE_FILES})
             add_custom_command(
                 TARGET run_cmake_format
-                COMMAND cmake-format -c ${CMAKE_SOURCE_DIR}/.cmake-format.yaml
-                        -i ${cmake_file}
+                COMMAND cmake-format -c ${CMAKE_SOURCE_DIR}/.cmake-format.yaml -i ${cmake_file}
                 COMMENT "Formatting ${cmake_file}")
         endforeach()
     else()
@@ -61,10 +60,8 @@ function(add_clang_format_target)
         message(STATUS "Added Clang Format")
         add_custom_target(
             run_clang_format
-            COMMAND
-                ${Python3_EXECUTABLE}
-                ${CMAKE_SOURCE_DIR}/tools/run-clang-format.py ${CPP_FILES}
-                --in-place
+            COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tools/run-clang-format.py ${CPP_FILES}
+                    --in-place
             WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
             USES_TERMINAL)
     else()
@@ -91,23 +88,17 @@ function(add_clang_tidy_to_target target)
     if(CLANGTIDY)
         if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
             message(STATUS "Added MSVC ClangTidy (VS GUI only) for: ${target}")
-            set_target_properties(
-                ${target} PROPERTIES VS_GLOBAL_EnableMicrosoftCodeAnalysis
-                                     false)
-            set_target_properties(
-                ${target} PROPERTIES VS_GLOBAL_EnableClangTidyCodeAnalysis true)
+            set_target_properties(${target} PROPERTIES VS_GLOBAL_EnableMicrosoftCodeAnalysis false)
+            set_target_properties(${target} PROPERTIES VS_GLOBAL_EnableClangTidyCodeAnalysis true)
         else()
-            message(STATUS "Added Clang Tidy for Target: ${target}")
+            message(STATUS "[${target}] Added Clang Tidy for Target")
             add_custom_target(
                 ${target}_clangtidy
                 COMMAND
-                    ${Python3_EXECUTABLE}
-                    ${CMAKE_SOURCE_DIR}/tools/run-clang-tidy.py
-                    ${TARGET_SOURCES}
-                    -config-file=${CMAKE_SOURCE_DIR}/.clang-tidy
+                    ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tools/run-clang-tidy.py
+                    ${TARGET_SOURCES} -config-file=${CMAKE_SOURCE_DIR}/.clang-tidy
                     -extra-arg-before=-std=${CMAKE_CXX_STANDARD}
-                    -header-filter="\(src|app\)\/*.\(h|hpp\)"
-                    -p=${CMAKE_BINARY_DIR}
+                    -header-filter="\(src|app\)\/*.\(h|hpp\)" -p=${CMAKE_BINARY_DIR}
                 WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
                 USES_TERMINAL)
         endif()

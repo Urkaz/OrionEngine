@@ -11,8 +11,10 @@ function(target_set_warnings)
         message(STATUS "Warnings Disabled for: ${TARGET_SET_WARNINGS_TARGET}")
         return()
     endif()
-    message(STATUS "Warnings Active for: ${TARGET_SET_WARNINGS_TARGET}")
-    message(STATUS "Warnings as Errors: ${TARGET_SET_WARNINGS_AS_ERRORS}")
+    message(STATUS "[${TARGET_SET_WARNINGS_TARGET}] Warnings Active")
+    message(
+        STATUS
+            "[${TARGET_SET_WARNINGS_TARGET}] Warnings as Errors: ${TARGET_SET_WARNINGS_AS_ERRORS}")
 
     set(MSVC_WARNINGS
         # Baseline

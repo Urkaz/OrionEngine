@@ -100,8 +100,7 @@ function(setup_target_for_coverage_gcovr_html)
 
     # Collect excludes (CMake 3.4+: Also compute absolute paths)
     set(GCOVR_EXCLUDES "")
-    foreach(EXCLUDE ${Coverage_EXCLUDE} ${COVERAGE_EXCLUDES}
-                    ${COVERAGE_GCOVR_EXCLUDES})
+    foreach(EXCLUDE ${Coverage_EXCLUDE} ${COVERAGE_EXCLUDES} ${COVERAGE_GCOVR_EXCLUDES})
         if(CMAKE_VERSION VERSION_GREATER 3.4)
             get_filename_component(
                 EXCLUDE
@@ -122,8 +121,7 @@ function(setup_target_for_coverage_gcovr_html)
     endforeach()
 
     # Set up commands which will be run to generate coverage data Run tests
-    set(GCOVR_HTML_EXEC_TESTS_CMD ${Coverage_EXECUTABLE}
-                                  ${Coverage_EXECUTABLE_ARGS})
+    set(GCOVR_HTML_EXEC_TESTS_CMD ${Coverage_EXECUTABLE} ${Coverage_EXECUTABLE_ARGS})
     # Create folder
     set(GCOVR_HTML_FOLDER_CMD
         ${CMAKE_COMMAND}
@@ -172,9 +170,7 @@ function(setup_target_for_coverage_gcovr_html)
         TARGET ${Coverage_NAME}
         POST_BUILD
         COMMAND ;
-        COMMENT
-            "Open ./${Coverage_NAME}/index.html in your browser to view the coverage report."
-    )
+        COMMENT "Open ./${Coverage_NAME}/index.html in your browser to view the coverage report.")
 endfunction() # setup_target_for_coverage_gcovr_html
 
 function(append_coverage_compiler_flags)
@@ -184,8 +180,5 @@ function(append_coverage_compiler_flags)
     set(CMAKE_CXX_FLAGS
         "${CMAKE_CXX_FLAGS} ${COVERAGE_COMPILER_FLAGS}"
         PARENT_SCOPE)
-    message(
-        STATUS
-            "Appending code coverage compiler flags: ${COVERAGE_COMPILER_FLAGS}"
-    )
+    message(STATUS "Appending code coverage compiler flags: ${COVERAGE_COMPILER_FLAGS}")
 endfunction()

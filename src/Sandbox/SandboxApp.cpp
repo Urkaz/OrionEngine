@@ -1,17 +1,10 @@
-#include <Ember.h>
+#include <ArcEngine.h>
 
-class Sandbox : public Ember::Application
+class Sandbox : public ArcEngine::Application
 {
 public:
-    Sandbox()
-    {
-    }
-    ~Sandbox()
-    {
-        }
+    Sandbox()           = default;
+    ~Sandbox() override = default;
 };
 
-Ember::Application *Ember::CreateApplication()
-{
-    return new Sandbox();
-}
+ArcEngine::Application* ArcEngine::CreateApplication() { return new Sandbox(); }
