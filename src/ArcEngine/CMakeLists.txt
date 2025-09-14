@@ -18,6 +18,10 @@ target_include_directories(${ENGINE_NAME} PUBLIC ${LIBRARY_INCLUDES})
 
 target_link_libraries(${ENGINE_NAME} PUBLIC spdlog::spdlog)
 
+# Precompiled header
+target_precompile_headers(${ENGINE_NAME} PUBLIC "aepch.h")
+
+# Misc settings
 setup_output_dirs(${ENGINE_NAME})
 
 if(${ENABLE_WARNINGS})

@@ -2,9 +2,6 @@
 
 #include "Core/Core.h"
 
-#include <functional>
-#include <string>
-
 #ifdef SPDLOG_FMT_EXTERNAL
     #include <fmt/core.h>
 #else

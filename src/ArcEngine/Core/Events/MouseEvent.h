@@ -2,8 +2,6 @@
 
 #include "Event.h"
 
-#include <sstream>
-
 namespace ArcEngine
 {
     class ARCENGINE_API MouseMovedEvent : public Event
