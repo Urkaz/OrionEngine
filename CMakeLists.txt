@@ -77,6 +77,17 @@ if(USE_CPM)
     message(STATUS "Using CPM")
     include(CPM)
     cpmaddpackage("gh:gabime/spdlog#v1.15.3")
+    cpmaddpackage(
+        NAME
+        glfw
+        GITHUB_REPOSITORY
+        glfw/glfw
+        GIT_TAG
+        3.4
+        OPTIONS
+        "GLFW_BUILD_DOCS OFF"
+        "GLFW_BUILD_TESTS OFF"
+        "GLFW_BUILD_EXAMPLES OFF")
     if(ENABLE_TESTING)
         cpmaddpackage("gh:catchorg/Catch2#v3.10.0")
         list(APPEND CMAKE_MODULE_PATH ${Catch2_SOURCE_DIR}/extras)
@@ -85,6 +96,7 @@ elseif(USE_VCPKG)
     message(STATUS "Using VCPKG")
     include(${CMAKE_SOURCE_DIR}/external/vcpkg/scripts/buildsystems/vcpkg.cmake)
     find_package(spdlog REQUIRED)
+    find_package(glfw REQUIRED)
 
     if(ENABLE_TESTING)
         find_package(Catch2 REQUIRED)
@@ -99,6 +111,22 @@ else()
         GIT_TAG v1.15.3
         GIT_SHALLOW TRUE)
     FetchContent_MakeAvailable(spdlog)
+
+    FetchContent_Declare(
+        glfw
+        GIT_REPOSITORY https://github.com/glfw/glfw
+        GIT_TAG 3.4
+        GIT_SHALLOW TRUE)
+    set(GLFW_BUILD_DOCS
+        OFF
+        CACHE BOOL "Disable building docs for GLFW" FORCE)
+    set(GLFW_BUILD_TESTS
+        OFF
+        CACHE BOOL "Disable building tests for GLFW" FORCE)
+    set(GLFW_BUILD_EXAMPLES
+        OFF
+        CACHE BOOL "Disable building examples for GLFW" FORCE)
+    FetchContent_MakeAvailable(glfw)
 
     if(ENABLE_TESTING)
         FetchContent_Declare(
