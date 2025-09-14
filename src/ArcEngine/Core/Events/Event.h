@@ -1,5 +1,7 @@
 #pragma once
 
+#include "aepch.h"
+
 #include "Core/Core.h"
 
 #ifdef SPDLOG_FMT_EXTERNAL

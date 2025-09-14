@@ -5,15 +5,17 @@
 #include "Events/ApplicationEvent.h"
 #include "Events/Event.h"
 
+//#include <GLFW/glfw3.h>
+
 namespace ArcEngine
 {
     void Application::Run()
     {
-        WindowResizeEvent event(1280, 720);
-        ArcEngine::Log::GetCoreLogger()->trace(event);
-
-        while (true)
+        while (m_Running)
         {
+            //glClearColor(1, 0, 1, 1);
+            //glClear(GL_COLOR_BUFFER_BIT);
+            m_Window->OnUpdate();
         }
     }
 } // namespace ArcEngine
