@@ -1,0 +1,24 @@
+{
+    "name": "arcengine",
+    "version-string": "1.0.0",
+    "dependencies": [
+        {
+            "name": "spdlog",
+            "version>=": "1.15.3"
+        },
+        {
+            "name": "catch2",
+            "version>=": "3.10.0"
+        },
+        {
+            "name": "glfw",
+            "version>=": "3.4"
+        }
+    ],
+    "overrides": [
+        {
+            "name": "catch2",
+            "version": "3.10.0"
+        }
+    ]
+}
