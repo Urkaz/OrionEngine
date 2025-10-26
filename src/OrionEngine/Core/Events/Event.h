@@ -1,6 +1,6 @@
 #pragma once
 
-#include "aepch.h"
+#include "oepch.h"
 
 #include "Core/Core.h"
 
@@ -10,9 +10,9 @@
     #include <spdlog/fmt/bundled/core.h>
 #endif
 
-namespace ArcEngine
+namespace OrionEngine
 {
-    // Events in ArcEngine are currently blocking, meaning when an event occurs it immediately gets dispatched and must be dealt with right then and there.
+    // Events in OrionEngine are currently blocking, meaning when an event occurs it immediately gets dispatched and must be dealt with right then and there.
     // For the future, a better strategy might be to buffer events in an event bus and process them during the "event" part of the update stage.
 
     enum class EventType
@@ -52,7 +52,7 @@ namespace ArcEngine
 #define EVENT_CLASS_CATEGORY(category)                                                                                 \
     virtual int GetCategoryFlags() const override { return category; }
 
-    class ARCENGINE_API Event
+    class ORIONENGINE_API Event
     {
         friend class EventDispatcher;
 
@@ -97,4 +97,4 @@ namespace ArcEngine
     // Allowing Events to be logged with fmt::format or spdlog
     inline std::string format_as(const Event& e) { return e.ToString(); }
 
-} // namespace ArcEngine
+} // namespace OrionEngine

@@ -1,11 +1,11 @@
 #pragma once
 
-#include "aepch.h"
+#include "oepch.h"
 
 #include "Core/Core.h"
 #include "Core/Events/Event.h"
 
-namespace ArcEngine
+namespace OrionEngine
 {
     struct WindowProps
     {
@@ -13,12 +13,12 @@ namespace ArcEngine
         unsigned int Width;
         unsigned int Height;
 
-        WindowProps(const std::string& title = "Arc Engine", unsigned int width = 1280, unsigned int height = 720)
+        WindowProps(const std::string& title = "Orion Engine", unsigned int width = 1280, unsigned int height = 720)
             : Title(title), Width(width), Height(height)
         {}
     };
 
-    class ARCENGINE_API Window
+    class ORIONENGINE_API Window
     {
     public:
         using EventCallbackFn = std::function<void(Event&)>;
@@ -38,4 +38,4 @@ namespace ArcEngine
         static Window* Create(const WindowProps& props = WindowProps());
     };
 
-} // namespace ArcEngine
+} // namespace OrionEngine

@@ -1,8 +1,8 @@
-#include "aepch.h"
+#include "oepch.h"
 
 #include "WindowsWindow.h"
 
-namespace ArcEngine
+namespace OrionEngine
 {
     static bool s_GLFWInitialized = false;
 
@@ -22,13 +22,13 @@ namespace ArcEngine
         m_Data.Width  = props.Width;
         m_Data.Height = props.Height;
 
-        AE_CORE_LOG(info, "Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height);
+        OE_CORE_LOG(info, "Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height);
 
         if (!s_GLFWInitialized)
         {
             // TODO: glfwTerminate on system shutdown
             int success = glfwInit();
-            AE_CORE_ASSERT(success, "Could not initialize GLFW!");
+            OE_CORE_ASSERT(success, "Could not initialize GLFW!");
             s_GLFWInitialized = true;
         }
 
@@ -58,4 +58,4 @@ namespace ArcEngine
 
     bool WindowsWindow::IsVSync() const { return m_Data.VSync; }
 
-} // namespace ArcEngine
+} // namespace OrionEngine

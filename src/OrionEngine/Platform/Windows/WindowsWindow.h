@@ -4,7 +4,7 @@
 
 #include <GLFW/glfw3.h>
 
-namespace ArcEngine
+namespace OrionEngine
 {
     class WindowsWindow : public Window
     {
@@ -49,4 +49,4 @@ namespace ArcEngine
         WindowData m_Data;
     };
 
-} // namespace ArcEngine
+} // namespace OrionEngine

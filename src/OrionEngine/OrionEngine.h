@@ -1,6 +1,6 @@
 #pragma once
 
-// For use by Ember applications
+// For use by Orion applications
 
 #include "Core/Application.h"
 #include "Core/Log.h"

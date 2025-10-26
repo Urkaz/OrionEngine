@@ -12,7 +12,7 @@ set(LIBRARY_HEADERS
     "${CMAKE_CURRENT_SOURCE_DIR}/Core/Events/KeyEvent.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Core/Events/MouseEvent.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Core/Window.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/ArcEngine.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/OrionEngine.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Windows/WindowsWindow.h")
 
 set(LIBRARY_INCLUDES "./")
@@ -27,7 +27,7 @@ if(WIN32)
 endif()
 
 # Precompiled header
-target_precompile_headers(${ENGINE_NAME} PUBLIC "aepch.h")
+target_precompile_headers(${ENGINE_NAME} PUBLIC "oepch.h")
 
 # Misc settings
 setup_output_dirs(${ENGINE_NAME})
@@ -55,7 +55,7 @@ if(${ENABLE_CLANG_TIDY})
 endif()
 
 # Temp
-add_compile_definitions("AE_PLATFORM_WINDOWS=1")
-add_compile_definitions("AE_BUILD_DLL=1")
-add_compile_definitions("AE_ENABLE_LOGS=1")
-add_compile_definitions("AE_ENABLE_ASSERTS=1")
+add_compile_definitions("OE_PLATFORM_WINDOWS=1")
+add_compile_definitions("OE_BUILD_DLL=1")
+add_compile_definitions("OE_ENABLE_LOGS=1")
+add_compile_definitions("OE_ENABLE_ASSERTS=1")

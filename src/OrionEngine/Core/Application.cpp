@@ -1,5 +1,5 @@
-#include "aepch.h"
 #include "Application.h"
+#include "oepch.h"
 
 #include "Core/Log.h"
 #include "Events/ApplicationEvent.h"
@@ -7,7 +7,7 @@
 
 //#include <GLFW/glfw3.h>
 
-namespace ArcEngine
+namespace OrionEngine
 {
     void Application::Run()
     {
@@ -18,4 +18,4 @@ namespace ArcEngine
             m_Window->OnUpdate();
         }
     }
-} // namespace ArcEngine
+} // namespace OrionEngine

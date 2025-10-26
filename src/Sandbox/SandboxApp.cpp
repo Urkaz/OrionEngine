@@ -1,10 +1,10 @@
-#include <ArcEngine.h>
+#include <OrionEngine.h>
 
-class Sandbox : public ArcEngine::Application
+class Sandbox : public OrionEngine::Application
 {
 public:
     Sandbox()           = default;
     ~Sandbox() override = default;
 };
 
-ArcEngine::Application* ArcEngine::CreateApplication() { return new Sandbox(); }
+OrionEngine::Application* OrionEngine::CreateApplication() { return new Sandbox(); }

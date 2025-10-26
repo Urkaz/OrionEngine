@@ -4,15 +4,12 @@
 #include "Events/Event.h"
 #include "Window.h"
 
-namespace ArcEngine
+namespace OrionEngine
 {
-    class ARCENGINE_API Application
+    class ORIONENGINE_API Application
     {
     public:
-        Application()
-            : m_Window(std::unique_ptr<Window>(Window::Create()))
-        {
-        }
+        Application() : m_Window(std::unique_ptr<Window>(Window::Create())) {}
 
         virtual ~Application() = default;
 
@@ -25,4 +22,4 @@ namespace ArcEngine
 
     // To be defined in client
     Application* CreateApplication();
-} // namespace ArcEngine
+} // namespace OrionEngine

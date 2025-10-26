@@ -2,9 +2,9 @@
 
 #include "Event.h"
 
-namespace ArcEngine
+namespace OrionEngine
 {
-    class ARCENGINE_API WindowResizeEvent : public Event
+    class ORIONENGINE_API WindowResizeEvent : public Event
     {
     public:
         WindowResizeEvent(unsigned int width, unsigned int height) : m_Width(width), m_Height(height) {}
@@ -25,7 +25,7 @@ namespace ArcEngine
         unsigned int m_Width, m_Height;
     };
 
-    class ARCENGINE_API WindowCloseEvent : public Event
+    class ORIONENGINE_API WindowCloseEvent : public Event
     {
     public:
         WindowCloseEvent() {}
@@ -34,7 +34,7 @@ namespace ArcEngine
         EVENT_CLASS_CATEGORY(EventCategoryApplication)
     };
 
-    class ARCENGINE_API AppTickEvent : public Event
+    class ORIONENGINE_API AppTickEvent : public Event
     {
     public:
         AppTickEvent() {}
@@ -43,7 +43,7 @@ namespace ArcEngine
         EVENT_CLASS_CATEGORY(EventCategoryApplication)
     };
 
-    class ARCENGINE_API AppUpdateEvent : public Event
+    class ORIONENGINE_API AppUpdateEvent : public Event
     {
     public:
         AppUpdateEvent() {}
@@ -52,7 +52,7 @@ namespace ArcEngine
         EVENT_CLASS_CATEGORY(EventCategoryApplication)
     };
 
-    class ARCENGINE_API AppRenderEvent : public Event
+    class ORIONENGINE_API AppRenderEvent : public Event
     {
     public:
         AppRenderEvent() {}
@@ -61,4 +61,4 @@ namespace ArcEngine
         EVENT_CLASS_CATEGORY(EventCategoryApplication)
     };
 
-} // namespace ArcEngine
+} // namespace OrionEngine

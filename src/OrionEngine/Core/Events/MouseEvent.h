@@ -2,9 +2,9 @@
 
 #include "Event.h"
 
-namespace ArcEngine
+namespace OrionEngine
 {
-    class ARCENGINE_API MouseMovedEvent : public Event
+    class ORIONENGINE_API MouseMovedEvent : public Event
     {
     public:
         MouseMovedEvent(float x, float y) : m_MouseX(x), m_MouseY(y) {}
@@ -25,7 +25,7 @@ namespace ArcEngine
         float m_MouseX, m_MouseY;
     };
 
-    class ARCENGINE_API MouseScrolledEvent : public Event
+    class ORIONENGINE_API MouseScrolledEvent : public Event
     {
     public:
         MouseScrolledEvent(float xOffset, float yOffset) : m_XOffset(xOffset), m_YOffset(yOffset) {}
@@ -46,7 +46,7 @@ namespace ArcEngine
         float m_XOffset, m_YOffset;
     };
 
-    class ARCENGINE_API MouseButtonEvent : public Event
+    class ORIONENGINE_API MouseButtonEvent : public Event
     {
     public:
         inline int GetMouseButton() const { return m_Button; }
@@ -57,7 +57,7 @@ namespace ArcEngine
         int m_Button;
     };
 
-    class ARCENGINE_API MouseButtonPressedEvent : public MouseButtonEvent
+    class ORIONENGINE_API MouseButtonPressedEvent : public MouseButtonEvent
     {
     public:
         MouseButtonPressedEvent(int button) : MouseButtonEvent(button) {}
@@ -72,7 +72,7 @@ namespace ArcEngine
         EVENT_CLASS_TYPE(MouseButtonPressed)
     };
 
-    class ARCENGINE_API MouseButtonReleasedEvent : public MouseButtonEvent
+    class ORIONENGINE_API MouseButtonReleasedEvent : public MouseButtonEvent
     {
     public:
         MouseButtonReleasedEvent(int button) : MouseButtonEvent(button) {}
@@ -87,4 +87,4 @@ namespace ArcEngine
         EVENT_CLASS_TYPE(MouseButtonReleased)
     };
 
-} // namespace ArcEngine
+} // namespace OrionEngine

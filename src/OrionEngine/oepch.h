@@ -14,6 +14,6 @@
 
 #include "Core/Log.h"
 
-#ifdef AE_PLATFORM_WINDOWS
+#ifdef OE_PLATFORM_WINDOWS
     #include <Windows.h>
 #endif

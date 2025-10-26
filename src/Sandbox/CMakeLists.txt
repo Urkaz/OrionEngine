@@ -32,6 +32,6 @@ if(${ENABLE_CLANG_TIDY})
 endif()
 
 # Temp
-add_compile_definitions("AE_PLATFORM_WINDOWS=1")
-add_compile_definitions("AE_ENABLE_LOGS=1")
-add_compile_definitions("AE_ENABLE_ASSERTS=1")
+add_compile_definitions("OE_PLATFORM_WINDOWS=1")
+add_compile_definitions("OE_ENABLE_LOGS=1")
+add_compile_definitions("OE_ENABLE_ASSERTS=1")
