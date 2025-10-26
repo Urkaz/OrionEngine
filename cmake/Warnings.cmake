@@ -1,5 +1,9 @@
 function(target_set_warnings)
-    set(oneValueArgs TARGET ENABLE AS_ERRORS)
+    set(oneValueArgs
+        TARGET
+        ENABLE
+        AS_ERRORS
+        DISABLE_EXTRA)
     cmake_parse_arguments(
         TARGET_SET_WARNINGS
         "${options}"
@@ -66,6 +70,18 @@ function(target_set_warnings)
         -Wduplicated-branches # warn if if / else branches have duplicated code
         -Wlogical-op # warn about logical operations being used where bitwise were probably wanted
     )
+
+    if(${TARGET_SET_WARNINGS_DISABLE_EXTRA})
+        set(CLANG_WARNINGS ${CLANG_WARNINGS}
+            -Wno-unused-parameter
+        )
+        set(GCC_WARNINGS ${GCC_WARNINGS}
+            -Wno-unused-parameter
+        )
+        set(MSVC_WARNINGS ${MSVC_WARNINGS}
+            /wd4100
+        )
+    endif()
 
     if(${TARGET_SET_WARNINGS_AS_ERRORS})
         set(CLANG_WARNINGS ${CLANG_WARNINGS} -Werror)

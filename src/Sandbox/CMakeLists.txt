@@ -16,7 +16,9 @@ if(${ENABLE_WARNINGS})
         ENABLE
         ${ENABLE_WARNINGS}
         AS_ERRORS
-        ${ENABLE_WARNINGS_AS_ERRORS})
+        ${ENABLE_WARNINGS_AS_ERRORS}
+        DISABLE_EXTRA
+        OFF)
 endif()
 
 if(${ENABLE_LTO})
