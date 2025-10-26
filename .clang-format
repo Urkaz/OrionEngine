@@ -72,7 +72,7 @@ ForEachMacros:
   - BOOST_FOREACH
 IncludeBlocks:   Preserve
 IncludeCategories:
-  - Regex: '^"aepch\.h"$'
+  - Regex: '^"oepch\.h"$'
     Priority: 1
   - Regex: '^".*"'
     Priority: 2
