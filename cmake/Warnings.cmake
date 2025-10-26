@@ -72,15 +72,9 @@ function(target_set_warnings)
     )
 
     if(${TARGET_SET_WARNINGS_DISABLE_EXTRA})
-        set(CLANG_WARNINGS ${CLANG_WARNINGS}
-            -Wno-unused-parameter
-        )
-        set(GCC_WARNINGS ${GCC_WARNINGS}
-            -Wno-unused-parameter
-        )
-        set(MSVC_WARNINGS ${MSVC_WARNINGS}
-            /wd4100
-        )
+        set(CLANG_WARNINGS ${CLANG_WARNINGS} -Wno-unused-parameter)
+        set(GCC_WARNINGS ${GCC_WARNINGS} -Wno-unused-parameter)
+        set(MSVC_WARNINGS ${MSVC_WARNINGS} /wd4100)
     endif()
 
     if(${TARGET_SET_WARNINGS_AS_ERRORS})

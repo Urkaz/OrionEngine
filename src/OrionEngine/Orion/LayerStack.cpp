@@ -3,10 +3,7 @@
 
 namespace OrionEngine
 {
-    LayerStack::LayerStack()
-        : m_Layers(), m_LayerInsert(m_Layers.begin())
-    {
-    }
+    LayerStack::LayerStack() : m_Layers(), m_LayerInsert(m_Layers.begin()) {}
 
     LayerStack::~LayerStack()
     {
