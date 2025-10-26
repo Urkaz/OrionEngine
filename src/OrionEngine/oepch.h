@@ -12,7 +12,7 @@
 #include <unordered_set>
 #include <vector>
 
-#include "Core/Log.h"
+#include "Orion/Log.h"
 
 #ifdef OE_PLATFORM_WINDOWS
     #include <Windows.h>

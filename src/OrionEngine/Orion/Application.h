@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Core.h"
-#include "Events/ApplicationEvent.h"
-#include "Events/Event.h"
-#include "LayerStack.h"
-#include "Window.h"
+#include "Orion/Core.h"
+#include "Orion/Events/ApplicationEvent.h"
+#include "Orion/Events/Event.h"
+#include "Orion/LayerStack.h"
+#include "Orion/Window.h"
 
 namespace OrionEngine
 {

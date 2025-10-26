@@ -1,9 +1,9 @@
 #include "oepch.h"
-
-#include "Core/Events/ApplicationEvent.h"
-#include "Core/Events/KeyEvent.h"
-#include "Core/Events/MouseEvent.h"
 #include "WindowsWindow.h"
+
+#include "Orion/Events/ApplicationEvent.h"
+#include "Orion/Events/KeyEvent.h"
+#include "Orion/Events/MouseEvent.h"
 
 namespace OrionEngine
 {
@@ -15,7 +15,7 @@ namespace OrionEngine
         {
             OE_CORE_LOG(error, "GLFW Error ({0}): {1}", error, description);
         }
-    }
+    } // namespace
 
     Window* Window::Create(const WindowProps& props)
     {

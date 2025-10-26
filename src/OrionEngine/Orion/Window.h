@@ -2,8 +2,8 @@
 
 #include "oepch.h"
 
-#include "Core/Core.h"
-#include "Core/Events/Event.h"
+#include "Orion/Core.h"
+#include "Orion/Events/Event.h"
 
 namespace OrionEngine
 {

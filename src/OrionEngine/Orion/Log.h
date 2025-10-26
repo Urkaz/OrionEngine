@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core.h"
+#include "Orion/Core.h"
 
 #include <spdlog/fmt/ostr.h>
 #include <spdlog/spdlog.h>

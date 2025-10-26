@@ -1,9 +1,9 @@
 #include "oepch.h"
 #include "Application.h"
 
-#include "Core/Log.h"
-#include "Events/ApplicationEvent.h"
-#include "Events/Event.h"
+#include "Orion/Log.h"
+#include "Orion/Events/ApplicationEvent.h"
+#include "Orion/Events/Event.h"
 
 #include <GLFW/glfw3.h>
 

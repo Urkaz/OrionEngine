@@ -2,10 +2,10 @@
 
 // For use by Orion applications
 
-#include "Core/Application.h"
-#include "Core/Layer.h"
-#include "Core/Log.h"
+#include "Orion/Application.h"
+#include "Orion/Layer.h"
+#include "Orion/Log.h"
 
 // --- Entry Point ---------
-#include "Core/EntryPoint.h"
+#include "Orion/EntryPoint.h"
 // -------------------------
