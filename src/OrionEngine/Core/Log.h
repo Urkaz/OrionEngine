@@ -15,8 +15,14 @@ namespace OrionEngine
     {
     public:
         static void Init();
-        static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return m_sCoreLogger; }
-        static std::shared_ptr<spdlog::logger>& GetClientLogger() { return m_sClientLogger; }
+        static std::shared_ptr<spdlog::logger>& GetCoreLogger()
+        {
+            return m_sCoreLogger;
+        }
+        static std::shared_ptr<spdlog::logger>& GetClientLogger()
+        {
+            return m_sClientLogger;
+        }
 
     private:
         static std::shared_ptr<spdlog::logger> m_sCoreLogger;

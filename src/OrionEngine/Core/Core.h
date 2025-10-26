@@ -11,8 +11,22 @@
 #endif
 
 #ifdef OE_ENABLE_ASSERTS
-    #define OE_ASSERT(x, ...) { if(!(x)) { OE_CORE_LOG(error, "Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
-    #define OE_CORE_ASSERT(x, ...) { if(!(x)) { OE_CORE_LOG(error, "Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+    #define OE_ASSERT(x, ...)                                                                                          \
+        {                                                                                                              \
+            if (!(x))                                                                                                  \
+            {                                                                                                          \
+                OE_CORE_LOG(error, "Assertion Failed: {0}", __VA_ARGS__);                                              \
+                __debugbreak();                                                                                        \
+            }                                                                                                          \
+        }
+    #define OE_CORE_ASSERT(x, ...)                                                                                     \
+        {                                                                                                              \
+            if (!(x))                                                                                                  \
+            {                                                                                                          \
+                OE_CORE_LOG(error, "Assertion Failed: {0}", __VA_ARGS__);                                              \
+                __debugbreak();                                                                                        \
+            }                                                                                                          \
+        }
 #else
     #define OE_ASSERT(x, ...)
     #define OE_CORE_ASSERT(x, ...)

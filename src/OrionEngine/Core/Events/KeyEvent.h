@@ -7,7 +7,10 @@ namespace OrionEngine
     class ORIONENGINE_API KeyEvent : public Event
     {
     public:
-        inline int GetKeyCode() const { return m_KeyCode; }
+        inline int GetKeyCode() const
+        {
+            return m_KeyCode;
+        }
 
         EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
 
@@ -22,7 +25,10 @@ namespace OrionEngine
     public:
         KeyPressedEvent(int keycode, int repeatCount) : KeyEvent(keycode), m_RepeatCount(repeatCount) {}
 
-        inline int GetRepeatCount() const { return m_RepeatCount; }
+        inline int GetRepeatCount() const
+        {
+            return m_RepeatCount;
+        }
 
         std::string ToString() const override
         {

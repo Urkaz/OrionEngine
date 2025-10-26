@@ -1,18 +1,22 @@
 set(LIBRARY_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/Core/Application.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Core/Layer.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Core/LayerStack.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Core/Log.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Windows/WindowsWindow.cpp")
 set(LIBRARY_HEADERS
     "${CMAKE_CURRENT_SOURCE_DIR}/Core/Application.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Core/Core.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Core/EntryPoint.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Core/Layer.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Core/LayerStack.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Core/Log.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Core/Events/ApplicationEvent.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Core/Events/Event.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Core/Events/KeyEvent.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Core/Events/MouseEvent.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Core/Window.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/OrionEngine.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Orion.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Windows/WindowsWindow.h")
 
 set(LIBRARY_INCLUDES "./")

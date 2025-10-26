@@ -13,22 +13,31 @@ namespace OrionEngine
         virtual ~WindowsWindow();
 
         // Prevent copying
-        WindowsWindow(const WindowsWindow&) = delete;
+        WindowsWindow(const WindowsWindow&)            = delete;
         WindowsWindow& operator=(const WindowsWindow&) = delete;
 
         void OnUpdate() override;
 
-        inline unsigned int GetWidth() const override { return m_Data.Width; }
-        inline unsigned int GetHeight() const override { return m_Data.Height; }
+        inline unsigned int GetWidth() const override
+        {
+            return m_Data.Width;
+        }
+        inline unsigned int GetHeight() const override
+        {
+            return m_Data.Height;
+        }
 
         // Window attributes
-        virtual void SetEventCallback(const EventCallbackFn& callback) override {m_Data.EventCallback = callback; }
+        virtual void SetEventCallback(const EventCallbackFn& callback) override
+        {
+            m_Data.EventCallback = callback;
+        }
         virtual void SetVSync(bool enabled) override;
         virtual bool IsVSync() const override;
 
     private:
-        virtual void Init(const WindowProps& props);
-        virtual void Shutdown();
+        void Init(const WindowProps& props);
+        void Shutdown();
 
     private:
         GLFWwindow* m_Window;
@@ -40,10 +49,13 @@ namespace OrionEngine
             bool VSync;
             EventCallbackFn EventCallback;
 
-            WindowData(const std::string& title = "", unsigned int width = 0, unsigned int height = 0, bool vsync = false, const EventCallbackFn& eventCallback = EventCallbackFn())
+            WindowData(const std::string& title             = "",
+                       unsigned int width                   = 0,
+                       unsigned int height                  = 0,
+                       bool vsync                           = false,
+                       const EventCallbackFn& eventCallback = EventCallbackFn())
                 : Title(title), Width(width), Height(height), VSync(vsync), EventCallback(eventCallback)
-            {
-            }
+            {}
         };
 
         WindowData m_Data;
