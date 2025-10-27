@@ -8,6 +8,8 @@
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 
+DISABLE_WARNING_FILE(4100, "-Wunused-parameter")
+
 namespace OrionEngine
 {
     static bool s_GLFWInitialized = false;

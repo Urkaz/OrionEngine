@@ -1,9 +1,5 @@
 function(target_set_warnings)
-    set(oneValueArgs
-        TARGET
-        ENABLE
-        AS_ERRORS
-        DISABLE_EXTRA)
+    set(oneValueArgs TARGET ENABLE AS_ERRORS)
     cmake_parse_arguments(
         TARGET_SET_WARNINGS
         "${options}"
@@ -40,7 +36,8 @@ function(target_set_warnings)
         /w14265 # class has virtual functions, but destructor is not virtual
         /w14640 # Enable warning on thread un-safe static member initialization
         /w14928 # more than one implicitly user-defined conversion
-        /we4289 # nonstandard extension used: 'variable'
+        /w14289 # nonstandard extension used: 'variable'
+        /wd4251 # class 'type' needs to have dll-interface to be used by clients of class 'type'
     )
 
     set(CLANG_WARNINGS
@@ -71,12 +68,6 @@ function(target_set_warnings)
         -Wlogical-op # warn about logical operations being used where bitwise were probably wanted
     )
 
-    if(${TARGET_SET_WARNINGS_DISABLE_EXTRA})
-        set(CLANG_WARNINGS ${CLANG_WARNINGS} -Wno-unused-parameter)
-        set(GCC_WARNINGS ${GCC_WARNINGS} -Wno-unused-parameter)
-        set(MSVC_WARNINGS ${MSVC_WARNINGS} /wd4100)
-    endif()
-
     if(${TARGET_SET_WARNINGS_AS_ERRORS})
         set(CLANG_WARNINGS ${CLANG_WARNINGS} -Werror)
         set(GCC_WARNINGS ${GCC_WARNINGS} -Werror)
@@ -84,7 +75,7 @@ function(target_set_warnings)
     endif()
 
     if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-        set(WARNINGS ${MSVC_WARNINGS})
+        set(WARNINGS ${MSVC_WARNINGS} $<$<CONFIG:Debug>:/MDd> $<$<NOT:$<CONFIG:Debug>>:/MD> /Gy)
     elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
         set(WARNINGS ${CLANG_WARNINGS})
     elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU")

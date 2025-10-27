@@ -7,6 +7,8 @@
 
 #include <glad/glad.h>
 
+DISABLE_WARNING_FILE(4100, "-Wunused-parameter")
+
 namespace OrionEngine
 {
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)

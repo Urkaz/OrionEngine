@@ -13,6 +13,7 @@
 #include <vector>
 
 #include "Orion/Log.h"
+#include "Orion/Warnings.h"
 
 #ifdef OE_PLATFORM_WINDOWS
     #include <Windows.h>

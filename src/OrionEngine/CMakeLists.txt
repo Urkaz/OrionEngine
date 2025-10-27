@@ -15,6 +15,7 @@ set(LIBRARY_HEADERS
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Events/Event.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Events/KeyEvent.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Events/MouseEvent.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Warnings.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Window.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Windows/WindowsWindow.h")
@@ -48,9 +49,7 @@ if(${ENABLE_WARNINGS})
         ENABLE
         ${ENABLE_WARNINGS}
         AS_ERRORS
-        ${ENABLE_WARNINGS_AS_ERRORS}
-        DISABLE_EXTRA
-        ON)
+        ${ENABLE_WARNINGS_AS_ERRORS})
 endif()
 
 if(${ENABLE_LTO})
