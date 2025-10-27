@@ -24,7 +24,12 @@ set(LIBRARY_INCLUDES "./")
 add_library(${ENGINE_NAME} SHARED ${LIBRARY_SOURCES} ${LIBRARY_HEADERS})
 target_include_directories(${ENGINE_NAME} PUBLIC ${LIBRARY_INCLUDES})
 
-target_link_libraries(${ENGINE_NAME} PUBLIC spdlog::spdlog glfw OpenGL::GL)
+target_link_libraries(
+    ${ENGINE_NAME}
+    PUBLIC spdlog::spdlog
+           glfw
+           OpenGL::GL
+           GLAD)
 
 if(WIN32)
     target_link_libraries(${ENGINE_NAME} PRIVATE gdi32 user32 kernel32)
@@ -65,3 +70,4 @@ add_compile_definitions("OE_PLATFORM_WINDOWS=1")
 add_compile_definitions("OE_BUILD_DLL=1")
 add_compile_definitions("OE_ENABLE_LOGS=1")
 add_compile_definitions("OE_ENABLE_ASSERTS=1")
+add_compile_definitions("GLFW_INCLUDE_NONE")

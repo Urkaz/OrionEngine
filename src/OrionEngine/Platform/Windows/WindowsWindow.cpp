@@ -5,6 +5,9 @@
 #include "Orion/Events/KeyEvent.h"
 #include "Orion/Events/MouseEvent.h"
 
+#include <GLFW/glfw3.h>
+#include <glad/glad.h>
+
 namespace OrionEngine
 {
     static bool s_GLFWInitialized = false;
@@ -56,6 +59,10 @@ namespace OrionEngine
                                     nullptr,
                                     nullptr);
         glfwMakeContextCurrent(m_Window);
+
+        int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+        OE_ASSERT(status, "Failed to initialize GLAD!");
+
         glfwSetWindowUserPointer(m_Window, &m_Data);
         SetVSync(true);
 
