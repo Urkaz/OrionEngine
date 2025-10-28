@@ -4,6 +4,7 @@
 #include "Orion/Events/ApplicationEvent.h"
 #include "Orion/Events/Event.h"
 #include "Orion/Log.h"
+#include "Orion/Input.h"
 
 #include <glad/glad.h>
 

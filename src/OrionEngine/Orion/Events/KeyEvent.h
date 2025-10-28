@@ -1,13 +1,14 @@
 #pragma once
 
-#include "Event.h"
+#include "Orion/Events/Event.h"
+#include "Orion/KeyCodes.h"
 
 namespace OrionEngine
 {
     class ORIONENGINE_API KeyEvent : public Event
     {
     public:
-        inline int GetKeyCode() const
+        inline KeyCode GetKeyCode() const
         {
             return m_KeyCode;
         }
@@ -15,15 +16,15 @@ namespace OrionEngine
         EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
 
     protected:
-        KeyEvent(int keycode) : m_KeyCode(keycode) {}
+        KeyEvent(KeyCode keycode) : m_KeyCode(keycode) {}
 
-        int m_KeyCode;
+        KeyCode m_KeyCode;
     };
 
     class ORIONENGINE_API KeyPressedEvent : public KeyEvent
     {
     public:
-        KeyPressedEvent(int keycode, int repeatCount) : KeyEvent(keycode), m_RepeatCount(repeatCount) {}
+        KeyPressedEvent(KeyCode keycode, int repeatCount) : KeyEvent(keycode), m_RepeatCount(repeatCount) {}
 
         inline int GetRepeatCount() const
         {
@@ -46,7 +47,7 @@ namespace OrionEngine
     class ORIONENGINE_API KeyReleasedEvent : public KeyEvent
     {
     public:
-        KeyReleasedEvent(int keycode) : KeyEvent(keycode) {}
+        KeyReleasedEvent(KeyCode keycode) : KeyEvent(keycode) {}
 
         std::string ToString() const override
         {
@@ -61,7 +62,7 @@ namespace OrionEngine
     class ORIONENGINE_API KeyTypedEvent : public KeyEvent
     {
     public:
-        KeyTypedEvent(int keycode) : KeyEvent(keycode) {}
+        KeyTypedEvent(KeyCode keycode) : KeyEvent(keycode) {}
 
         std::string ToString() const override
         {

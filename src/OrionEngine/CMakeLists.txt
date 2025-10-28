@@ -4,6 +4,7 @@ set(LIBRARY_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Layer.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/LayerStack.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Log.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Windows/WindowsInput.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Windows/WindowsWindow.cpp")
 set(LIBRARY_HEADERS
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Events/ApplicationEvent.h"
@@ -14,12 +15,16 @@ set(LIBRARY_HEADERS
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Application.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Core.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/EntryPoint.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Input.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/KeyCodes.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Layer.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/LayerStack.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Log.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/MouseCodes.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Warnings.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Window.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Windows/WindowsInput.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Windows/WindowsWindow.h")
 
 set(LIBRARY_INCLUDES "./")

@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Event.h"
+#include "Orion/Events/Event.h"
+#include "Orion/MouseCodes.h"
 
 namespace OrionEngine
 {
@@ -61,21 +62,21 @@ namespace OrionEngine
     class ORIONENGINE_API MouseButtonEvent : public Event
     {
     public:
-        inline int GetMouseButton() const
+        inline MouseCode GetMouseButton() const
         {
             return m_Button;
         }
 
         EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput | EventCategoryMouseButton)
     protected:
-        MouseButtonEvent(int button) : m_Button(button) {}
-        int m_Button;
+        MouseButtonEvent(MouseCode button) : m_Button(button) {}
+        MouseCode m_Button;
     };
 
     class ORIONENGINE_API MouseButtonPressedEvent : public MouseButtonEvent
     {
     public:
-        MouseButtonPressedEvent(int button) : MouseButtonEvent(button) {}
+        MouseButtonPressedEvent(MouseCode button) : MouseButtonEvent(button) {}
 
         std::string ToString() const override
         {
@@ -90,7 +91,7 @@ namespace OrionEngine
     class ORIONENGINE_API MouseButtonReleasedEvent : public MouseButtonEvent
     {
     public:
-        MouseButtonReleasedEvent(int button) : MouseButtonEvent(button) {}
+        MouseButtonReleasedEvent(MouseCode button) : MouseButtonEvent(button) {}
 
         std::string ToString() const override
         {

@@ -7,12 +7,12 @@ public:
 
     void OnUpdate() override
     {
-        OE_LOG(info, "ExampleLayer::OnUpdate called");
+        //OE_LOG(info, "ExampleLayer::OnUpdate called");
     }
 
     void OnEvent(OrionEngine::Event& event) override
     {
-        OE_LOG(trace, "ExampleLayer::OnEvent {0} called", event);
+        //OE_LOG(trace, "ExampleLayer::OnEvent {0} called", event);
     }
 };
 
