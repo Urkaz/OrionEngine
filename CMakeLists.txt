@@ -90,8 +90,11 @@ if(USE_CPM)
         "GLFW_BUILD_TESTS OFF"
         "GLFW_BUILD_EXAMPLES OFF"
         "GLFW_INSTALL OFF")
-        set_target_properties(glfw PROPERTIES FOLDER "Dependencies/GLFW")
-        set_target_properties(update_mappings PROPERTIES FOLDER "Dependencies/GLFW")
+    set_target_properties(glfw PROPERTIES FOLDER "Dependencies/GLFW")
+    set_target_properties(update_mappings PROPERTIES FOLDER "Dependencies/GLFW")
+
+    cpmaddpackage("gh:g-truc/glm#1.0.2")
+    set_target_properties(glm PROPERTIES FOLDER "Dependencies")
 
     if(ENABLE_TESTING)
         cpmaddpackage("gh:catchorg/Catch2#v3.10.0")
@@ -101,10 +104,16 @@ if(USE_CPM)
 elseif(USE_VCPKG)
     message(STATUS "Using VCPKG")
     include(${CMAKE_SOURCE_DIR}/external/vcpkg/scripts/buildsystems/vcpkg.cmake)
+
     find_package(spdlog REQUIRED)
-    find_package(glfw REQUIRED)
     set_target_properties(spdlog PROPERTIES FOLDER "Dependencies")
-    set_target_properties(glfw PROPERTIES FOLDER "Dependencies")
+
+    find_package(glfw REQUIRED)
+    set_target_properties(glfw PROPERTIES FOLDER "Dependencies/GLFW")
+    set_target_properties(update_mappings PROPERTIES FOLDER "Dependencies/GLFW")
+
+    find_package(glm REQUIRED)
+    set_target_properties(glm PROPERTIES FOLDER "Dependencies")
 
     if(ENABLE_TESTING)
         find_package(Catch2 REQUIRED)
@@ -141,6 +150,14 @@ else()
         CACHE BOOL "Disable installing docs for GLFW" FORCE)
     FetchContent_MakeAvailable(glfw)
     set_target_properties(glfw PROPERTIES FOLDER "Dependencies")
+
+    FetchContent_Declare(
+        glm
+        GIT_REPOSITORY https://github.com/g-truc/glm
+        GIT_TAG 1.0.2
+        GIT_SHALLOW TRUE)
+    FetchContent_MakeAvailable(glm)
+    set_target_properties(glm PROPERTIES FOLDER "Dependencies")
 
     if(ENABLE_TESTING)
         FetchContent_Declare(
