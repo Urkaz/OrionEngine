@@ -4,6 +4,7 @@
 #include "Orion/Events/ApplicationEvent.h"
 #include "Orion/Events/Event.h"
 #include "Orion/LayerStack.h"
+#include "Orion/ImGui/ImGuiLayer.h"
 #include "Orion/Window.h"
 
 namespace OrionEngine
@@ -38,6 +39,7 @@ namespace OrionEngine
         static Application* s_Instance;
 
         std::unique_ptr<Window> m_Window;
+        ImGuiLayer* m_ImGuiLayer;
         bool m_Running = true;
         LayerStack m_LayerStack;
     };

@@ -3,8 +3,8 @@
 
 #include "Orion/Events/ApplicationEvent.h"
 #include "Orion/Events/Event.h"
-#include "Orion/Log.h"
 #include "Orion/Input.h"
+#include "Orion/Log.h"
 
 #include <glad/glad.h>
 
@@ -20,6 +20,9 @@ namespace OrionEngine
         s_Instance = this;
 
         m_Window->SetEventCallback(OE_BIND_EVENT_FN(Application::OnEvent));
+
+        m_ImGuiLayer = new ImGuiLayer();
+        PushOverlay(m_ImGuiLayer);
     }
 
     void Application::Run()
@@ -31,6 +34,11 @@ namespace OrionEngine
 
             for (Layer* layer : m_LayerStack)
                 layer->OnUpdate();
+
+            m_ImGuiLayer->Begin();
+            for (Layer* layer : m_LayerStack)
+                layer->OnImguiRender();
+            m_ImGuiLayer->End();
 
             m_Window->OnUpdate();
         }

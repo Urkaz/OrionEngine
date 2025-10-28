@@ -39,6 +39,7 @@ target_link_libraries(
            OpenGL::GL
            GLAD
            ImGui_OpenGL3
+           ImGui_GLFW
            glm)
 
 if(WIN32)

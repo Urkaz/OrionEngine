@@ -10,8 +10,6 @@
 #include "Orion/KeyCodes.h"
 #include "Orion/MouseCodes.h"
 
-#include "Orion/ImGui/ImGuiLayer.h"
-
 // --- Entry Point ---------
 #include "Orion/EntryPoint.h"
 // -------------------------

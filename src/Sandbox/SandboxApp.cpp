@@ -22,7 +22,6 @@ public:
     Sandbox()
     {
         PushLayer(new ExampleLayer());
-        PushOverlay(new OrionEngine::ImGuiLayer());
     };
     ~Sandbox() override = default;
 };
