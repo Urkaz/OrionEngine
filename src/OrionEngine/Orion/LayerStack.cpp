@@ -3,7 +3,7 @@
 
 namespace OrionEngine
 {
-    LayerStack::LayerStack() : m_Layers(), m_LayerInsert(m_Layers.begin()) {}
+    LayerStack::LayerStack() : m_Layers() {}
 
     LayerStack::~LayerStack()
     {
@@ -13,7 +13,8 @@ namespace OrionEngine
 
     void LayerStack::PushLayer(Layer* layer)
     {
-        m_LayerInsert = m_Layers.emplace(m_LayerInsert, layer);
+        m_Layers.emplace(m_Layers.begin() + m_LayerInsertIndex, layer);
+        m_LayerInsertIndex++;
         layer->OnAttach();
     }
 
@@ -29,7 +30,7 @@ namespace OrionEngine
         if (it != m_Layers.end())
         {
             m_Layers.erase(it);
-            m_LayerInsert--;
+            m_LayerInsertIndex--;
         }
     }
 
