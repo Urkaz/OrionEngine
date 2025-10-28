@@ -24,6 +24,7 @@ function(add_cmake_format_target)
         foreach(cmake_file ${CMAKE_FILES})
             add_custom_command(
                 TARGET run_cmake_format
+                PRE_BUILD
                 COMMAND cmake-format -c ${CMAKE_SOURCE_DIR}/.cmake-format.yaml -i ${cmake_file}
                 COMMENT "Formatting ${cmake_file}")
         endforeach()

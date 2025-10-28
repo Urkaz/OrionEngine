@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.22)
+cmake_minimum_required(VERSION 4.0.0)
 
 project(
     "OrionEngine"
@@ -88,6 +88,7 @@ if(USE_CPM)
         "GLFW_BUILD_DOCS OFF"
         "GLFW_BUILD_TESTS OFF"
         "GLFW_BUILD_EXAMPLES OFF")
+
     if(ENABLE_TESTING)
         cpmaddpackage("gh:catchorg/Catch2#v3.10.0")
         list(APPEND CMAKE_MODULE_PATH ${Catch2_SOURCE_DIR}/extras)
