@@ -77,6 +77,7 @@ if(USE_CPM)
     message(STATUS "Using CPM")
     include(CPM)
     cpmaddpackage("gh:gabime/spdlog#v1.15.3")
+    set_target_properties(spdlog PROPERTIES FOLDER "Dependencies")
     cpmaddpackage(
         NAME
         glfw
@@ -87,10 +88,14 @@ if(USE_CPM)
         OPTIONS
         "GLFW_BUILD_DOCS OFF"
         "GLFW_BUILD_TESTS OFF"
-        "GLFW_BUILD_EXAMPLES OFF")
+        "GLFW_BUILD_EXAMPLES OFF"
+        "GLFW_INSTALL OFF")
+        set_target_properties(glfw PROPERTIES FOLDER "Dependencies/GLFW")
+        set_target_properties(update_mappings PROPERTIES FOLDER "Dependencies/GLFW")
 
     if(ENABLE_TESTING)
         cpmaddpackage("gh:catchorg/Catch2#v3.10.0")
+        set_target_properties(Catch2 PROPERTIES FOLDER "Dependencies")
         list(APPEND CMAKE_MODULE_PATH ${Catch2_SOURCE_DIR}/extras)
     endif()
 elseif(USE_VCPKG)
@@ -98,9 +103,12 @@ elseif(USE_VCPKG)
     include(${CMAKE_SOURCE_DIR}/external/vcpkg/scripts/buildsystems/vcpkg.cmake)
     find_package(spdlog REQUIRED)
     find_package(glfw REQUIRED)
+    set_target_properties(spdlog PROPERTIES FOLDER "Dependencies")
+    set_target_properties(glfw PROPERTIES FOLDER "Dependencies")
 
     if(ENABLE_TESTING)
         find_package(Catch2 REQUIRED)
+        set_target_properties(Catch2 PROPERTIES FOLDER "Dependencies")
         list(APPEND CMAKE_MODULE_PATH ${Catch2_SOURCE_DIR}/extras)
     endif()
 else()
@@ -112,6 +120,7 @@ else()
         GIT_TAG v1.15.3
         GIT_SHALLOW TRUE)
     FetchContent_MakeAvailable(spdlog)
+    set_target_properties(spdlog PROPERTIES FOLDER "Dependencies")
 
     FetchContent_Declare(
         glfw
@@ -127,7 +136,11 @@ else()
     set(GLFW_BUILD_EXAMPLES
         OFF
         CACHE BOOL "Disable building examples for GLFW" FORCE)
+    set(GLFW_INSTALL
+        OFF
+        CACHE BOOL "Disable installing docs for GLFW" FORCE)
     FetchContent_MakeAvailable(glfw)
+    set_target_properties(glfw PROPERTIES FOLDER "Dependencies")
 
     if(ENABLE_TESTING)
         FetchContent_Declare(
@@ -136,6 +149,7 @@ else()
             GIT_TAG v3.10.0
             GIT_SHALLOW TRUE)
         FetchContent_MakeAvailable(Catch2)
+        set_target_properties(Catch2 PROPERTIES FOLDER "Dependencies")
         list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
     endif()
 endif()

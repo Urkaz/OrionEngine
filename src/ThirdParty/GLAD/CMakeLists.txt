@@ -6,3 +6,4 @@ set(LIBRARY_INCLUDES "./include/")
 
 add_library(GLAD STATIC ${LIBRARY_SOURCES} ${LIBRARY_HEADERS})
 target_include_directories(GLAD PUBLIC ${LIBRARY_INCLUDES})
+set_target_properties(GLAD PROPERTIES FOLDER "Dependencies")

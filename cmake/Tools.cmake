@@ -20,6 +20,7 @@ function(add_cmake_format_target)
             run_cmake_format
             WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
             COMMENT "Running cmake-format on CMake files")
+        set_target_properties(run_cmake_format PROPERTIES FOLDER "Tools")
 
         foreach(cmake_file ${CMAKE_FILES})
             add_custom_command(
@@ -65,6 +66,7 @@ function(add_clang_format_target)
                     --in-place
             WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
             USES_TERMINAL)
+        set_target_properties(run_clang_format PROPERTIES FOLDER "Tools")
     else()
         message(WARNING "CLANGFORMAT NOT FOUND")
     endif()
