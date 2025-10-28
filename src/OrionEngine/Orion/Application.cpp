@@ -11,11 +11,14 @@ DISABLE_WARNING_FILE(4100, "-Wunused-parameter")
 
 namespace OrionEngine
 {
-#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
+    Application* Application::s_Instance = nullptr;
 
     Application::Application() : m_Window(std::unique_ptr<Window>(Window::Create())), m_LayerStack()
     {
-        m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+        OE_CORE_ASSERT(!s_Instance, "Application already exists!");
+        s_Instance = this;
+
+        m_Window->SetEventCallback(OE_BIND_EVENT_FN(Application::OnEvent));
     }
 
     void Application::Run()
@@ -45,7 +48,7 @@ namespace OrionEngine
     void Application::OnEvent(Event& e)
     {
         EventDispatcher dispatcher(e);
-        dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
+        dispatcher.Dispatch<WindowCloseEvent>(OE_BIND_EVENT_FN(Application::OnWindowClose));
 
         for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
         {

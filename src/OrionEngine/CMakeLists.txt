@@ -1,20 +1,22 @@
 set(LIBRARY_SOURCES
+    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/ImGui/ImGuiLayer.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Application.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Layer.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/LayerStack.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Log.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Windows/WindowsWindow.cpp")
 set(LIBRARY_HEADERS
+    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Events/ApplicationEvent.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Events/Event.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Events/KeyEvent.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Events/MouseEvent.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/ImGui/ImGuiLayer.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Application.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Core.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/EntryPoint.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Layer.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/LayerStack.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Log.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Events/ApplicationEvent.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Events/Event.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Events/KeyEvent.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Events/MouseEvent.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Warnings.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Window.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion.h"
@@ -30,7 +32,8 @@ target_link_libraries(
     PUBLIC spdlog::spdlog
            glfw
            OpenGL::GL
-           GLAD)
+           GLAD
+           ImGui_OpenGL3)
 
 if(WIN32)
     target_link_libraries(${ENGINE_NAME} PRIVATE gdi32 user32 kernel32)
