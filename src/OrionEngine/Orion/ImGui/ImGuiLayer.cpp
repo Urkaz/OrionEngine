@@ -78,7 +78,6 @@ namespace OrionEngine
     {
         static bool show = true;
         ImGui::ShowDemoWindow(&show);
-
     }
 
     void ImGuiLayer::Begin()
@@ -90,16 +89,16 @@ namespace OrionEngine
 
     void ImGuiLayer::End()
     {
-        ImGuiIO& io = ImGui::GetIO();
+        ImGuiIO& io      = ImGui::GetIO();
         Application& app = Application::Get();
-        io.DisplaySize = ImVec2(static_cast<float>(app.GetWindow().GetWidth()), static_cast<float>(app.GetWindow().GetHeight()));
+        io.DisplaySize =
+            ImVec2(static_cast<float>(app.GetWindow().GetWidth()), static_cast<float>(app.GetWindow().GetHeight()));
 
         // Rendering
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-
-        if( io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable )
+        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
         {
             GLFWwindow* backup_current_context = glfwGetCurrentContext();
             ImGui::UpdatePlatformWindows();

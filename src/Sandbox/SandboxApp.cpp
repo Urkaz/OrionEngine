@@ -5,14 +5,12 @@ class ExampleLayer : public OrionEngine::Layer
 public:
     ExampleLayer() : Layer("Example") {}
 
-    void OnUpdate() override
+    void OnImguiRender() override
     {
-        //OE_LOG(info, "ExampleLayer::OnUpdate called");
-    }
-
-    void OnEvent(OrionEngine::Event& event) override
-    {
-        //OE_LOG(trace, "ExampleLayer::OnEvent {0} called", event);
+        // OE_CORE_LOG(info, "Before ExampleLayer render");
+        // ImGui::Begin("Hello, ImGui!");
+        // ImGui::Text("This is some example text.");
+        // ImGui::End();
     }
 };
 

@@ -31,6 +31,7 @@ namespace OrionEngine
         {
             m_Layers.erase(it);
             m_LayerInsertIndex--;
+            layer->OnDetach();
         }
     }
 
@@ -40,6 +41,7 @@ namespace OrionEngine
         if (it != m_Layers.end())
         {
             m_Layers.erase(it);
+            overlay->OnDetach();
         }
     }
 } // namespace OrionEngine
