@@ -7,7 +7,7 @@ DISABLE_WARNING_FILE(4100, "-Wunused-parameter")
 
 namespace OrionEngine
 {
-    class ORIONENGINE_API Layer
+    class Layer
     {
     public:
         Layer(std::string name = "Layer");

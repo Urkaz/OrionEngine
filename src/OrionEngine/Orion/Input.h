@@ -7,7 +7,7 @@
 
 namespace OrionEngine
 {
-    class ORIONENGINE_API Input
+    class Input
     {
     public:
         inline static bool IsKeyPressed(KeyCode key)

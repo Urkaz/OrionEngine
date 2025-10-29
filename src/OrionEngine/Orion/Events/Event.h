@@ -65,7 +65,7 @@ namespace OrionEngine
         return category;                                                                                               \
     }
 
-    class ORIONENGINE_API Event
+    class Event
     {
         friend class EventDispatcher;
 

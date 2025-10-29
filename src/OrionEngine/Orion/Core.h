@@ -1,15 +1,5 @@
 #pragma once
 
-#ifdef OE_PLATFORM_WINDOWS
-    #ifdef OE_BUILD_DLL
-        #define ORIONENGINE_API __declspec(dllexport)
-    #else
-        #define ORIONENGINE_API __declspec(dllimport)
-    #endif
-#else
-    #error Only Windows is supported for now!
-#endif
-
 #ifdef OE_ENABLE_ASSERTS
     #define OE_ASSERT(x, ...)                                                                                          \
         {                                                                                                              \

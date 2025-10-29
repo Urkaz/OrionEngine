@@ -52,6 +52,8 @@ if(ENABLE_WARNINGS)
     include(Warnings)
 endif()
 
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+
 add_cmake_format_target()
 add_clang_format_target()
 

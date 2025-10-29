@@ -1,5 +1,7 @@
 #include <Orion.h>
 
+#include <imgui.h>
+
 class ExampleLayer : public OrionEngine::Layer
 {
 public:
@@ -7,10 +9,9 @@ public:
 
     void OnImguiRender() override
     {
-        // OE_CORE_LOG(info, "Before ExampleLayer render");
-        // ImGui::Begin("Hello, ImGui!");
-        // ImGui::Text("This is some example text.");
-        // ImGui::End();
+        ImGui::Begin("Hello, ImGui!");
+        ImGui::Text("This is some example text.");
+        ImGui::End();
     }
 };
 

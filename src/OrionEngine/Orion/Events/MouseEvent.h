@@ -5,7 +5,7 @@
 
 namespace OrionEngine
 {
-    class ORIONENGINE_API MouseMovedEvent : public Event
+    class MouseMovedEvent : public Event
     {
     public:
         MouseMovedEvent(float x, float y) : m_MouseX(x), m_MouseY(y) {}
@@ -32,7 +32,7 @@ namespace OrionEngine
         float m_MouseX, m_MouseY;
     };
 
-    class ORIONENGINE_API MouseScrolledEvent : public Event
+    class MouseScrolledEvent : public Event
     {
     public:
         MouseScrolledEvent(float xOffset, float yOffset) : m_XOffset(xOffset), m_YOffset(yOffset) {}
@@ -59,7 +59,7 @@ namespace OrionEngine
         float m_XOffset, m_YOffset;
     };
 
-    class ORIONENGINE_API MouseButtonEvent : public Event
+    class MouseButtonEvent : public Event
     {
     public:
         inline MouseCode GetMouseButton() const
@@ -73,7 +73,7 @@ namespace OrionEngine
         MouseCode m_Button;
     };
 
-    class ORIONENGINE_API MouseButtonPressedEvent : public MouseButtonEvent
+    class MouseButtonPressedEvent : public MouseButtonEvent
     {
     public:
         MouseButtonPressedEvent(MouseCode button) : MouseButtonEvent(button) {}
@@ -88,7 +88,7 @@ namespace OrionEngine
         EVENT_CLASS_TYPE(MouseButtonPressed)
     };
 
-    class ORIONENGINE_API MouseButtonReleasedEvent : public MouseButtonEvent
+    class MouseButtonReleasedEvent : public MouseButtonEvent
     {
     public:
         MouseButtonReleasedEvent(MouseCode button) : MouseButtonEvent(button) {}

@@ -29,18 +29,18 @@ set(LIBRARY_HEADERS
 
 set(LIBRARY_INCLUDES "./")
 
-add_library(${ENGINE_NAME} SHARED ${LIBRARY_SOURCES} ${LIBRARY_HEADERS})
+add_library(${ENGINE_NAME} STATIC ${LIBRARY_SOURCES} ${LIBRARY_HEADERS})
 target_include_directories(${ENGINE_NAME} PUBLIC ${LIBRARY_INCLUDES})
 
 target_link_libraries(
     ${ENGINE_NAME}
-    PUBLIC spdlog::spdlog
-           glfw
-           OpenGL::GL
-           GLAD
-           ImGui_OpenGL3
-           ImGui_GLFW
-           glm)
+    PUBLIC spdlog::spdlog ImGui_Core
+    PRIVATE glfw
+            OpenGL::GL
+            GLAD
+            ImGui_OpenGL3
+            ImGui_GLFW
+            glm)
 
 if(WIN32)
     target_link_libraries(${ENGINE_NAME} PRIVATE gdi32 user32 kernel32)

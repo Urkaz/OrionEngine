@@ -5,7 +5,7 @@
 
 namespace OrionEngine
 {
-    class ORIONENGINE_API KeyEvent : public Event
+    class KeyEvent : public Event
     {
     public:
         inline KeyCode GetKeyCode() const
@@ -21,7 +21,7 @@ namespace OrionEngine
         KeyCode m_KeyCode;
     };
 
-    class ORIONENGINE_API KeyPressedEvent : public KeyEvent
+    class KeyPressedEvent : public KeyEvent
     {
     public:
         KeyPressedEvent(KeyCode keycode, int repeatCount) : KeyEvent(keycode), m_RepeatCount(repeatCount) {}
@@ -44,7 +44,7 @@ namespace OrionEngine
         int m_RepeatCount;
     };
 
-    class ORIONENGINE_API KeyReleasedEvent : public KeyEvent
+    class KeyReleasedEvent : public KeyEvent
     {
     public:
         KeyReleasedEvent(KeyCode keycode) : KeyEvent(keycode) {}
@@ -59,7 +59,7 @@ namespace OrionEngine
         EVENT_CLASS_TYPE(KeyReleased)
     };
 
-    class ORIONENGINE_API KeyTypedEvent : public KeyEvent
+    class KeyTypedEvent : public KeyEvent
     {
     public:
         KeyTypedEvent(KeyCode keycode) : KeyEvent(keycode) {}

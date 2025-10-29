@@ -9,7 +9,7 @@
 
 namespace OrionEngine
 {
-    class ORIONENGINE_API Application
+    class Application
     {
     public:
         Application();

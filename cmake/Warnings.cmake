@@ -37,7 +37,6 @@ function(target_set_warnings)
         /w14640 # Enable warning on thread un-safe static member initialization
         /w14928 # more than one implicitly user-defined conversion
         /w14289 # nonstandard extension used: 'variable'
-        /wd4251 # class 'type' needs to have dll-interface to be used by clients of class 'type'
     )
 
     set(CLANG_WARNINGS

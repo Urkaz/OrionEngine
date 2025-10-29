@@ -6,12 +6,10 @@
 #include <spdlog/spdlog.h>
 
 #ifdef OE_ENABLE_LOGS
-// #if OE_PLATFORM_WINDOWS
-// #pragma warning(disable: 4251)
-// #endif
+
 namespace OrionEngine
 {
-    class ORIONENGINE_API Log
+    class Log
     {
     public:
         static void Init();

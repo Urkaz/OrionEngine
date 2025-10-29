@@ -7,7 +7,7 @@
 
 namespace OrionEngine
 {
-    class ORIONENGINE_API LayerStack
+    class LayerStack
     {
     public:
         LayerStack();
