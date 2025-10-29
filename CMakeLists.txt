@@ -25,6 +25,8 @@ option(ENABLE_COVERAGE "Enable a Code Coverage build." OFF)
 
 option(ENABLE_CLANG_TIDY "Enable to add clang tidy." ON)
 
+option(ENABLE_DOCS "Enable to generate docs." OFF)
+
 option(ENABLE_SANITIZE_ADDR "Enable address sanitize." OFF)
 option(ENABLE_SANITIZE_UNDEF "Enable undefined sanitize." OFF)
 option(ENABLE_SANITIZE_LEAK "Enable leak sanitize (Gcc/Clang only)." OFF)
@@ -43,10 +45,13 @@ set(SANDBOX_NAME "Sandbox")
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/")
 include(ConfigSafeGuards)
 include(AddGitSubmodule)
-include(Docs)
 include(Tools)
 include(OutputFolder)
 include(CompilerFlags)
+
+if(ENABLE_DOCS)
+    include(Docs)
+endif()
 
 if(ENABLE_WARNINGS)
     include(Warnings)

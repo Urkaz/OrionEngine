@@ -10,6 +10,8 @@ namespace OrionEngine
     class Input
     {
     public:
+        virtual ~Input() = default;
+
         inline static bool IsKeyPressed(KeyCode key)
         {
             return s_Instance->IsKeyPressedImpl(key);

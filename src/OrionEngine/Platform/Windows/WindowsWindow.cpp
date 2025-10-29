@@ -62,7 +62,7 @@ namespace OrionEngine
                                     nullptr);
         glfwMakeContextCurrent(m_Window);
 
-        int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+        int status = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
         OE_ASSERT(status, "Failed to initialize GLAD!");
 
         glfwSetWindowUserPointer(m_Window, &m_Data);

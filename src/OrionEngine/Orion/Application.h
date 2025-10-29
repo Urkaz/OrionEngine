@@ -3,8 +3,8 @@
 #include "Orion/Core.h"
 #include "Orion/Events/ApplicationEvent.h"
 #include "Orion/Events/Event.h"
-#include "Orion/LayerStack.h"
 #include "Orion/ImGui/ImGuiLayer.h"
+#include "Orion/LayerStack.h"
 #include "Orion/Window.h"
 
 namespace OrionEngine
@@ -40,8 +40,8 @@ namespace OrionEngine
 
         std::unique_ptr<Window> m_Window;
         ImGuiLayer* m_ImGuiLayer;
-        bool m_Running = true;
         LayerStack m_LayerStack;
+        bool m_Running = true;
     };
 
     // To be defined in client
