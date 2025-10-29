@@ -4,9 +4,9 @@
 #include "Orion/Events/ApplicationEvent.h"
 #include "Orion/Events/KeyEvent.h"
 #include "Orion/Events/MouseEvent.h"
+#include "Platform/OpenGL/OpenGLContext.h"
 
 #include <GLFW/glfw3.h>
-#include <glad/glad.h>
 
 DISABLE_WARNING_FILE(4100, "-Wunused-parameter")
 
@@ -27,7 +27,7 @@ namespace OrionEngine
         return new WindowsWindow(props);
     }
 
-    WindowsWindow::WindowsWindow(const WindowProps& props) : m_Window(nullptr), m_Data()
+    WindowsWindow::WindowsWindow(const WindowProps& props) : m_Window(nullptr), m_Context(nullptr), m_Data()
     {
         Init(props);
     }
@@ -60,10 +60,9 @@ namespace OrionEngine
                                     m_Data.Title.c_str(),
                                     nullptr,
                                     nullptr);
-        glfwMakeContextCurrent(m_Window);
 
-        int status = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
-        OE_ASSERT(status, "Failed to initialize GLAD!");
+        m_Context = new OpenGLContext(m_Window);
+        m_Context->Init();
 
         glfwSetWindowUserPointer(m_Window, &m_Data);
         SetVSync(true);
@@ -163,7 +162,7 @@ namespace OrionEngine
     void WindowsWindow::OnUpdate()
     {
         glfwPollEvents();
-        glfwSwapBuffers(m_Window);
+        m_Context->SwapBuffers();
     }
 
     void WindowsWindow::SetVSync(bool enabled)

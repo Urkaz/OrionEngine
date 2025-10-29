@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Orion/Window.h"
+#include "Orion/Renderer/GraphicsContext.h"
 
 struct GLFWwindow;
 
@@ -46,6 +47,7 @@ namespace OrionEngine
 
     private:
         GLFWwindow* m_Window;
+        GraphicsContext* m_Context;
 
         struct WindowData
         {
