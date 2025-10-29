@@ -61,6 +61,7 @@ if(${ENABLE_WARNINGS})
         AS_ERRORS
         ${ENABLE_WARNINGS_AS_ERRORS})
 endif()
+target_set_compiler_flags(TARGET ${ENGINE_NAME})
 
 if(${ENABLE_LTO})
     target_enable_lto(

@@ -75,7 +75,7 @@ function(target_set_warnings)
     endif()
 
     if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-        set(WARNINGS ${MSVC_WARNINGS} $<$<CONFIG:Debug>:/MDd> $<$<NOT:$<CONFIG:Debug>>:/MD> /Gy)
+        set(WARNINGS ${MSVC_WARNINGS})
     elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
         set(WARNINGS ${CLANG_WARNINGS})
     elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU")

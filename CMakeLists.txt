@@ -46,6 +46,7 @@ include(AddGitSubmodule)
 include(Docs)
 include(Tools)
 include(OutputFolder)
+include(CompilerFlags)
 
 if(ENABLE_WARNINGS)
     include(Warnings)
