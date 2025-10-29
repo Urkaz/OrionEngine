@@ -90,6 +90,7 @@ if(USE_CPM)
         "GLFW_BUILD_TESTS OFF"
         "GLFW_BUILD_EXAMPLES OFF"
         "GLFW_INSTALL OFF")
+    target_compile_definitions(glfw PRIVATE _CRT_SECURE_NO_WARNINGS _GLFW_WIN32)
     set_target_properties(glfw PROPERTIES FOLDER "Dependencies/GLFW")
     set_target_properties(update_mappings PROPERTIES FOLDER "Dependencies/GLFW")
 
