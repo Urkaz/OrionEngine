@@ -31,7 +31,8 @@ if(${ENABLE_CLANG_TIDY})
     add_clang_tidy_to_target(${SANDBOX_NAME})
 endif()
 
-# Temp
-add_compile_definitions("OE_PLATFORM_WINDOWS=1")
-add_compile_definitions("OE_ENABLE_LOGS=1")
-add_compile_definitions("OE_ENABLE_ASSERTS=1")
+if(WIN32)
+    target_compile_definitions(${SANDBOX_NAME} PRIVATE OE_PLATFORM_WINDOWS)
+endif()
+target_compile_definitions(${SANDBOX_NAME} PRIVATE $<$<NOT:$<CONFIG:Release>>:OE_ENABLE_LOGS>)
+target_compile_definitions(${SANDBOX_NAME} PRIVATE $<$<NOT:$<CONFIG:Release>>:OE_ENABLE_ASSERTS>)
