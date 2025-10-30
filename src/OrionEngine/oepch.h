@@ -13,8 +13,9 @@
 #include <unordered_set>
 #include <vector>
 
-#include "Orion/Log.h"
 #include "Orion/Warnings.h"
+
+#include "Orion/Log.h"
 
 #ifdef OE_PLATFORM_WINDOWS
     #include <Windows.h>
