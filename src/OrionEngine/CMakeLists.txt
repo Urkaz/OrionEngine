@@ -1,5 +1,6 @@
 set(LIBRARY_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/ImGui/ImGuiLayer.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/Shader.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Application.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Layer.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/LayerStack.cpp"
@@ -14,6 +15,7 @@ set(LIBRARY_HEADERS
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Events/MouseEvent.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/ImGui/ImGuiLayer.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/GraphicsContext.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/Shader.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Application.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Core.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/EntryPoint.h"

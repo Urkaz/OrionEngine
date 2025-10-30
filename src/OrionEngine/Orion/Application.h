@@ -7,6 +7,8 @@
 #include "Orion/LayerStack.h"
 #include "Orion/Window.h"
 
+#include "Orion/Renderer/Shader.h"
+
 namespace OrionEngine
 {
     class Application
@@ -44,6 +46,8 @@ namespace OrionEngine
         bool m_Running = true;
 
         unsigned int m_vertexArray, m_VertexBuffer, m_IndexBuffer;
+        std::unique_ptr<Shader> m_Shader;
+
     };
 
     // To be defined in client
