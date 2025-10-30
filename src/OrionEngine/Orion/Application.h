@@ -42,6 +42,8 @@ namespace OrionEngine
         ImGuiLayer* m_ImGuiLayer;
         LayerStack m_LayerStack;
         bool m_Running = true;
+
+        unsigned int m_vertexArray, m_VertexBuffer, m_IndexBuffer;
     };
 
     // To be defined in client

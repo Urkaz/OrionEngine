@@ -43,7 +43,7 @@ namespace OrionEngine
         m_Data.Width  = props.Width;
         m_Data.Height = props.Height;
 
-        OE_CORE_LOG(info, "Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height);
+        OE_CORE_LOG(info, "Creating window \"{0}\" ({1}, {2})", props.Title, props.Width, props.Height);
 
         if (!s_GLFWInitialized)
         {
