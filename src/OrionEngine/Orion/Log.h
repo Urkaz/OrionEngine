@@ -35,7 +35,7 @@ enum OE_LogLevel
     info,
     warn,
     error,
-    fatal
+    critical
 };
 
 #ifdef OE_ENABLE_LOGS
