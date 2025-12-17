@@ -8,6 +8,7 @@
 #include "Orion/Window.h"
 
 #include "Orion/Renderer/Shader.h"
+#include "Orion/Renderer/Buffer.h"
 
 namespace OrionEngine
 {
@@ -45,9 +46,10 @@ namespace OrionEngine
         LayerStack m_LayerStack;
         bool m_Running = true;
 
-        unsigned int m_vertexArray, m_VertexBuffer, m_IndexBuffer;
+        unsigned int m_vertexArray;
         std::unique_ptr<Shader> m_Shader;
-
+        std::unique_ptr<VertexBuffer> m_VertexBuffer;
+        std::unique_ptr<IndexBuffer> m_IndexBuffer;
     };
 
     // To be defined in client
