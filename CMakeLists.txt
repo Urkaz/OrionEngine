@@ -85,7 +85,7 @@ endif()
 if(USE_CPM)
     message(STATUS "Using CPM")
     include(CPM)
-    cpmaddpackage("gh:gabime/spdlog#v1.15.3")
+    cpmaddpackage("gh:gabime/spdlog#v1.16.0")
     set_target_properties(spdlog PROPERTIES FOLDER "Dependencies")
     cpmaddpackage(
         NAME
@@ -107,7 +107,7 @@ if(USE_CPM)
     set_target_properties(glm PROPERTIES FOLDER "Dependencies")
 
     if(ENABLE_TESTING)
-        cpmaddpackage("gh:catchorg/Catch2#v3.10.0")
+        cpmaddpackage("gh:catchorg/Catch2#v3.11.0")
         set_target_properties(Catch2 PROPERTIES FOLDER "Dependencies")
         list(APPEND CMAKE_MODULE_PATH ${Catch2_SOURCE_DIR}/extras)
     endif()
@@ -134,7 +134,7 @@ else()
     FetchContent_Declare(
         spdlog
         GIT_REPOSITORY https://github.com/gabime/spdlog
-        GIT_TAG v1.15.3
+        GIT_TAG v1.16.0
         GIT_SHALLOW TRUE)
     FetchContent_MakeAvailable(spdlog)
     set_target_properties(spdlog PROPERTIES FOLDER "Dependencies")
@@ -171,7 +171,7 @@ else()
         FetchContent_Declare(
             Catch2
             GIT_REPOSITORY https://github.com/catchorg/Catch2
-            GIT_TAG v3.10.0
+            GIT_TAG v3.11.0
             GIT_SHALLOW TRUE)
         FetchContent_MakeAvailable(Catch2)
         set_target_properties(Catch2 PROPERTIES FOLDER "Dependencies")
