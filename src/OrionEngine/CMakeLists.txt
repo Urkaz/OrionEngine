@@ -51,7 +51,7 @@ target_link_libraries(
             GLAD
             ImGui_OpenGL3
             ImGui_GLFW
-            glm)
+            glm::glm)
 
 if(WIN32)
     target_link_libraries(${ENGINE_NAME} PRIVATE gdi32 user32 kernel32)
