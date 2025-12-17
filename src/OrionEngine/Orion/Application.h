@@ -7,8 +7,8 @@
 #include "Orion/LayerStack.h"
 #include "Orion/Window.h"
 
-#include "Orion/Renderer/Shader.h"
 #include "Orion/Renderer/Buffer.h"
+#include "Orion/Renderer/Shader.h"
 
 namespace OrionEngine
 {

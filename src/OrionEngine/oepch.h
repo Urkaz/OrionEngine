@@ -1,11 +1,11 @@
 #pragma once
 
 #include <algorithm>
+#include <cstdint>
 #include <functional>
 #include <iostream>
 #include <memory>
 #include <utility>
-#include <cstdint>
 
 #include <sstream>
 #include <string>

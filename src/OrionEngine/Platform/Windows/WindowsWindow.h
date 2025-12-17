@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Orion/Window.h"
 #include "Orion/Renderer/GraphicsContext.h"
+#include "Orion/Window.h"
 
 struct GLFWwindow;
 

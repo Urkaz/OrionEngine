@@ -3,7 +3,6 @@
 
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
-#include <GL/gl.h>
 
 namespace OrionEngine
 {
@@ -22,7 +21,9 @@ namespace OrionEngine
         OE_CORE_LOG(info, "   Vendor: {0}", reinterpret_cast<const char*>(glGetString(GL_VENDOR)));
         OE_CORE_LOG(info, "   Renderer: {0}", reinterpret_cast<const char*>(glGetString(GL_RENDERER)));
         OE_CORE_LOG(info, "   Version: {0}", reinterpret_cast<const char*>(glGetString(GL_VERSION)));
-        OE_CORE_LOG(info, "   Shading Language: {0}", reinterpret_cast<const char*>(glGetString(GL_SHADING_LANGUAGE_VERSION)));
+        OE_CORE_LOG(info,
+                    "   Shading Language: {0}",
+                    reinterpret_cast<const char*>(glGetString(GL_SHADING_LANGUAGE_VERSION)));
     }
 
     void OpenGLContext::SwapBuffers()
