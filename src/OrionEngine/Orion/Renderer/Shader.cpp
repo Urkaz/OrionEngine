@@ -3,7 +3,7 @@
 
 #include <glad/glad.h>
 
-OrionEngine::Shader::Shader(const std::string& vertexSrc, const std::string& fragmentSrc)
+Orion::Shader::Shader(const std::string& vertexSrc, const std::string& fragmentSrc)
 {
     // Read our shaders into the appropriate buffers
     // Create an empty vertex shader handle
@@ -111,17 +111,17 @@ OrionEngine::Shader::Shader(const std::string& vertexSrc, const std::string& fra
     glDetachShader(program, fragmentShader);
 }
 
-OrionEngine::Shader::~Shader()
+Orion::Shader::~Shader()
 {
     glDeleteProgram(m_RendererID);
 }
 
-void OrionEngine::Shader::Bind() const
+void Orion::Shader::Bind() const
 {
     glUseProgram(m_RendererID);
 }
 
-void OrionEngine::Shader::Unbind() const
+void Orion::Shader::Unbind() const
 {
     glUseProgram(0);
 }

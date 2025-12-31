@@ -1,6 +1,6 @@
 #pragma once
 
-namespace OrionEngine
+namespace Orion
 {
     enum class ShaderDataType : uint8_t
     {
@@ -175,4 +175,4 @@ namespace OrionEngine
 
         static IndexBuffer* Create(uint32_t* indices, uint32_t count);
     };
-} // namespace OrionEngine
+} // namespace Orion

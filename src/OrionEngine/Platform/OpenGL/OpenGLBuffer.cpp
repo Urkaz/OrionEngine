@@ -3,7 +3,7 @@
 
 #include <glad/glad.h>
 
-namespace OrionEngine
+namespace Orion
 {
     // Vertex Buffer -----------------------------
 
@@ -63,4 +63,4 @@ namespace OrionEngine
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
-} // namespace OrionEngine
+} // namespace Orion

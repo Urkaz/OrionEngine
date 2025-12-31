@@ -1,6 +1,6 @@
 #pragma once
 
-namespace OrionEngine
+namespace Orion
 {
     enum class RendererAPI
     {
@@ -20,4 +20,4 @@ namespace OrionEngine
         static RendererAPI s_RendererAPI;
     };
 
-} // namespace OrionEngine
+} // namespace Orion

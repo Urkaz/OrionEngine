@@ -1,10 +1,10 @@
 #include "oepch.h"
 #include "Buffer.h"
-#include "Renderer.h"
 
 #include "Platform/OpenGL/OpenGLBuffer.h"
+#include "Renderer.h"
 
-namespace OrionEngine
+namespace Orion
 {
     VertexBuffer* VertexBuffer::Create(float* vertices, uint32_t size)
     {
@@ -39,4 +39,4 @@ namespace OrionEngine
         OE_ASSERT(false, "Unknown RendererAPI!");
         return nullptr;
     }
-} // namespace OrionEngine
+} // namespace Orion

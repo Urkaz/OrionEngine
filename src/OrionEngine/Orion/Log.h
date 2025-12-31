@@ -7,7 +7,7 @@
 
 #ifdef OE_ENABLE_LOGS
 
-namespace OrionEngine
+namespace Orion
 {
     class Log
     {
@@ -26,7 +26,7 @@ namespace OrionEngine
         static std::shared_ptr<spdlog::logger> m_sCoreLogger;
         static std::shared_ptr<spdlog::logger> m_sClientLogger;
     };
-} // namespace OrionEngine
+} // namespace Orion
 #endif
 
 enum OE_LogLevel
@@ -39,7 +39,7 @@ enum OE_LogLevel
 };
 
 #ifdef OE_ENABLE_LOGS
-    #define OE_INTERNAL_LOGGER(OE_LogLevel, Logger, ...) OrionEngine::Log::Logger()->OE_LogLevel(__VA_ARGS__)
+    #define OE_INTERNAL_LOGGER(OE_LogLevel, Logger, ...) Orion::Log::Logger()->OE_LogLevel(__VA_ARGS__)
     #define OE_CORE_LOG(OE_LogLevel, ...) OE_INTERNAL_LOGGER(OE_LogLevel, GetCoreLogger, __VA_ARGS__)
     #define OE_LOG(OE_LogLevel, ...) OE_INTERNAL_LOGGER(OE_LogLevel, GetClientLogger, __VA_ARGS__)
 #else

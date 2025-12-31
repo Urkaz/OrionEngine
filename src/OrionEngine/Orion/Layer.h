@@ -5,7 +5,7 @@
 
 DISABLE_WARNING_FILE(4100, "-Wunused-parameter")
 
-namespace OrionEngine
+namespace Orion
 {
     class Layer
     {
@@ -27,4 +27,4 @@ namespace OrionEngine
     protected:
         std::string m_DebugName;
     };
-} // namespace OrionEngine
+} // namespace Orion

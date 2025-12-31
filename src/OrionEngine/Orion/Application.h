@@ -9,8 +9,9 @@
 
 #include "Orion/Renderer/Buffer.h"
 #include "Orion/Renderer/Shader.h"
+#include "Orion/Renderer/VertexArray.h"
 
-namespace OrionEngine
+namespace Orion
 {
     class Application
     {
@@ -46,12 +47,13 @@ namespace OrionEngine
         LayerStack m_LayerStack;
         bool m_Running = true;
 
-        unsigned int m_vertexArray;
-        std::unique_ptr<Shader> m_Shader;
-        std::unique_ptr<VertexBuffer> m_VertexBuffer;
-        std::unique_ptr<IndexBuffer> m_IndexBuffer;
+        std::shared_ptr<Shader> m_Shader;
+        std::shared_ptr<VertexArray> m_VertexArray;
+
+        std::shared_ptr<Shader> m_BlueShader;
+        std::shared_ptr<VertexArray> m_SquareVA;
     };
 
     // To be defined in client
     Application* CreateApplication();
-} // namespace OrionEngine
+} // namespace Orion

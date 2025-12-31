@@ -1,8 +1,8 @@
 #include "oepch.h"
 #include "Renderer.h"
 
-namespace OrionEngine
+namespace Orion
 {
     RendererAPI Renderer::s_RendererAPI = RendererAPI::OpenGL;
 
-} // namespace OrionEngine
+} // namespace Orion

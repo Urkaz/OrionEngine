@@ -5,7 +5,7 @@
 
 #include "Orion/Core.h"
 
-namespace OrionEngine
+namespace Orion
 {
     class Input
     {
@@ -43,4 +43,4 @@ namespace OrionEngine
     private:
         static Input* s_Instance;
     };
-} // namespace OrionEngine
+} // namespace Orion

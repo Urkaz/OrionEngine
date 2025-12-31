@@ -1,6 +1,6 @@
 #pragma once
 
-namespace OrionEngine
+namespace Orion
 {
     using MouseCode = std::uint16_t;
 
@@ -25,4 +25,4 @@ namespace OrionEngine
             ButtonMiddle = Button2
         };
     }
-} // namespace OrionEngine
+} // namespace Orion

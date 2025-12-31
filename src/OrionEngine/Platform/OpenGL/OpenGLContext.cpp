@@ -4,7 +4,7 @@
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 
-namespace OrionEngine
+namespace Orion
 {
     OpenGLContext::OpenGLContext(GLFWwindow* windowHandle) : m_WindowHandle(windowHandle)
     {
@@ -32,4 +32,4 @@ namespace OrionEngine
     }
 
 
-} // namespace OrionEngine
+} // namespace Orion

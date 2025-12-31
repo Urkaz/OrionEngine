@@ -5,7 +5,7 @@
 
 struct GLFWwindow;
 
-namespace OrionEngine
+namespace Orion
 {
     class WindowsWindow : public Window
     {
@@ -68,4 +68,4 @@ namespace OrionEngine
         WindowData m_Data;
     };
 
-} // namespace OrionEngine
+} // namespace Orion

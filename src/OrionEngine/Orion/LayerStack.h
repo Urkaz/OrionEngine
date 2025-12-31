@@ -5,7 +5,7 @@
 
 #include <vector>
 
-namespace OrionEngine
+namespace Orion
 {
     class LayerStack
     {
@@ -31,4 +31,4 @@ namespace OrionEngine
         std::vector<Layer*> m_Layers;
         unsigned int m_LayerInsertIndex = 0;
     };
-} // namespace OrionEngine
+} // namespace Orion

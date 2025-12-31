@@ -5,7 +5,7 @@
 #include "Orion/Core.h"
 #include "Orion/Events/Event.h"
 
-namespace OrionEngine
+namespace Orion
 {
     struct WindowProps
     {
@@ -40,4 +40,4 @@ namespace OrionEngine
         static Window* Create(const WindowProps& props = WindowProps());
     };
 
-} // namespace OrionEngine
+} // namespace Orion

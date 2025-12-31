@@ -10,7 +10,7 @@
 
 DISABLE_WARNING_FILE(4100, "-Wunused-parameter")
 
-namespace OrionEngine
+namespace Orion
 {
     static bool s_GLFWInitialized = false;
 
@@ -180,4 +180,4 @@ namespace OrionEngine
         return m_Data.VSync;
     }
 
-} // namespace OrionEngine
+} // namespace Orion

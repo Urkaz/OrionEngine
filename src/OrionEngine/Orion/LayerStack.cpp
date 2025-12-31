@@ -1,7 +1,7 @@
 #include "oepch.h"
 #include "LayerStack.h"
 
-namespace OrionEngine
+namespace Orion
 {
     LayerStack::LayerStack() : m_Layers() {}
 
@@ -44,4 +44,4 @@ namespace OrionEngine
             m_Layers.erase(it);
         }
     }
-} // namespace OrionEngine
+} // namespace Orion

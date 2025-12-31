@@ -2,7 +2,7 @@
 
 #include "Orion/Events/Event.h"
 
-namespace OrionEngine
+namespace Orion
 {
     class WindowResizeEvent : public Event
     {
@@ -67,4 +67,4 @@ namespace OrionEngine
         EVENT_CLASS_CATEGORY(EventCategoryApplication)
     };
 
-} // namespace OrionEngine
+} // namespace Orion

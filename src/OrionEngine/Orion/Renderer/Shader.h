@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace OrionEngine
+namespace Orion
 {
     class Shader
     {
@@ -16,4 +16,4 @@ namespace OrionEngine
     private:
         uint32_t m_RendererID;
     };
-} // namespace OrionEngine
+} // namespace Orion

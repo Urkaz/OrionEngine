@@ -2,7 +2,7 @@
 
 #include "Orion/Renderer/Buffer.h"
 
-namespace OrionEngine
+namespace Orion
 {
     class OpenGLVertexBuffer : public VertexBuffer
     {
@@ -40,4 +40,4 @@ namespace OrionEngine
         uint32_t m_Count;
     };
 
-} // namespace OrionEngine
+} // namespace Orion

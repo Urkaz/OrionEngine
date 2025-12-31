@@ -2,7 +2,7 @@
 
 #include "Orion/Input.h"
 
-namespace OrionEngine
+namespace Orion
 {
     class WindowsInput : public Input
     {
@@ -13,4 +13,4 @@ namespace OrionEngine
         virtual float GetMouseYImpl() override;
         virtual std::pair<float, float> GetMousePositionImpl() override;
     };
-} // namespace OrionEngine
+} // namespace Orion

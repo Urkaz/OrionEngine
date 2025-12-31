@@ -11,7 +11,7 @@
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 
-namespace OrionEngine
+namespace Orion
 {
     ImGuiLayer::ImGuiLayer() : Layer("ImGuiLayer") {}
 
@@ -106,4 +106,4 @@ namespace OrionEngine
             glfwMakeContextCurrent(backup_current_context);
         }
     }
-} // namespace OrionEngine
+} // namespace Orion

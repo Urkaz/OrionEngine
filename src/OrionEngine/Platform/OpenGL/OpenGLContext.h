@@ -4,7 +4,7 @@
 
 struct GLFWwindow;
 
-namespace OrionEngine
+namespace Orion
 {
     class OpenGLContext : public GraphicsContext
     {
@@ -17,4 +17,4 @@ namespace OrionEngine
     private:
         GLFWwindow* m_WindowHandle;
     };
-} // namespace OrionEngine
+} // namespace Orion

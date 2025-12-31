@@ -1,9 +1,9 @@
 #include "oepch.h"
 #include "Layer.h"
 
-namespace OrionEngine
+namespace Orion
 {
     Layer::Layer(std::string name) : m_DebugName(std::move(name)) {}
 
     Layer::~Layer() = default;
-} // namespace OrionEngine
+} // namespace Orion

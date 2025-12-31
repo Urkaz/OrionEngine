@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-class ExampleLayer : public OrionEngine::Layer
+class ExampleLayer : public Orion::Layer
 {
 public:
     ExampleLayer() : Layer("Example") {}
@@ -15,7 +15,7 @@ public:
     }
 };
 
-class Sandbox : public OrionEngine::Application
+class Sandbox : public Orion::Application
 {
 public:
     Sandbox()
@@ -25,7 +25,7 @@ public:
     ~Sandbox() override = default;
 };
 
-OrionEngine::Application* OrionEngine::CreateApplication()
+Orion::Application* Orion::CreateApplication()
 {
     return new Sandbox();
 }

@@ -2,13 +2,13 @@
 
 #ifdef OE_PLATFORM_WINDOWS
 
-extern OrionEngine::Application* OrionEngine::CreateApplication();
+extern Orion::Application* Orion::CreateApplication();
 
 int main()
 {
-    OrionEngine::Log::Init();
+    Orion::Log::Init();
 
-    auto* app = OrionEngine::CreateApplication();
+    auto* app = Orion::CreateApplication();
     app->Run();
     delete app;
 

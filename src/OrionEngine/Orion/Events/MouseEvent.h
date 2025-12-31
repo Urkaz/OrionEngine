@@ -3,7 +3,7 @@
 #include "Orion/Events/Event.h"
 #include "Orion/MouseCodes.h"
 
-namespace OrionEngine
+namespace Orion
 {
     class MouseMovedEvent : public Event
     {
@@ -103,4 +103,4 @@ namespace OrionEngine
         EVENT_CLASS_TYPE(MouseButtonReleased)
     };
 
-} // namespace OrionEngine
+} // namespace Orion

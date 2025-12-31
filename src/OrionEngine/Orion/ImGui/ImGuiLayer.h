@@ -5,7 +5,7 @@
 #include "Orion/Events/MouseEvent.h"
 #include "Orion/Layer.h"
 
-namespace OrionEngine
+namespace Orion
 {
     class ImGuiLayer : public Layer
     {
@@ -33,4 +33,4 @@ namespace OrionEngine
         bool m_LeftSuperDown  = false;
         bool m_RightSuperDown = false;
     };
-} // namespace OrionEngine
+} // namespace Orion

@@ -1,6 +1,6 @@
 #pragma once
 
-namespace OrionEngine
+namespace Orion
 {
     class GraphicsContext
     {
@@ -10,4 +10,4 @@ namespace OrionEngine
         virtual void Init()        = 0;
         virtual void SwapBuffers() = 0;
     };
-} // namespace OrionEngine
+} // namespace Orion

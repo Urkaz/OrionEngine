@@ -3,7 +3,7 @@
 #include "Orion/Events/Event.h"
 #include "Orion/KeyCodes.h"
 
-namespace OrionEngine
+namespace Orion
 {
     class KeyEvent : public Event
     {
@@ -73,4 +73,4 @@ namespace OrionEngine
 
         EVENT_CLASS_TYPE(KeyTyped)
     };
-} // namespace OrionEngine
+} // namespace Orion

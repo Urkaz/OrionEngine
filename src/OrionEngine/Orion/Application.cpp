@@ -11,33 +11,9 @@
 
 DISABLE_WARNING_FILE(4100, "-Wunused-parameter")
 
-namespace OrionEngine
+namespace Orion
 {
     Application* Application::s_Instance = nullptr;
-
-    static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
-    {
-        switch (type)
-        {
-        case ShaderDataType::Float:
-        case ShaderDataType::Float2:
-        case ShaderDataType::Float3:
-        case ShaderDataType::Float4:
-        case ShaderDataType::Mat3:
-        case ShaderDataType::Mat4:
-            return GL_FLOAT;
-        case ShaderDataType::Int:
-        case ShaderDataType::Int2:
-        case ShaderDataType::Int3:
-        case ShaderDataType::Int4:
-            return GL_INT;
-        case ShaderDataType::Bool:
-            return GL_BOOL;
-        default:
-            OE_CORE_ASSERT(false, "Unknown ShaderDataType!");
-            return 0;
-        }
-    }
 
     Application::Application()
         : m_Window(std::unique_ptr<Window>(Window::Create())), m_ImGuiLayer(new ImGuiLayer()), m_LayerStack()
@@ -49,35 +25,36 @@ namespace OrionEngine
 
         PushOverlay(m_ImGuiLayer);
 
+        /// TRIANGLE
+        m_VertexArray.reset(VertexArray::Create());
+
         float vertices[3 * 7] = {-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.5f, -0.5f, 0.0f, 0.0f,
                                  0.0f,  1.0f,  1.0f, 0.0f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f,  1.0f};
-        uint32_t indices[3]   = {0, 1, 2};
+        std::shared_ptr<VertexBuffer> vertexBuffer;
+        vertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
+        BufferLayout layout = {{ShaderDataType::Float3, "a_Position"}, {ShaderDataType::Float4, "a_Color"}};
+        vertexBuffer->SetLayout(layout);
+        m_VertexArray->AddVertexBuffer(vertexBuffer);
 
-        glGenVertexArrays(1, &m_vertexArray);
-        glBindVertexArray(m_vertexArray);
+        uint32_t indices[3] = {0, 1, 2};
+        std::shared_ptr<IndexBuffer> indexBuffer;
+        indexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+        m_VertexArray->SetIndexBuffer(indexBuffer);
 
-        m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
+        /// SQUARE
+        m_SquareVA.reset(VertexArray::Create());
+        float squareVertices[3 * 4] =
+            {-0.75f, -0.75f, 0.0f, 0.75f, -0.75f, 0.0f, 0.75f, 0.75f, 0.0f, -0.75f, 0.75f, 0.0f};
+        std::shared_ptr<VertexBuffer> squareVB;
+        squareVB.reset(VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+        BufferLayout squareVBLayout = {{ShaderDataType::Float3, "a_Position"}};
+        squareVB->SetLayout(squareVBLayout);
+        m_SquareVA->AddVertexBuffer(squareVB);
 
-        {
-            BufferLayout layout = {{ShaderDataType::Float3, "a_Position"}, {ShaderDataType::Float4, "a_Color"}};
-            m_VertexBuffer->SetLayout(layout);
-        }
-
-        uint32_t index     = 0;
-        const auto& layout = m_VertexBuffer->GetLayout();
-        for (const auto& element : layout)
-        {
-            glEnableVertexAttribArray(index);
-            glVertexAttribPointer(index,
-                                  static_cast<GLint>(element.GetComponentCount()),
-                                  ShaderDataTypeToOpenGLBaseType(element.Type),
-                                  element.Normalized ? GL_TRUE : GL_FALSE,
-                                  static_cast<GLsizei>(layout.GetStride()),
-                                  reinterpret_cast<const void*>(element.Offset));
-            index++;
-        }
-
-        m_IndexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+        uint32_t squareIndices[6] = {0, 1, 2, 2, 3, 0};
+        std::shared_ptr<IndexBuffer> squareIB;
+        squareIB.reset(IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+        m_SquareVA->SetIndexBuffer(squareIB);
 
         std::string vertexSrc = R"(
             #version 330 core
@@ -112,6 +89,35 @@ namespace OrionEngine
         )";
 
         m_Shader.reset(new Shader(vertexSrc, fragmentSrc));
+
+        std::string blueShaderVertexSrc = R"(
+            #version 330 core
+
+            layout(location = 0) in vec3 a_Position;
+
+            out vec3 v_Position;
+
+            void main()
+            {
+                v_Position = a_Position;
+                gl_Position = vec4(a_Position, 1.0);
+            }
+        )";
+
+        std::string blueShaderFragmentSrc = R"(
+            #version 330 core
+
+            layout(location = 0) out vec4 color;
+
+            in vec3 v_Position;
+
+            void main()
+            {
+                color = vec4(0.2, 0.3, 0.8, 1.0);
+            }
+        )";
+
+        m_BlueShader.reset(new Shader(blueShaderVertexSrc, blueShaderFragmentSrc));
     }
 
     void Application::Run()
@@ -121,9 +127,19 @@ namespace OrionEngine
             glClearColor(0.1f, 0.1f, 0.1f, 1);
             glClear(GL_COLOR_BUFFER_BIT);
 
+            m_BlueShader->Bind();
+            m_SquareVA->Bind();
+            glDrawElements(GL_TRIANGLES,
+                           static_cast<int>(m_SquareVA->GetIndexBuffer()->GetCount()),
+                           GL_UNSIGNED_INT,
+                           nullptr);
+
             m_Shader->Bind();
-            glBindVertexArray(m_vertexArray);
-            glDrawElements(GL_TRIANGLES, static_cast<int>(m_IndexBuffer->GetCount()), GL_UNSIGNED_INT, nullptr);
+            m_VertexArray->Bind();
+            glDrawElements(GL_TRIANGLES,
+                           static_cast<int>(m_VertexArray->GetIndexBuffer()->GetCount()),
+                           GL_UNSIGNED_INT,
+                           nullptr);
             // m_Shader->Unbind();
 
             for (Layer* layer : m_LayerStack)
@@ -166,4 +182,4 @@ namespace OrionEngine
         m_Running = false;
         return true;
     }
-} // namespace OrionEngine
+} // namespace Orion

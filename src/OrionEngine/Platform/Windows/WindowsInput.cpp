@@ -5,7 +5,7 @@
 
 #include <GLFW/glfw3.h>
 
-namespace OrionEngine
+namespace Orion
 {
     Input* Input::s_Instance = new WindowsInput();
 
@@ -43,4 +43,4 @@ namespace OrionEngine
         return {static_cast<float>(xpos), static_cast<float>(ypos)};
     }
 
-} // namespace OrionEngine
+} // namespace Orion

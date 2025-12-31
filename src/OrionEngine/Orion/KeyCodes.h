@@ -1,6 +1,6 @@
 #pragma once
 
-namespace OrionEngine
+namespace Orion
 {
     using KeyCode = std::uint16_t;
 
@@ -141,4 +141,4 @@ namespace OrionEngine
             Menu         = 348
         };
     }
-} // namespace OrionEngine
+} // namespace Orion

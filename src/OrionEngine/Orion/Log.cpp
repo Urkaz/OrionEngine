@@ -4,7 +4,7 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 
 #ifdef OE_ENABLE_LOGS
-namespace OrionEngine
+namespace Orion
 {
     std::shared_ptr<spdlog::logger> Log::m_sCoreLogger;
     std::shared_ptr<spdlog::logger> Log::m_sClientLogger;
@@ -22,5 +22,5 @@ namespace OrionEngine
         OE_CORE_LOG(warn, "Initialized Core Log!");
         OE_LOG(info, "Initialized Client Log!");
     }
-} // namespace OrionEngine
+} // namespace Orion
 #endif
