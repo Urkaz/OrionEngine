@@ -5,9 +5,10 @@
 #include "Orion/Events/Event.h"
 #include "Orion/Input.h"
 #include "Orion/Log.h"
+#include "Orion/Renderer/Renderer.h"
+#include "Orion/Renderer/RenderCommand.h"
 
 #include <cstdint>
-#include <glad/glad.h>
 
 DISABLE_WARNING_FILE(4100, "-Wunused-parameter")
 
@@ -124,23 +125,20 @@ namespace Orion
     {
         while (m_Running)
         {
-            glClearColor(0.1f, 0.1f, 0.1f, 1);
-            glClear(GL_COLOR_BUFFER_BIT);
+            RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1});
+            RenderCommand::Clear();
+
+            Renderer::BeginScene();
 
             m_BlueShader->Bind();
-            m_SquareVA->Bind();
-            glDrawElements(GL_TRIANGLES,
-                           static_cast<int>(m_SquareVA->GetIndexBuffer()->GetCount()),
-                           GL_UNSIGNED_INT,
-                           nullptr);
+            Renderer::Submit(m_SquareVA);
 
             m_Shader->Bind();
-            m_VertexArray->Bind();
-            glDrawElements(GL_TRIANGLES,
-                           static_cast<int>(m_VertexArray->GetIndexBuffer()->GetCount()),
-                           GL_UNSIGNED_INT,
-                           nullptr);
-            // m_Shader->Unbind();
+            Renderer::Submit(m_VertexArray);
+
+            Renderer::EndScene();
+
+            //Renderer::Flush();
 
             for (Layer* layer : m_LayerStack)
                 layer->OnUpdate();

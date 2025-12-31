@@ -10,10 +10,10 @@ namespace Orion
     {
         switch (Renderer::GetAPI())
         {
-        case RendererAPI::None:
+        case RendererAPI::API::None:
             OE_ASSERT(false, "RendererAPI::None is not supported!");
             return nullptr;
-        case RendererAPI::OpenGL:
+        case RendererAPI::API::OpenGL:
             return new OpenGLVertexBuffer(vertices, size);
         default:
             break;
@@ -27,10 +27,10 @@ namespace Orion
     {
         switch (Renderer::GetAPI())
         {
-        case RendererAPI::None:
+        case RendererAPI::API::None:
             OE_ASSERT(false, "RendererAPI::None is not supported!");
             return nullptr;
-        case RendererAPI::OpenGL:
+        case RendererAPI::API::OpenGL:
             return new OpenGLIndexBuffer(indices, size);
         default:
             break;

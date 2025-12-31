@@ -1,7 +1,9 @@
 set(LIBRARY_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/ImGui/ImGuiLayer.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/Buffer.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/RenderCommand.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/Renderer.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/RendererAPI.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/Shader.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/VertexArray.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Application.cpp"
@@ -10,6 +12,7 @@ set(LIBRARY_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Log.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLBuffer.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLContext.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLRendererAPI.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLVertexArray.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Windows/WindowsInput.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Windows/WindowsWindow.cpp")
@@ -21,7 +24,9 @@ set(LIBRARY_HEADERS
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/ImGui/ImGuiLayer.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/Buffer.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/GraphicsContext.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/RenderCommand.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/Renderer.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/RendererAPI.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/Shader.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/VertexArray.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Application.h"
@@ -38,6 +43,7 @@ set(LIBRARY_HEADERS
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLBuffer.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLContext.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLRendererAPI.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLVertexArray.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Windows/WindowsInput.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Windows/WindowsWindow.h")
