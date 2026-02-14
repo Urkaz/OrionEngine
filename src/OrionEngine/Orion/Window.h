@@ -16,9 +16,9 @@ namespace Orion
      */
     struct WindowProps
     {
-        std::string Title;      ///< Window title
-        unsigned int Width;     ///< Window width in pixels
-        unsigned int Height;    ///< Window height in pixels
+        std::string Title;   ///< Window title
+        unsigned int Width;  ///< Window width in pixels
+        unsigned int Height; ///< Window height in pixels
 
         /**
          * @brief Constructor for WindowProps with default values.
@@ -67,7 +67,7 @@ namespace Orion
          *
          * @return unsigned int The window width in pixels.
          */
-        virtual unsigned int GetWidth() const  = 0;
+        virtual unsigned int GetWidth() const = 0;
 
         /**
          * @brief Retrieves the height of the window.
@@ -88,14 +88,14 @@ namespace Orion
          *
          * @param enabled True to enable VSync, false to disable.
          */
-        virtual void SetVSync(bool enabled)                            = 0;
+        virtual void SetVSync(bool enabled) = 0;
 
         /**
          * @brief Checks if vertical synchronization is enabled.
          *
          * @return bool True if VSync is enabled, false otherwise.
          */
-        virtual bool IsVSync() const                                   = 0;
+        virtual bool IsVSync() const = 0;
 
         /**
          * @brief Retrieves the native window pointer.

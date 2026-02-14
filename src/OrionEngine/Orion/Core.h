@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #ifdef OE_ENABLE_ASSERTS
     #define OE_ASSERT(x, ...)                                                                                          \
         {                                                                                                              \
@@ -25,3 +27,12 @@
 #define BIT(x) (1 << x)
 
 #define OE_BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
+
+namespace Orion
+{
+    template <typename T>
+    using Scope = std::unique_ptr<T>;
+
+    template <typename T>
+    using Ref = std::shared_ptr<T>;
+} // namespace Orion

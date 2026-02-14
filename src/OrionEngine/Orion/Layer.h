@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Orion/Core.h"
-#include "Orion/Events/Event.h"
 #include "Orion/Core/Timestep.h"
+#include "Orion/Events/Event.h"
 
 DISABLE_WARNING_FILE(4100, "-Wunused-parameter")
 

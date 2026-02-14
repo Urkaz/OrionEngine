@@ -17,7 +17,7 @@ public:
 
         float vertices[3 * 7] = {-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.5f, -0.5f, 0.0f, 0.0f,
                                  0.0f,  1.0f,  1.0f, 0.0f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f,  1.0f};
-        std::shared_ptr<Orion::VertexBuffer> vertexBuffer;
+        Orion::Ref<Orion::VertexBuffer> vertexBuffer;
         vertexBuffer.reset(Orion::VertexBuffer::Create(vertices, sizeof(vertices)));
         Orion::BufferLayout layout = {{Orion::ShaderDataType::Float3, "a_Position"},
                                       {Orion::ShaderDataType::Float4, "a_Color"}};
@@ -25,21 +25,21 @@ public:
         m_VertexArray->AddVertexBuffer(vertexBuffer);
 
         uint32_t indices[3] = {0, 1, 2};
-        std::shared_ptr<Orion::IndexBuffer> indexBuffer;
+        Orion::Ref<Orion::IndexBuffer> indexBuffer;
         indexBuffer.reset(Orion::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
         m_VertexArray->SetIndexBuffer(indexBuffer);
 
         /// SQUARE
         m_SquareVA.reset(Orion::VertexArray::Create());
         float squareVertices[3 * 4] = {-0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.5f, 0.5f, 0.0f, -0.5f, 0.5f, 0.0f};
-        std::shared_ptr<Orion::VertexBuffer> squareVB;
+        Orion::Ref<Orion::VertexBuffer> squareVB;
         squareVB.reset(Orion::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
         Orion::BufferLayout squareVBLayout = {{Orion::ShaderDataType::Float3, "a_Position"}};
         squareVB->SetLayout(squareVBLayout);
         m_SquareVA->AddVertexBuffer(squareVB);
 
         uint32_t squareIndices[6] = {0, 1, 2, 2, 3, 0};
-        std::shared_ptr<Orion::IndexBuffer> squareIB;
+        Orion::Ref<Orion::IndexBuffer> squareIB;
         squareIB.reset(Orion::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
         m_SquareVA->SetIndexBuffer(squareIB);
 
@@ -181,11 +181,11 @@ public:
     }
 
 private:
-    std::shared_ptr<Orion::Shader> m_Shader;
-    std::shared_ptr<Orion::VertexArray> m_VertexArray;
+    Orion::Ref<Orion::Shader> m_Shader;
+    Orion::Ref<Orion::VertexArray> m_VertexArray;
 
-    std::shared_ptr<Orion::Shader> m_FlatColorShader;
-    std::shared_ptr<Orion::VertexArray> m_SquareVA;
+    Orion::Ref<Orion::Shader> m_FlatColorShader;
+    Orion::Ref<Orion::VertexArray> m_SquareVA;
 
     Orion::OrthographicCamera m_Camera;
 

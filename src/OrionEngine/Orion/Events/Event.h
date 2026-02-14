@@ -117,13 +117,13 @@ namespace Orion
          * @brief Get the event's name as a C string.
          * @return const char*
          */
-        virtual const char* GetName() const    = 0;
+        virtual const char* GetName() const = 0;
 
         /**
          * @brief Get the category bitmask for the event.
          * @return int Bitmask of EventCategory values.
          */
-        virtual int GetCategoryFlags() const   = 0;
+        virtual int GetCategoryFlags() const = 0;
 
         /**
          * @brief String representation used for logging/debugging.

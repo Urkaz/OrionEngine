@@ -35,36 +35,77 @@ namespace Orion
          */
         virtual ~Application() = default;
 
+        /**
+         * @brief Main application loop.
+         *
+         * Processes events, updates layers, and renders until m_Running is false.
+         * Calculates delta time between frames for frame-rate independent updates.
+         */
         void Run();
 
+        /**
+         * @brief Dispatch an event through the layer stack.
+         *
+         * Propagates events to layers in reverse order (top to bottom)
+         * and handles application-level events like WindowCloseEvent.
+         *
+         * @param e The event to process.
+         */
         void OnEvent(Event& e);
 
+        /**
+         * @brief Add a layer to the layer stack.
+         *
+         * @param layer Pointer to the layer to add (inserted before overlays).
+         */
         void PushLayer(Layer* layer);
+
+        /**
+         * @brief Add an overlay layer.
+         *
+         * @param overlay Pointer to the overlay layer (inserted at the top, rendered last).
+         */
         void PushOverlay(Layer* overlay);
 
+        /**
+         * @brief Get the singleton instance of the Application.
+         *
+         * @return Application& Reference to the running application instance.
+         */
         static Application& Get()
         {
             return *s_Instance;
         }
 
+        /**
+         * @brief Get the application window.
+         *
+         * @return Window& Reference to the window instance.
+         */
         inline Window& GetWindow()
         {
             return *m_Window;
         }
 
     private:
+        /**
+         * @brief Handle window close event.
+         *
+         * @param e The window close event.
+         * @return true if handled, false otherwise.
+         */
         bool OnWindowClose(WindowCloseEvent& e);
 
     private:
-        static Application* s_Instance;
+        static Application* s_Instance; ///< Singleton instance pointer
 
-        std::unique_ptr<Window> m_Window;
-        ImGuiLayer* m_ImGuiLayer;
-        LayerStack m_LayerStack;
-        bool m_Running = true;
+        Scope<Window> m_Window;   ///< Main application window
+        ImGuiLayer* m_ImGuiLayer; ///< ImGui overlay layer
+        LayerStack m_LayerStack;  ///< Stack of application layers
+        bool m_Running = true;    ///< Application running state
 
-        Timestep m_Timestep;
-        float m_LastFrameTime = 0.0f;
+        Timestep m_Timestep;          ///< Delta time for current frame
+        float m_LastFrameTime = 0.0f; ///< Timestamp of last frame
     };
 
     /**
