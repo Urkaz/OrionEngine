@@ -12,11 +12,27 @@
 
 namespace Orion
 {
+    /**
+     * @class Application
+     * @brief Main application class that manages the engine lifecycle.
+     *
+     * Handles window creation, layer management, event dispatching, and
+     * the main update/render loop. The application runs until m_Running
+     * is set to false (typically by a window close event).
+     */
     class Application
     {
     public:
+        /**
+         * @brief Constructor for the Application.
+         *
+         * Initializes the window, layer stack, and sets up the ImGui layer.
+         */
         Application();
 
+        /**
+         * @brief Virtual destructor for proper cleanup.
+         */
         virtual ~Application() = default;
 
         void Run();
@@ -51,6 +67,13 @@ namespace Orion
         float m_LastFrameTime = 0.0f;
     };
 
-    // To be defined in client
+    /**
+     * @brief Factory function to create the client application.
+     *
+     * This function must be defined by the client application.
+     * It creates and returns a new Application-derived instance.
+     *
+     * @return Application* Pointer to a dynamically allocated Application instance.
+     */
     Application* CreateApplication();
 } // namespace Orion
