@@ -1,6 +1,7 @@
 set(LIBRARY_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/ImGui/ImGuiLayer.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/Buffer.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/OrthographicCamera.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/RenderCommand.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/Renderer.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/RendererAPI.cpp"
@@ -24,6 +25,7 @@ set(LIBRARY_HEADERS
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/ImGui/ImGuiLayer.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/Buffer.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/GraphicsContext.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/OrthographicCamera.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/RenderCommand.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/Renderer.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/RendererAPI.h"
@@ -55,13 +57,12 @@ target_include_directories(${ENGINE_NAME} PUBLIC ${LIBRARY_INCLUDES})
 
 target_link_libraries(
     ${ENGINE_NAME}
-    PUBLIC spdlog::spdlog ImGui_Core
+    PUBLIC spdlog::spdlog ImGui_Core glm::glm
     PRIVATE glfw
             OpenGL::GL
             GLAD
             ImGui_OpenGL3
-            ImGui_GLFW
-            glm::glm)
+            ImGui_GLFW)
 
 if(WIN32)
     target_link_libraries(${ENGINE_NAME} PRIVATE gdi32 user32 kernel32)

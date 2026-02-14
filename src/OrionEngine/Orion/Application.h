@@ -8,6 +8,7 @@
 #include "Orion/Window.h"
 
 #include "Orion/Renderer/Buffer.h"
+#include "Orion/Renderer/OrthographicCamera.h"
 #include "Orion/Renderer/Shader.h"
 #include "Orion/Renderer/VertexArray.h"
 
@@ -52,6 +53,8 @@ namespace Orion
 
         std::shared_ptr<Shader> m_BlueShader;
         std::shared_ptr<VertexArray> m_SquareVA;
+
+        OrthographicCamera m_Camera;
     };
 
     // To be defined in client

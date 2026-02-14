@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include <glm/glm.hpp>
+
 namespace Orion
 {
     class Shader
@@ -12,6 +14,8 @@ namespace Orion
 
         void Bind() const;
         void Unbind() const;
+
+        void UploadeUniformMat4(const std::string& name, const glm::mat4& matrix);
 
     private:
         uint32_t m_RendererID;
