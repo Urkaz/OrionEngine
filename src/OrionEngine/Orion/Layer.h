@@ -2,6 +2,7 @@
 
 #include "Orion/Core.h"
 #include "Orion/Events/Event.h"
+#include "Orion/Core/Timestep.h"
 
 DISABLE_WARNING_FILE(4100, "-Wunused-parameter")
 
@@ -15,7 +16,7 @@ namespace Orion
 
         virtual void OnAttach() {}
         virtual void OnDetach() {}
-        virtual void OnUpdate() {}
+        virtual void OnUpdate(Timestep ts) {}
         virtual void OnImguiRender() {}
         virtual void OnEvent(Event& event) {}
 

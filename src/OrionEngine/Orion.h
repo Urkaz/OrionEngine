@@ -6,6 +6,8 @@
 #include "Orion/Layer.h"
 #include "Orion/Log.h"
 
+#include "Orion/Core/Timestep.h"
+
 #include "Orion/Input.h"
 #include "Orion/KeyCodes.h"
 #include "Orion/MouseCodes.h"

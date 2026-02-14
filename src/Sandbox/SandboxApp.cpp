@@ -109,22 +109,22 @@ public:
 
     void OnImguiRender() override {}
 
-    void OnUpdate() override
+    void OnUpdate(Orion::Timestep ts) override
     {
         if (Orion::Input::IsKeyPressed(Orion::Key::Left))
-            m_CameraPosition.x -= m_CameraMoveSpeed;
+            m_CameraPosition.x -= m_CameraMoveSpeed * ts;
         else if (Orion::Input::IsKeyPressed(Orion::Key::Right))
-            m_CameraPosition.x += m_CameraMoveSpeed;
+            m_CameraPosition.x += m_CameraMoveSpeed * ts;
 
         if (Orion::Input::IsKeyPressed(Orion::Key::Up))
-            m_CameraPosition.y += m_CameraMoveSpeed;
+            m_CameraPosition.y += m_CameraMoveSpeed * ts;
         else if (Orion::Input::IsKeyPressed(Orion::Key::Down))
-            m_CameraPosition.y -= m_CameraMoveSpeed;
+            m_CameraPosition.y -= m_CameraMoveSpeed * ts;
 
         if (Orion::Input::IsKeyPressed(Orion::Key::A))
-            m_CameraRotation += m_CameraRotationSpeed;
+            m_CameraRotation += m_CameraRotationSpeed * ts;
         else if (Orion::Input::IsKeyPressed(Orion::Key::D))
-            m_CameraRotation -= m_CameraRotationSpeed;
+            m_CameraRotation -= m_CameraRotationSpeed * ts;
 
         Orion::RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1});
         Orion::RenderCommand::Clear();
@@ -163,8 +163,8 @@ private:
     glm::vec3 m_CameraPosition;
     float m_CameraRotation = 0.0f;
 
-    float m_CameraMoveSpeed     = 0.1f;
-    float m_CameraRotationSpeed = 2.0f;
+    float m_CameraMoveSpeed     = 1.0f;
+    float m_CameraRotationSpeed = 45.0f;
 };
 
 class Sandbox : public Orion::Application

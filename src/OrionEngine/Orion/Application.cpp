@@ -6,6 +6,7 @@
 #include "Orion/Input.h"
 #include "Orion/Log.h"
 
+#include <glfw/glfw3.h>
 
 #include <cstdint>
 
@@ -30,8 +31,12 @@ namespace Orion
     {
         while (m_Running)
         {
+            float time        = static_cast<float>(glfwGetTime()); // Platform::GetTime
+            Timestep timestep = time - m_LastFrameTime;
+            m_LastFrameTime   = time;
+
             for (Layer* layer : m_LayerStack)
-                layer->OnUpdate();
+                layer->OnUpdate(timestep);
 
             m_ImGuiLayer->Begin();
             for (Layer* layer : m_LayerStack)
