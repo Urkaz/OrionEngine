@@ -2,10 +2,13 @@
 
 #include <imgui.h>
 
+#include <glm/gtc/matrix_transform.hpp>
+
 class ExampleLayer : public Orion::Layer
 {
 public:
-    ExampleLayer() : Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), m_CameraPosition(0.0f)
+    ExampleLayer()
+        : Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), m_CameraPosition(0.0f)
     {
         /// TRIANGLE
         m_VertexArray.reset(Orion::VertexArray::Create());
@@ -26,8 +29,7 @@ public:
 
         /// SQUARE
         m_SquareVA.reset(Orion::VertexArray::Create());
-        float squareVertices[3 * 4] =
-            {-0.75f, -0.75f, 0.0f, 0.75f, -0.75f, 0.0f, 0.75f, 0.75f, 0.0f, -0.75f, 0.75f, 0.0f};
+        float squareVertices[3 * 4] = {-0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.5f, 0.5f, 0.0f, -0.5f, 0.5f, 0.0f};
         std::shared_ptr<Orion::VertexBuffer> squareVB;
         squareVB.reset(Orion::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
         Orion::BufferLayout squareVBLayout = {{Orion::ShaderDataType::Float3, "a_Position"}};
@@ -46,6 +48,7 @@ public:
             layout(location = 1) in vec4 a_Color;
 
             uniform mat4 u_ViewProjection;
+            uniform mat4 u_Transform;
 
             out vec3 v_Position;
             out vec4 v_Color;
@@ -54,7 +57,7 @@ public:
             {
                 v_Position = a_Position;
                 v_Color = a_Color;
-                gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
+                gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
             }
         )";
 
@@ -81,13 +84,14 @@ public:
             layout(location = 0) in vec3 a_Position;
 
             uniform mat4 u_ViewProjection;
+            uniform mat4 u_Transform;
 
             out vec3 v_Position;
 
             void main()
             {
                 v_Position = a_Position;
-                gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
+                gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
             }
         )";
 
@@ -121,9 +125,9 @@ public:
         else if (Orion::Input::IsKeyPressed(Orion::Key::Down))
             m_CameraPosition.y -= m_CameraMoveSpeed * ts;
 
-        if (Orion::Input::IsKeyPressed(Orion::Key::A))
+        if (Orion::Input::IsKeyPressed(Orion::Key::Q))
             m_CameraRotation += m_CameraRotationSpeed * ts;
-        else if (Orion::Input::IsKeyPressed(Orion::Key::D))
+        else if (Orion::Input::IsKeyPressed(Orion::Key::E))
             m_CameraRotation -= m_CameraRotationSpeed * ts;
 
         Orion::RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1});
@@ -134,7 +138,16 @@ public:
 
         Orion::Renderer::BeginScene(m_Camera);
 
-        Orion::Renderer::Submit(m_BlueShader, m_SquareVA);
+        static glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+
+        for (int y = 0; y < 5; y++)
+            for (int x = 0; x < 5; x++)
+            {
+                glm::vec3 pos(static_cast<float>(x) * 0.11f, static_cast<float>(y) * 0.11f, 0.0f);
+                glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
+                Orion::Renderer::Submit(m_BlueShader, m_SquareVA, transform);
+            }
+
         Orion::Renderer::Submit(m_Shader, m_VertexArray);
 
         Orion::Renderer::EndScene();
@@ -163,7 +176,7 @@ private:
     glm::vec3 m_CameraPosition;
     float m_CameraRotation = 0.0f;
 
-    float m_CameraMoveSpeed     = 1.0f;
+    float m_CameraMoveSpeed     = 2.0f;
     float m_CameraRotationSpeed = 45.0f;
 };
 
