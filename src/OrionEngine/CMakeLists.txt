@@ -14,6 +14,7 @@ set(LIBRARY_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLBuffer.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLContext.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLRendererAPI.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLShader.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLVertexArray.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Windows/WindowsInput.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Windows/WindowsWindow.cpp")
@@ -46,6 +47,7 @@ set(LIBRARY_HEADERS
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLBuffer.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLContext.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLRendererAPI.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLShader.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLVertexArray.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Windows/WindowsInput.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Windows/WindowsWindow.h")
