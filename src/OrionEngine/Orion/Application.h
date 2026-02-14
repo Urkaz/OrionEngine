@@ -1,16 +1,13 @@
 #pragma once
 
 #include "Orion/Core.h"
+
 #include "Orion/Events/ApplicationEvent.h"
 #include "Orion/Events/Event.h"
-#include "Orion/ImGui/ImGuiLayer.h"
 #include "Orion/LayerStack.h"
 #include "Orion/Window.h"
 
-#include "Orion/Renderer/Buffer.h"
-#include "Orion/Renderer/OrthographicCamera.h"
-#include "Orion/Renderer/Shader.h"
-#include "Orion/Renderer/VertexArray.h"
+#include "Orion/ImGui/ImGuiLayer.h"
 
 namespace Orion
 {
@@ -47,14 +44,6 @@ namespace Orion
         ImGuiLayer* m_ImGuiLayer;
         LayerStack m_LayerStack;
         bool m_Running = true;
-
-        std::shared_ptr<Shader> m_Shader;
-        std::shared_ptr<VertexArray> m_VertexArray;
-
-        std::shared_ptr<Shader> m_BlueShader;
-        std::shared_ptr<VertexArray> m_SquareVA;
-
-        OrthographicCamera m_Camera;
     };
 
     // To be defined in client
