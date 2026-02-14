@@ -10,7 +10,7 @@ function(add_cmake_format_target)
         CMAKE_FILES_TXT
         EXCLUDE
         REGEX
-        "${CMAKE_SOURCE_DIR}/(build|external)/.*")
+        "${CMAKE_SOURCE_DIR}/(build|external|src/ThirdParty)/.*")
     set(CMAKE_FILES ${ROOT_CMAKE_FILES} ${CMAKE_FILES_TXT} ${CMAKE_FILES_C})
     find_program(CMAKE_FORMAT cmake-format)
     if(CMAKE_FORMAT)
@@ -38,10 +38,14 @@ function(add_clang_format_target)
     if(NOT ${ENABLE_CLANG_FORMAT})
         return()
     endif()
-    find_package(Python3 COMPONENTS Interpreter)
-    if(NOT ${Python_FOUND})
+    find_package(
+        Python3
+        COMPONENTS Interpreter
+        REQUIRED)
+    if(NOT Python3_FOUND)
         return()
     endif()
+
     file(GLOB_RECURSE CMAKE_FILES_CC "*/*.cc")
     file(GLOB_RECURSE CMAKE_FILES_CPP "*/*.cpp")
     file(GLOB_RECURSE CMAKE_FILES_H "*/*.h")
@@ -56,8 +60,8 @@ function(add_clang_format_target)
         CPP_FILES
         EXCLUDE
         REGEX
-        "${CMAKE_SOURCE_DIR}/(build|external)/.*")
-    find_program(CLANGFORMAT clang-format)
+        "${CMAKE_SOURCE_DIR}/(build|external|src/ThirdParty)/.*")
+    find_program(CLANGFORMAT clang-format REQUIRED)
     if(CLANGFORMAT)
         message(STATUS "Added Clang Format")
         add_custom_target(
@@ -82,7 +86,7 @@ function(add_clang_tidy_to_target target)
         ".*.(cc|h|cpp|hpp)")
 
     find_package(Python3 COMPONENTS Interpreter)
-    if(NOT ${Python_FOUND})
+    if(NOT Python3_FOUND)
         message(WARNING "Python3 needed for Clang-Tidy")
         return()
     endif()

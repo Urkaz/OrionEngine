@@ -5,8 +5,8 @@
 #include "Orion/Events/Event.h"
 #include "Orion/Input.h"
 #include "Orion/Log.h"
-#include "Orion/Renderer/Renderer.h"
 #include "Orion/Renderer/RenderCommand.h"
+#include "Orion/Renderer/Renderer.h"
 
 #include <cstdint>
 
