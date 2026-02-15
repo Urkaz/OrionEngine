@@ -37,3 +37,10 @@ if(WIN32)
 endif()
 target_compile_definitions(${SANDBOX_NAME} PRIVATE $<$<NOT:$<CONFIG:Release>>:OE_ENABLE_LOGS>)
 target_compile_definitions(${SANDBOX_NAME} PRIVATE $<$<NOT:$<CONFIG:Release>>:OE_ENABLE_ASSERTS>)
+
+# Copy assets
+add_custom_command(TARGET ${SANDBOX_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_CURRENT_SOURCE_DIR}/assets
+    $<TARGET_FILE_DIR:${SANDBOX_NAME}>/assets
+)

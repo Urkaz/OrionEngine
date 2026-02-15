@@ -6,6 +6,7 @@ set(LIBRARY_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/Renderer.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/RendererAPI.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/Shader.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/Texture.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/VertexArray.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Application.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Layer.cpp"
@@ -15,6 +16,7 @@ set(LIBRARY_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLContext.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLRendererAPI.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLShader.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLTexture.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLVertexArray.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Windows/WindowsInput.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Windows/WindowsWindow.cpp")
@@ -31,6 +33,7 @@ set(LIBRARY_HEADERS
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/Renderer.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/RendererAPI.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/Shader.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/Texture.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/VertexArray.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Application.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Core.h"
@@ -48,6 +51,7 @@ set(LIBRARY_HEADERS
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLContext.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLRendererAPI.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLShader.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLTexture.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/OpenGL/OpenGLVertexArray.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Windows/WindowsInput.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/Platform/Windows/WindowsWindow.h")
@@ -64,7 +68,8 @@ target_link_libraries(
             OpenGL::GL
             GLAD
             ImGui_OpenGL3
-            ImGui_GLFW)
+            ImGui_GLFW
+            stb_image)
 
 if(WIN32)
     target_link_libraries(${ENGINE_NAME} PRIVATE gdi32 user32 kernel32)

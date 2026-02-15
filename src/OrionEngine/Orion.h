@@ -20,6 +20,7 @@
 
 #include "Orion/Renderer/Buffer.h"
 #include "Orion/Renderer/Shader.h"
+#include "Orion/Renderer/Texture.h"
 #include "Orion/Renderer/VertexArray.h"
 
 #include "Orion/Renderer/OrthographicCamera.h"
