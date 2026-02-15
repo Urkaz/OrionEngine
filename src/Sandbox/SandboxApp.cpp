@@ -13,12 +13,12 @@ public:
     ExampleLayer() : Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), m_CameraPosition(0.0f)
     {
         /// TRIANGLE
-        m_VertexArray.reset(Orion::VertexArray::Create());
+        m_VertexArray = Orion::VertexArray::Create();
 
         float vertices[3 * 7] = {-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.5f, -0.5f, 0.0f, 0.0f,
                                  0.0f,  1.0f,  1.0f, 0.0f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f,  1.0f};
         Orion::Ref<Orion::VertexBuffer> vertexBuffer;
-        vertexBuffer.reset(Orion::VertexBuffer::Create(vertices, sizeof(vertices)));
+        vertexBuffer               = Orion::VertexBuffer::Create(vertices, sizeof(vertices));
         Orion::BufferLayout layout = {{Orion::ShaderDataType::Float3, "a_Position"},
                                       {Orion::ShaderDataType::Float4, "a_Color"}};
         vertexBuffer->SetLayout(layout);
@@ -26,21 +26,22 @@ public:
 
         uint32_t indices[3] = {0, 1, 2};
         Orion::Ref<Orion::IndexBuffer> indexBuffer;
-        indexBuffer.reset(Orion::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+        indexBuffer = Orion::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
         m_VertexArray->SetIndexBuffer(indexBuffer);
 
         /// SQUARE
         m_SquareVA.reset(Orion::VertexArray::Create());
         float squareVertices[3 * 4] = {-0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, 0.5f, 0.5f, 0.0f, -0.5f, 0.5f, 0.0f};
         Orion::Ref<Orion::VertexBuffer> squareVB;
-        squareVB.reset(Orion::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
-        Orion::BufferLayout squareVBLayout = {{Orion::ShaderDataType::Float3, "a_Position"}};
+        squareVB                           = Orion::VertexBuffer::Create(squareVertices, sizeof(squareVertices));
+        Orion::BufferLayout squareVBLayout = {{Orion::ShaderDataType::Float3, "a_Position"},
+                                              {Orion::ShaderDataType::Float2, "a_TexCoord"}};
         squareVB->SetLayout(squareVBLayout);
         m_SquareVA->AddVertexBuffer(squareVB);
 
         uint32_t squareIndices[6] = {0, 1, 2, 2, 3, 0};
         Orion::Ref<Orion::IndexBuffer> squareIB;
-        squareIB.reset(Orion::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+        squareIB = Orion::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
         m_SquareVA->SetIndexBuffer(squareIB);
 
         std::string vertexSrc = R"(
@@ -77,10 +78,9 @@ public:
                 color = v_Color;
             }
         )";
+        m_Shader                = Orion::Shader::Create(vertexSrc, fragmentSrc);
 
-        m_Shader.reset(Orion::Shader::Create(vertexSrc, fragmentSrc));
-
-        std::string flatColorShaderVertexSrc = R"(
+        std::string flatColorShaderVertexSrc   = R"(
             #version 330 core
 
             layout(location = 0) in vec3 a_Position;
@@ -156,13 +156,15 @@ public:
         std::dynamic_pointer_cast<Orion::OpenGLShader>(m_FlatColorShader)
             ->UploadUniformFloat3("u_Color", m_SquareColor);
 
-        for (int y = 0; y < 5; y++)
-            for (int x = 0; x < 5; x++)
+        for (int y = 0; y < 20; y++)
+        {
+            for (int x = 0; x < 20; x++)
             {
                 glm::vec3 pos(static_cast<float>(x) * 0.11f, static_cast<float>(y) * 0.11f, 0.0f);
                 glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
                 Orion::Renderer::Submit(m_FlatColorShader, m_SquareVA, transform);
             }
+        }
 
         Orion::Renderer::Submit(m_Shader, m_VertexArray);
 
