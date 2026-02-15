@@ -5,6 +5,7 @@
 #include "Orion/Events/Event.h"
 #include "Orion/Input.h"
 #include "Orion/Log.h"
+#include "Orion/Renderer/Renderer.h"
 
 #include <glfw/glfw3.h>
 
@@ -23,6 +24,8 @@ namespace Orion
         s_Instance = this;
 
         m_Window->SetEventCallback(OE_BIND_EVENT_FN(Application::OnEvent));
+
+        Renderer::Init();
 
         PushOverlay(m_ImGuiLayer);
     }

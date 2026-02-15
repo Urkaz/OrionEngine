@@ -146,7 +146,8 @@ public:
         )";
         m_TextureShader                      = Orion::Shader::Create(textureShaderVertexSrc, textureShaderFragmentSrc);
 
-        m_Texture = Orion::Texture2D::Create("assets/textures/Checkerboard.png");
+        m_Texture     = Orion::Texture2D::Create("assets/textures/Checkerboard.png");
+        m_TextureLogo = Orion::Texture2D::Create("assets/textures/fs_logo.png");
 
         std::dynamic_pointer_cast<Orion::OpenGLShader>(m_TextureShader)->Bind();
         std::dynamic_pointer_cast<Orion::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
@@ -206,6 +207,9 @@ public:
         m_Texture->Bind();
         Orion::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.0f)));
 
+        m_TextureLogo->Bind();
+        Orion::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.0f)));
+
         // Orion::Renderer::Submit(m_Shader, m_VertexArray);
 
         Orion::Renderer::EndScene();
@@ -229,7 +233,7 @@ private:
     Orion::Ref<Orion::Shader> m_FlatColorShader, m_TextureShader;
     Orion::Ref<Orion::VertexArray> m_SquareVA;
 
-    Orion::Ref<Orion::Texture2D> m_Texture;
+    Orion::Ref<Orion::Texture2D> m_Texture, m_TextureLogo;
 
     Orion::OrthographicCamera m_Camera;
 
