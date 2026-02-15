@@ -22,4 +22,21 @@ namespace Orion
         OE_ASSERT(false, "Unknown RendererAPI!");
         return nullptr;
     }
+
+    Ref<Shader> Shader::Create(const std::string& filepath)
+    {
+        switch (Renderer::GetAPI())
+        {
+        case RendererAPI::API::None:
+            OE_ASSERT(false, "RendererAPI::None is not supported!");
+            return nullptr;
+        case RendererAPI::API::OpenGL:
+            return std::make_shared<OpenGLShader>(filepath);
+        default:
+            break;
+        }
+
+        OE_ASSERT(false, "Unknown RendererAPI!");
+        return nullptr;
+    }
 } // namespace Orion

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Orion/Renderer/Buffer.h"
 #include "Orion/Core.h"
+#include "Orion/Renderer/Buffer.h"
 #include <memory>
 
 namespace Orion

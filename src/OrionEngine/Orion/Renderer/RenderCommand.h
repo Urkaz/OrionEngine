@@ -7,7 +7,8 @@ namespace Orion
     class RenderCommand
     {
     public:
-        inline static void Init() {
+        inline static void Init()
+        {
             s_RendererAPI->Init();
         }
 
