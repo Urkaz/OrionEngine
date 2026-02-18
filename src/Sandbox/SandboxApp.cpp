@@ -29,8 +29,8 @@ public:
         m_SquareVA->SetIndexBuffer(squareIB);
 
         // Shaders
-        m_FlatColorShader = Orion::Shader::Create("assets/shaders/FlatColor.glsl");
-        m_TextureShader   = Orion::Shader::Create("assets/shaders/Texture.glsl");
+        auto m_FlatColorShader = m_ShaderLibrary.Load("assets/shaders/FlatColor.glsl");
+        auto m_TextureShader   = m_ShaderLibrary.Load("assets/shaders/Texture.glsl");
 
         // Textures
         m_Texture     = Orion::Texture2D::Create("assets/textures/Checkerboard.png");
@@ -77,6 +77,8 @@ public:
         glm::vec4 redColor(0.8f, 0.2f, 0.3f, 1.0f);
         glm::vec4 blueColor(0.2f, 0.3f, 0.8f, 1.0f);
 
+        auto m_FlatColorShader = m_ShaderLibrary.Get("FlatColor");
+
         std::dynamic_pointer_cast<Orion::OpenGLShader>(m_FlatColorShader)->Bind();
         std::dynamic_pointer_cast<Orion::OpenGLShader>(m_FlatColorShader)
             ->UploadUniformFloat3("u_Color", m_SquareColor);
@@ -91,6 +93,7 @@ public:
             }
         }
 
+        auto m_TextureShader = m_ShaderLibrary.Get("Texture");
         m_Texture->Bind();
         Orion::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.0f)));
 
@@ -114,7 +117,7 @@ public:
     }
 
 private:
-    Orion::Ref<Orion::Shader> m_FlatColorShader, m_TextureShader;
+    Orion::ShaderLibrary m_ShaderLibrary;
     Orion::Ref<Orion::VertexArray> m_SquareVA;
 
     Orion::Ref<Orion::Texture2D> m_Texture, m_TextureLogo;
