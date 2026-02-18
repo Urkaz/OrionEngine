@@ -17,9 +17,10 @@ namespace Orion
         return 0;
     }
 
-    OpenGLShader::OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc) {
+    OpenGLShader::OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc)
+    {
         std::unordered_map<GLenum, std::string> shaderSources;
-        shaderSources[GL_VERTEX_SHADER] = vertexSrc;
+        shaderSources[GL_VERTEX_SHADER]   = vertexSrc;
         shaderSources[GL_FRAGMENT_SHADER] = fragmentSrc;
         Compile(shaderSources);
     }
@@ -82,8 +83,10 @@ namespace Orion
     void OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& shaderSources)
     {
         GLuint program = glCreateProgram();
-        std::vector<GLenum> glShaderIDs(shaderSources.size());
+        OE_CORE_ASSERT(shaderSources.size() <= 2, "Too many shader sources")
+        std::array<GLenum, 2> glShaderIDs;
 
+        int glShaderIDIndex = 0;
         for (auto& kv : shaderSources)
         {
             GLenum shaderType         = kv.first;
@@ -122,7 +125,7 @@ namespace Orion
             // Shader successfully compiled.
             // Attach shader to our program
             glAttachShader(program, shader);
-            glShaderIDs.push_back(shader);
+            glShaderIDs[glShaderIDIndex++] = shader;
         }
 
         // Store program after a successfult compilation
