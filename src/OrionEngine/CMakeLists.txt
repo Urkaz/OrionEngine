@@ -1,74 +1,14 @@
-set(LIBRARY_SOURCES
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/ImGui/ImGuiLayer.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/Buffer.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/OrthographicCamera.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/RenderCommand.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/Renderer.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/RendererAPI.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/Shader.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/Texture.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/VertexArray.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Core/Application.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Core/Core.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Core/Layer.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Core/LayerStack.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Core/Log.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/OrthographicCameraController.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Platform/OpenGL/OpenGLBuffer.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Platform/OpenGL/OpenGLContext.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Platform/OpenGL/OpenGLRendererAPI.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Platform/OpenGL/OpenGLShader.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Platform/OpenGL/OpenGLTexture.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Platform/OpenGL/OpenGLVertexArray.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Platform/Windows/WindowsInput.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Platform/Windows/WindowsWindow.cpp")
-set(LIBRARY_HEADERS
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Core/Events/ApplicationEvent.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Core/Events/Event.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Core/Events/KeyEvent.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Core/Events/MouseEvent.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/ImGui/ImGuiLayer.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/Buffer.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/GraphicsContext.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/OrthographicCamera.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/RenderCommand.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/Renderer.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/RendererAPI.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/Shader.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/Texture.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Renderer/VertexArray.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Core/Application.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Core/Core.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/EntryPoint.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Core/Input.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Core/KeyCodes.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Core/Layer.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Core/LayerStack.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Core/Log.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Core/MouseCodes.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Core/Warnings.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Core/Window.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/OrthographicCameraController.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Platform/OpenGL/OpenGLBuffer.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Platform/OpenGL/OpenGLContext.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Platform/OpenGL/OpenGLRendererAPI.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Platform/OpenGL/OpenGLShader.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Platform/OpenGL/OpenGLTexture.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Platform/OpenGL/OpenGLVertexArray.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Platform/Windows/WindowsInput.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Orion/Platform/Windows/WindowsWindow.h")
+add_library(${ENGINE_NAME} STATIC)
 
-set(LIBRARY_INCLUDES "./")
+add_subdirectory(Orion)
 
-add_library(${ENGINE_NAME} STATIC ${LIBRARY_SOURCES} ${LIBRARY_HEADERS})
-target_include_directories(${ENGINE_NAME} PUBLIC ${LIBRARY_INCLUDES})
+target_sources(${ENGINE_NAME} PUBLIC Orion.h)
+
+target_include_directories(${ENGINE_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Set Source Groups
-foreach(FILE ${LIBRARY_SOURCES})
-    set_source_group(${FILE})
-endforeach()
-foreach(FILE ${LIBRARY_HEADERS})
+get_target_property(ALL_SOURCES ${ENGINE_NAME} SOURCES)
+foreach(FILE ${ALL_SOURCES})
     set_source_group(${FILE})
 endforeach()
 
