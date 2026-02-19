@@ -49,6 +49,7 @@ include(AddGitSubmodule)
 include(Tools)
 include(OutputFolder)
 include(CompilerFlags)
+include(SetSourceGroup)
 
 if(ENABLE_DOCS)
     include(Docs)

@@ -5,6 +5,14 @@ set(LIBRARY_HEADERS)
 add_executable(${SANDBOX_NAME} ${LIBRARY_SOURCES} ${LIBRARY_HEADERS})
 target_include_directories(${SANDBOX_NAME} PUBLIC)
 
+# Set Source Groups
+foreach(FILE ${LIBRARY_SOURCES})
+    set_source_group(${FILE})
+endforeach()
+foreach(FILE ${LIBRARY_HEADERS})
+    set_source_group(${FILE})
+endforeach()
+
 target_link_libraries(${SANDBOX_NAME} PUBLIC ${ENGINE_NAME})
 
 setup_output_dirs(${SANDBOX_NAME})

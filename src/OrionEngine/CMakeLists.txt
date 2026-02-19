@@ -64,6 +64,14 @@ set(LIBRARY_INCLUDES "./")
 add_library(${ENGINE_NAME} STATIC ${LIBRARY_SOURCES} ${LIBRARY_HEADERS})
 target_include_directories(${ENGINE_NAME} PUBLIC ${LIBRARY_INCLUDES})
 
+# Set Source Groups
+foreach(FILE ${LIBRARY_SOURCES})
+    set_source_group(${FILE})
+endforeach()
+foreach(FILE ${LIBRARY_HEADERS})
+    set_source_group(${FILE})
+endforeach()
+
 target_link_libraries(
     ${ENGINE_NAME}
     PUBLIC spdlog::spdlog ImGui_Core glm::glm
