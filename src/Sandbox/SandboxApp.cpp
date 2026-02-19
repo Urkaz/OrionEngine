@@ -60,9 +60,6 @@ public:
 
         static glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
-        glm::vec4 redColor(0.8f, 0.2f, 0.3f, 1.0f);
-        glm::vec4 blueColor(0.2f, 0.3f, 0.8f, 1.0f);
-
         auto m_FlatColorShader = m_ShaderLibrary.Get("FlatColor");
 
         std::dynamic_pointer_cast<Orion::OpenGLShader>(m_FlatColorShader)->Bind();
@@ -86,21 +83,12 @@ public:
         m_TextureLogo->Bind();
         Orion::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.0f)));
 
-        // Orion::Renderer::Submit(m_Shader, m_VertexArray);
-
         Orion::Renderer::EndScene();
     }
 
-    void OnEvent(Orion::Event& event) override
+    void OnEvent(Orion::Event& e) override
     {
-        m_CameraController.OnEvent(event);
-        // Orion::EventDispatcher dispatcher(event);
-        // dispatcher.Dispatch<Orion::KeyPressedEvent>(OE_BIND_EVENT_FN(ExampleLayer::OnKeyPressedEvent));
-    }
-
-    bool OnKeyPressedEvent(Orion::KeyPressedEvent& event)
-    {
-        return false;
+        m_CameraController.OnEvent(e);
     }
 
 private:

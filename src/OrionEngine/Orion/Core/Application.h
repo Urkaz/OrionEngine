@@ -96,6 +96,8 @@ namespace Orion
          */
         bool OnWindowClose(WindowCloseEvent& e);
 
+        bool OnWindowResize(WindowResizeEvent& e);
+
     private:
         static Application* s_Instance; ///< Singleton instance pointer
 
@@ -103,6 +105,7 @@ namespace Orion
         ImGuiLayer* m_ImGuiLayer; ///< ImGui overlay layer
         LayerStack m_LayerStack;  ///< Stack of application layers
         bool m_Running = true;    ///< Application running state
+        bool m_Minimized = false; ///< Application minimized state
 
         Timestep m_Timestep;          ///< Delta time for current frame
         float m_LastFrameTime = 0.0f; ///< Timestamp of last frame

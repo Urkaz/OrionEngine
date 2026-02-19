@@ -42,7 +42,7 @@ namespace Orion
     {
         EventDispatcher dispatcher(event);
         dispatcher.Dispatch<MouseScrolledEvent>(OE_BIND_EVENT_FN(OrthographicCameraController::OnMouseScrolled));
-        dispatcher.Dispatch<WindowResizeEvent>(OE_BIND_EVENT_FN(OrthographicCameraController::OnWindowResized));
+        dispatcher.Dispatch<WindowResizeEvent>(OE_BIND_EVENT_FN(OrthographicCameraController::OnWindowResize));
     }
 
     bool OrthographicCameraController::OnMouseScrolled(MouseScrolledEvent& e)
@@ -53,7 +53,7 @@ namespace Orion
         return false;
     }
 
-    bool OrthographicCameraController::OnWindowResized(WindowResizeEvent& e)
+    bool OrthographicCameraController::OnWindowResize(WindowResizeEvent& e)
     {
         m_AspectRatio = static_cast<float>(e.GetWidth()) / static_cast<float>(e.GetHeight());
         m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
