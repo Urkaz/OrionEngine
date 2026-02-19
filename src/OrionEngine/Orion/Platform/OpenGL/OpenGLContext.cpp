@@ -6,6 +6,8 @@
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 
+DISABLE_WARNING_FILE(4101, "-Wunused-variable")
+
 namespace Orion
 {
     OpenGLContext::OpenGLContext(GLFWwindow* windowHandle) : m_WindowHandle(windowHandle)

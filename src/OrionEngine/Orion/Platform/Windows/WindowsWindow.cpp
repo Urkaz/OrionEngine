@@ -9,6 +9,7 @@
 #include <GLFW/glfw3.h>
 
 DISABLE_WARNING_FILE(4100, "-Wunused-parameter")
+DISABLE_WARNING_FILE(4101, "-Wunused-variable")
 
 namespace Orion
 {
