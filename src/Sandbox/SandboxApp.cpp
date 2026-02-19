@@ -10,7 +10,7 @@
 class ExampleLayer : public Orion::Layer
 {
 public:
-    ExampleLayer() : Layer("Example"), m_Camera(-1.6f, 1.6f, -0.9f, 0.9f), m_CameraPosition(0.0f)
+    ExampleLayer() : Layer("Example"), m_CameraController(1280.0f / 720.0f, true)
     {
         // SQUARE
         m_SquareVA                  = Orion::VertexArray::Create();
@@ -49,28 +49,14 @@ public:
 
     void OnUpdate(Orion::Timestep ts) override
     {
-        if (Orion::Input::IsKeyPressed(Orion::Key::Left))
-            m_CameraPosition.x -= m_CameraMoveSpeed * ts;
-        else if (Orion::Input::IsKeyPressed(Orion::Key::Right))
-            m_CameraPosition.x += m_CameraMoveSpeed * ts;
+        // Update
+        m_CameraController.OnUpdate(ts);
 
-        if (Orion::Input::IsKeyPressed(Orion::Key::Up))
-            m_CameraPosition.y += m_CameraMoveSpeed * ts;
-        else if (Orion::Input::IsKeyPressed(Orion::Key::Down))
-            m_CameraPosition.y -= m_CameraMoveSpeed * ts;
-
-        if (Orion::Input::IsKeyPressed(Orion::Key::Q))
-            m_CameraRotation += m_CameraRotationSpeed * ts;
-        else if (Orion::Input::IsKeyPressed(Orion::Key::E))
-            m_CameraRotation -= m_CameraRotationSpeed * ts;
-
+        // Render
         Orion::RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1});
         Orion::RenderCommand::Clear();
 
-        m_Camera.SetPosition(m_CameraPosition);
-        m_Camera.SetRotation(m_CameraRotation);
-
-        Orion::Renderer::BeginScene(m_Camera);
+        Orion::Renderer::BeginScene(m_CameraController.GetCamera());
 
         static glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
@@ -107,6 +93,7 @@ public:
 
     void OnEvent(Orion::Event& event) override
     {
+        m_CameraController.OnEvent(event);
         // Orion::EventDispatcher dispatcher(event);
         // dispatcher.Dispatch<Orion::KeyPressedEvent>(OE_BIND_EVENT_FN(ExampleLayer::OnKeyPressedEvent));
     }
@@ -122,13 +109,7 @@ private:
 
     Orion::Ref<Orion::Texture2D> m_Texture, m_TextureLogo;
 
-    Orion::OrthographicCamera m_Camera;
-
-    glm::vec3 m_CameraPosition;
-    float m_CameraRotation = 0.0f;
-
-    float m_CameraMoveSpeed     = 2.0f;
-    float m_CameraRotationSpeed = 45.0f;
+    Orion::OrthographicCameraController m_CameraController;
 
     glm::vec3 m_SquareColor = {0.2f, 0.3f, 0.8f};
 };

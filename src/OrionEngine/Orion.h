@@ -11,6 +11,7 @@
 #include "Orion/Core/Input.h"
 #include "Orion/Core/KeyCodes.h"
 #include "Orion/Core/MouseCodes.h"
+#include "Orion/OrthographicCameraController.h"
 
 #include "Orion/ImGui/ImGuiLayer.h"
 
