@@ -1,10 +1,8 @@
 #pragma once
 
 #include "Orion/Core/Core.h"
-#include "Orion/Core/Timestep.h"
 #include "Orion/Core/Events/Event.h"
-
-DISABLE_WARNING_FILE(4100, "-Wunused-parameter")
+#include "Orion/Core/Timestep.h"
 
 namespace Orion
 {
@@ -16,9 +14,9 @@ namespace Orion
 
         virtual void OnAttach() {}
         virtual void OnDetach() {}
-        virtual void OnUpdate(Timestep ts) {}
+        virtual void OnUpdate([[maybe_unused]] Timestep ts) {}
         virtual void OnImguiRender() {}
-        virtual void OnEvent(Event& event) {}
+        virtual void OnEvent([[maybe_unused]] Event& event) {}
 
         inline const std::string& GetName() const
         {

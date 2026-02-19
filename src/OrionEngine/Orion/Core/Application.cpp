@@ -7,11 +7,8 @@
 #include "Orion/Core/Log.h"
 #include "Orion/Renderer/Renderer.h"
 
-#include <glfw/glfw3.h>
-
 #include <cstdint>
-
-DISABLE_WARNING_FILE(4100, "-Wunused-parameter")
+#include <glfw/glfw3.h>
 
 namespace Orion
 {
@@ -77,7 +74,7 @@ namespace Orion
         }
     }
 
-    bool Application::OnWindowClose(WindowCloseEvent& e)
+    bool Application::OnWindowClose([[maybe_unused]] WindowCloseEvent& e)
     {
         m_Running = false;
         return true;

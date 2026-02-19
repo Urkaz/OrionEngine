@@ -8,18 +8,15 @@
 
 #include <GLFW/glfw3.h>
 
-DISABLE_WARNING_FILE(4100, "-Wunused-parameter")
-DISABLE_WARNING_FILE(4101, "-Wunused-variable")
-
 namespace Orion
 {
     static bool s_GLFWInitialized = false;
 
     namespace
     {
-        void GLFWErrorCallback(int error, const char* description)
+        void GLFWErrorCallback([[maybe_unused]] int errorCode, [[maybe_unused]] const char* description)
         {
-            OE_CORE_LOG(error, "GLFW Error ({0}): {1}", error, description);
+            OE_CORE_LOG(error, "GLFW Error ({0}): {1}", errorCode, description);
         }
     } // namespace
 
@@ -49,7 +46,7 @@ namespace Orion
         if (!s_GLFWInitialized)
         {
             // TODO: glfwTerminate on system shutdown
-            const int success = glfwInit();
+            [[maybe_unused]] const int success = glfwInit();
             OE_CORE_ASSERT(success, "Could not initialize GLFW!");
 
             glfwSetErrorCallback(GLFWErrorCallback);
@@ -84,33 +81,35 @@ namespace Orion
             data.EventCallback(event);
         });
 
-        glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
-            const WindowData& data = *static_cast<WindowData*>(glfwGetWindowUserPointer(window));
+        glfwSetKeyCallback(
+            m_Window,
+            [](GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
+                const WindowData& data = *static_cast<WindowData*>(glfwGetWindowUserPointer(window));
 
-            switch (action)
-            {
-            case GLFW_PRESS:
-            {
-                KeyPressedEvent event(static_cast<KeyCode>(key), 0);
-                data.EventCallback(event);
-                break;
-            }
-            case GLFW_RELEASE:
-            {
-                KeyReleasedEvent event(static_cast<KeyCode>(key));
-                data.EventCallback(event);
-                break;
-            }
-            case GLFW_REPEAT:
-            {
-                KeyPressedEvent event(static_cast<KeyCode>(key), 1);
-                data.EventCallback(event);
-                break;
-            }
-            default:
-                break;
-            }
-        });
+                switch (action)
+                {
+                case GLFW_PRESS:
+                {
+                    KeyPressedEvent event(static_cast<KeyCode>(key), 0);
+                    data.EventCallback(event);
+                    break;
+                }
+                case GLFW_RELEASE:
+                {
+                    KeyReleasedEvent event(static_cast<KeyCode>(key));
+                    data.EventCallback(event);
+                    break;
+                }
+                case GLFW_REPEAT:
+                {
+                    KeyPressedEvent event(static_cast<KeyCode>(key), 1);
+                    data.EventCallback(event);
+                    break;
+                }
+                default:
+                    break;
+                }
+            });
 
         glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int keycode) {
             const WindowData& data = *static_cast<WindowData*>(glfwGetWindowUserPointer(window));
@@ -118,7 +117,7 @@ namespace Orion
             data.EventCallback(event);
         });
 
-        glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods) {
+        glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, [[maybe_unused]] int mods) {
             const WindowData& data = *static_cast<WindowData*>(glfwGetWindowUserPointer(window));
 
             switch (action)

@@ -6,8 +6,6 @@
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 
-DISABLE_WARNING_FILE(4101, "-Wunused-variable")
-
 namespace Orion
 {
     OpenGLContext::OpenGLContext(GLFWwindow* windowHandle) : m_WindowHandle(windowHandle)
@@ -21,7 +19,7 @@ namespace Orion
         int status = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
         OE_ASSERT(status, "Failed to initialize GLAD!");
 
-        auto& capabilities = RendererAPI::GetCapabilities();
+        auto& capabilities    = RendererAPI::GetCapabilities();
         capabilities.Vendor   = reinterpret_cast<const char*>(glGetString(GL_VENDOR));
         capabilities.Renderer = reinterpret_cast<const char*>(glGetString(GL_RENDERER));
         capabilities.Version  = reinterpret_cast<const char*>(glGetString(GL_VERSION));
