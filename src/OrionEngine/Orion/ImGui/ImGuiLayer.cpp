@@ -76,8 +76,6 @@ namespace Orion
 
     void ImGuiLayer::OnImguiRender()
     {
-        static bool show = true;
-        ImGui::ShowDemoWindow(&show);
     }
 
     void ImGuiLayer::Begin()
