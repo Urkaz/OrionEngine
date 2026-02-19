@@ -6,11 +6,14 @@ extern Orion::Application* Orion::CreateApplication();
 
 int main()
 {
-    Orion::Log::Init();
+    Orion::InitializeCore();
 
-    auto* app = Orion::CreateApplication();
+    Orion::Application* app = Orion::CreateApplication();
+    OE_CORE_ASSERT(app, "Client Application is null!");
     app->Run();
     delete app;
+
+    Orion::ShutdownCore();
 
     return 0;
 }

@@ -1,7 +1,7 @@
 #include "oepch.h"
 #include "VertexArray.h"
 
-#include "Platform/OpenGL/OpenGLVertexArray.h"
+#include "Orion/Platform/OpenGL/OpenGLVertexArray.h"
 #include "Renderer.h"
 
 namespace Orion

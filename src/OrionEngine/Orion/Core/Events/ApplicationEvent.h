@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Orion/Events/Event.h"
+#include "Orion/Core/Events/Event.h"
 
 namespace Orion
 {

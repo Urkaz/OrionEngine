@@ -1,7 +1,7 @@
 #include "oepch.h"
 #include "Renderer.h"
 
-#include "Platform/OpenGL/OpenGLShader.h"
+#include "Orion/Platform/OpenGL/OpenGLShader.h"
 #include "RenderCommand.h"
 
 namespace Orion

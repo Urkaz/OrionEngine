@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Orion/Core.h"
+#include "Orion/Core/Core.h"
 
 #include "Orion/Core/Timestep.h"
-#include "Orion/Events/ApplicationEvent.h"
-#include "Orion/Events/Event.h"
-#include "Orion/LayerStack.h"
-#include "Orion/Window.h"
+#include "Orion/Core/Events/ApplicationEvent.h"
+#include "Orion/Core/Events/Event.h"
+#include "Orion/Core/LayerStack.h"
+#include "Orion/Core/Window.h"
 
 #include "Orion/ImGui/ImGuiLayer.h"
 

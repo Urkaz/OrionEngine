@@ -1,10 +1,10 @@
 #include "oepch.h"
 #include "Application.h"
 
-#include "Orion/Events/ApplicationEvent.h"
-#include "Orion/Events/Event.h"
-#include "Orion/Input.h"
-#include "Orion/Log.h"
+#include "Orion/Core/Events/ApplicationEvent.h"
+#include "Orion/Core/Events/Event.h"
+#include "Orion/Core/Input.h"
+#include "Orion/Core/Log.h"
 #include "Orion/Renderer/Renderer.h"
 
 #include <glfw/glfw3.h>

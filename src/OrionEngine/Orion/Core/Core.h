@@ -2,6 +2,11 @@
 
 #include <memory>
 
+namespace Orion {
+	void InitializeCore();
+	void ShutdownCore();
+}
+
 #ifdef OE_ENABLE_ASSERTS
     #define OE_ASSERT(x, ...)                                                                                          \
         {                                                                                                              \

@@ -1,7 +1,7 @@
 #include "oepch.h"
 #include "Texture.h"
 
-#include "Platform/OpenGL/OpenGLTexture.h"
+#include "Orion/Platform/OpenGL/OpenGLTexture.h"
 #include "Renderer.h"
 
 namespace Orion

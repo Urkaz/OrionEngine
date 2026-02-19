@@ -1,7 +1,7 @@
 #include "oepch.h"
 #include "WindowsInput.h"
 
-#include "Orion/Application.h"
+#include "Orion/Core/Application.h"
 
 #include <GLFW/glfw3.h>
 

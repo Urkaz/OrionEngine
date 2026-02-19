@@ -14,6 +14,13 @@ namespace Orion
             OpenGL = 1,
         };
 
+        struct Capabilities
+        {
+            std::string Vendor;
+            std::string Renderer;
+            std::string Version;
+        };
+
     public:
         virtual ~RendererAPI() = default;
 
@@ -27,6 +34,12 @@ namespace Orion
         inline static API GetAPI()
         {
             return s_API;
+        }
+
+        static Capabilities& GetCapabilities()
+        {
+            static Capabilities capabilities;
+            return capabilities;
         }
 
     private:

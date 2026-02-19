@@ -5,7 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Platform/OpenGL/OpenGLShader.h"
+#include "Orion/Platform/OpenGL/OpenGLShader.h"
 
 class ExampleLayer : public Orion::Layer
 {

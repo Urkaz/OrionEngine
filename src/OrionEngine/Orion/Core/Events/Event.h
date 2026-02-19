@@ -2,7 +2,7 @@
 
 #include "oepch.h"
 
-#include "Orion/Core.h"
+#include "Orion/Core/Core.h"
 
 #ifdef SPDLOG_FMT_EXTERNAL
     #include <fmt/core.h>
