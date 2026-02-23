@@ -1,8 +1,11 @@
 #include <Orion.h>
+#include <Orion/EntryPoint.h>
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <imgui.h>
+
+#include "Sandbox2D.h"
 
 class ExampleLayer : public Orion::Layer
 {
@@ -10,13 +13,12 @@ public:
     ExampleLayer() : Layer("Example"), m_CameraController(1280.0f / 720.0f, true)
     {
         // SQUARE
-        m_SquareVA                  = Orion::VertexArray::Create();
-        float squareVertices[5 * 4] = {-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.5f,  -0.5f, 0.0f, 1.0f, 0.0f,
-                                       0.5f,  0.5f,  0.0f, 1.0f, 1.0f, -0.5f, 0.5f,  0.0f, 0.0f, 1.0f};
-        Orion::Ref<Orion::VertexBuffer> squareVB;
-        squareVB                           = Orion::VertexBuffer::Create(squareVertices, sizeof(squareVertices));
-        Orion::BufferLayout squareVBLayout = {{Orion::ShaderDataType::Float3, "a_Position"},
-                                              {Orion::ShaderDataType::Float2, "a_TexCoord"}};
+        m_SquareVA                               = Orion::VertexArray::Create();
+        float squareVertices[5 * 4]              = {-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.5f,  -0.5f, 0.0f, 1.0f, 0.0f,
+                                                    0.5f,  0.5f,  0.0f, 1.0f, 1.0f, -0.5f, 0.5f,  0.0f, 0.0f, 1.0f};
+        Orion::Ref<Orion::VertexBuffer> squareVB = Orion::VertexBuffer::Create(squareVertices, sizeof(squareVertices));
+        Orion::BufferLayout squareVBLayout       = {{Orion::ShaderDataType::Float3, "a_Position"},
+                                                    {Orion::ShaderDataType::Float2, "a_TexCoord"}};
         squareVB->SetLayout(squareVBLayout);
         m_SquareVA->AddVertexBuffer(squareVB);
 
@@ -37,7 +39,7 @@ public:
         m_TextureShader->SetInt("u_Texture", 0);
     }
 
-    void OnImguiRender() override
+    void OnImGuiRender() override
     {
         ImGui::Begin("Settings");
         ImGui::ColorEdit3("Square Color", glm::value_ptr(m_SquareColor));
@@ -103,7 +105,7 @@ class Sandbox : public Orion::Application
 public:
     Sandbox()
     {
-        PushLayer(new ExampleLayer());
+        PushLayer(new Sandbox2D());
     };
     ~Sandbox() override = default;
 };

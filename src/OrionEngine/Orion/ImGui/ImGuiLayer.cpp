@@ -74,7 +74,7 @@ namespace Orion
         ImGui::DestroyContext();
     }
 
-    void ImGuiLayer::OnImguiRender()
+    void ImGuiLayer::OnImGuiRender()
     {
     }
 

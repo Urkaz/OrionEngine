@@ -5,6 +5,7 @@ target_sources(
             OrthographicCamera.cpp
             RenderCommand.cpp
             Renderer.cpp
+            Renderer2D.cpp
             RendererAPI.cpp
             Shader.cpp
             Texture.cpp
@@ -17,6 +18,7 @@ target_sources(
            OrthographicCamera.h
            RenderCommand.h
            Renderer.h
+           Renderer2D.h
            RendererAPI.h
            Shader.h
            Texture.h

@@ -49,7 +49,7 @@ namespace Orion
 
             m_ImGuiLayer->Begin();
             for (Layer* layer : m_LayerStack)
-                layer->OnImguiRender();
+                layer->OnImGuiRender();
             m_ImGuiLayer->End();
 
             m_Window->OnUpdate();

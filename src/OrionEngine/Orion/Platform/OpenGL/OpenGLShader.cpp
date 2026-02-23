@@ -47,28 +47,27 @@ namespace Orion
 
     std::string OpenGLShader::ReadFile(const std::string& filepath)
     {
-        std::string result;
         std::ifstream in(filepath, std::ios::in | std::ios::binary);
-        if (in)
-        {
-            in.seekg(0, std::ios::end);
-            size_t size = in.tellg();
-            if (size != -1)
-            {
-                result.resize(size);
-                in.seekg(0, std::ios::beg);
-                in.read(&result[0], size);
-                in.close();
-            }
-            else
-            {
-                OE_CORE_LOG(error, "Could not read from file '{0}'", filepath);
-            }
-        }
-        else
+        if (!in)
         {
             OE_CORE_LOG(error, "Could not read shader file: '{0}'", filepath);
+            return {};
         }
+
+        in.seekg(0, std::ios::end);
+        std::streampos endPos = in.tellg();
+        if (endPos <= 0)
+        {
+            OE_CORE_LOG(error, "Could not read from file '{0}'", filepath);
+            return {};
+        }
+
+        const std::size_t size = static_cast<std::size_t>(endPos);
+
+        std::string result(size, '\0');
+        in.seekg(0, std::ios::beg);
+        in.read(result.data(), static_cast<std::streamsize>(size));
+
         return result;
     }
 
@@ -195,6 +194,26 @@ namespace Orion
     std::string OpenGLShader::GetName()
     {
         return m_Name;
+    }
+
+    void OpenGLShader::SetInt(const std::string& name, int value)
+    {
+        UploadUniformInt(name, value);
+    }
+
+    void OpenGLShader::SetFloat3(const std::string& name, const glm::vec3& value)
+    {
+        UploadUniformFloat3(name, value);
+    }
+
+    void OpenGLShader::SetFloat4(const std::string& name, const glm::vec4& value)
+    {
+        UploadUniformFloat4(name, value);
+    }
+
+    void OpenGLShader::SetMat4(const std::string& name, const glm::mat4& value)
+    {
+        UploadUniformMat4(name, value);
     }
 
     void OpenGLShader::UploadUniformInt(const std::string& name, int value)

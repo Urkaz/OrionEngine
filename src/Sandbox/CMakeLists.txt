@@ -1,5 +1,6 @@
-set(LIBRARY_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/SandboxApp.cpp")
-set(LIBRARY_HEADERS)
+set(LIBRARY_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/SandboxApp.cpp"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/Sandbox2D.cpp")
+set(LIBRARY_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/Sandbox2D.h")
 #set(LIBRARY_INCLUDES "./" "${CMAKE_BINARY_DIR}/configured_files/include")
 
 add_executable(${SANDBOX_NAME} ${LIBRARY_SOURCES} ${LIBRARY_HEADERS})
@@ -40,9 +41,6 @@ if(${ENABLE_CLANG_TIDY})
     add_clang_tidy_to_target(${SANDBOX_NAME})
 endif()
 
-if(WIN32)
-    target_compile_definitions(${SANDBOX_NAME} PRIVATE OE_PLATFORM_WINDOWS)
-endif()
 target_compile_definitions(${SANDBOX_NAME} PRIVATE $<$<NOT:$<CONFIG:Release>>:OE_ENABLE_LOGS>)
 target_compile_definitions(${SANDBOX_NAME} PRIVATE $<$<NOT:$<CONFIG:Release>>:OE_ENABLE_ASSERTS>)
 

@@ -16,7 +16,7 @@ namespace Orion
     void OpenGLContext::Init()
     {
         glfwMakeContextCurrent(m_WindowHandle);
-        int status = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
+        [[maybe_unused]] int status = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
         OE_ASSERT(status, "Failed to initialize GLAD!");
 
         auto& capabilities    = RendererAPI::GetCapabilities();

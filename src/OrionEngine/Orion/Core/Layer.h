@@ -15,7 +15,7 @@ namespace Orion
         virtual void OnAttach() {}
         virtual void OnDetach() {}
         virtual void OnUpdate([[maybe_unused]] Timestep ts) {}
-        virtual void OnImguiRender() {}
+        virtual void OnImGuiRender() {}
         virtual void OnEvent([[maybe_unused]] Event& event) {}
 
         inline const std::string& GetName() const

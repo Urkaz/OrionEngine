@@ -15,7 +15,7 @@ namespace Orion
 
         virtual void OnAttach() override;
         virtual void OnDetach() override;
-        virtual void OnImguiRender() override;
+        virtual void OnImGuiRender() override;
 
         void Begin();
         void End();
