@@ -52,10 +52,18 @@ namespace Orion
         if (in)
         {
             in.seekg(0, std::ios::end);
-            result.resize(static_cast<size_t>(in.tellg()));
-            in.seekg(0, std::ios::beg);
-            in.read(&result[0], static_cast<std::streamsize>(result.size()));
-            in.close();
+            size_t size = in.tellg();
+            if (size != -1)
+            {
+                result.resize(size);
+                in.seekg(0, std::ios::beg);
+                in.read(&result[0], size);
+                in.close();
+            }
+            else
+            {
+                OE_CORE_LOG(error, "Could not read from file '{0}'", filepath);
+            }
         }
         else
         {
@@ -75,8 +83,8 @@ namespace Orion
         {
             size_t eol = source.find_first_of("\r\n", pos); //End of shader type declaration line
             OE_CORE_ASSERT(eol != std::string::npos, "Syntax error");
-            size_t begin       = pos + rtpeTokenLength + 1;
-            std::string type   = source.substr(begin, eol - begin); //Start of shader type name (after "#type " keyword)
+            size_t begin     = pos + rtpeTokenLength + 1;
+            std::string type = source.substr(begin, eol - begin); //Start of shader type name (after "#type " keyword)
 
             size_t nextLinePos =
                 source.find_first_not_of("\r\n", eol); //Start of shader code after shader type declaration line
