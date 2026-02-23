@@ -77,7 +77,6 @@ namespace Orion
             OE_CORE_ASSERT(eol != std::string::npos, "Syntax error");
             size_t begin       = pos + rtpeTokenLength + 1;
             std::string type   = source.substr(begin, eol - begin); //Start of shader type name (after "#type " keyword)
-            GLenum shaderTytpe = ShaderTypeFromString(type);
 
             size_t nextLinePos =
                 source.find_first_not_of("\r\n", eol); //Start of shader code after shader type declaration line

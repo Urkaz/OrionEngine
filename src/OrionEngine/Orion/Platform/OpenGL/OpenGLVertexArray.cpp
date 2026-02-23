@@ -1,8 +1,8 @@
 #include "oepch.h"
 #include "OpenGLVertexArray.h"
 
-#include <glad/glad.h>
 #include <cstdint>
+#include <glad/glad.h>
 
 namespace Orion
 {
@@ -67,7 +67,7 @@ namespace Orion
                                   ShaderDataTypeToOpenGLBaseType(element.Type),
                                   element.Normalized ? GL_TRUE : GL_FALSE,
                                   static_cast<GLsizei>(layout.GetStride()),
-                                  reinterpret_cast<const void*>(static_cast<std::uintptr_t>(element.Offset)));
+                                  reinterpret_cast<const void*>(element.Offset));
             index++;
         }
 
