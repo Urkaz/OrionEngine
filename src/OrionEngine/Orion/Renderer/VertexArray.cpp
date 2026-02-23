@@ -1,8 +1,8 @@
 #include "oepch.h"
-#include "VertexArray.h"
+#include "Orion/Renderer/VertexArray.h"
 
 #include "Orion/Platform/OpenGL/OpenGLVertexArray.h"
-#include "Renderer.h"
+#include "Orion/Renderer/Renderer.h"
 
 namespace Orion
 {
@@ -14,7 +14,7 @@ namespace Orion
             OE_ASSERT(false, "RendererAPI::None is not supported!");
             return nullptr;
         case RendererAPI::API::OpenGL:
-            return std::make_shared<OpenGLVertexArray>();
+            return CreateRef<OpenGLVertexArray>();
         default:
             break;
         }

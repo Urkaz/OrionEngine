@@ -13,18 +13,18 @@ namespace Orion
     {
     public:
         static void Init();
-        static std::shared_ptr<spdlog::logger>& GetCoreLogger()
+        static Ref<spdlog::logger>& GetCoreLogger()
         {
             return m_sCoreLogger;
         }
-        static std::shared_ptr<spdlog::logger>& GetClientLogger()
+        static Ref<spdlog::logger>& GetClientLogger()
         {
             return m_sClientLogger;
         }
 
     private:
-        static std::shared_ptr<spdlog::logger> m_sCoreLogger;
-        static std::shared_ptr<spdlog::logger> m_sClientLogger;
+        static Ref<spdlog::logger> m_sCoreLogger;
+        static Ref<spdlog::logger> m_sClientLogger;
     };
 } // namespace Orion
 #endif

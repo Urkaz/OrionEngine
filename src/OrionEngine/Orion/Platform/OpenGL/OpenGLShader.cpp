@@ -1,5 +1,5 @@
 #include "oepch.h"
-#include "OpenGLShader.h"
+#include "Orion/Platform/OpenGL/OpenGLShader.h"
 
 #include <fstream>
 #include <glad/glad.h>

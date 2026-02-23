@@ -1,8 +1,8 @@
 #include "oepch.h"
-#include "Shader.h"
+#include "Orion/Renderer/Shader.h"
 
 #include "Orion/Platform/OpenGL/OpenGLShader.h"
-#include "Renderer.h"
+#include "Orion/Renderer/Renderer.h"
 
 namespace Orion
 {
@@ -14,7 +14,7 @@ namespace Orion
             OE_ASSERT(false, "RendererAPI::None is not supported!");
             return nullptr;
         case RendererAPI::API::OpenGL:
-            return std::make_shared<OpenGLShader>(name,vertexSrc, fragmentSrc);
+            return CreateRef<OpenGLShader>(name,vertexSrc, fragmentSrc);
         default:
             break;
         }
@@ -31,7 +31,7 @@ namespace Orion
             OE_ASSERT(false, "RendererAPI::None is not supported!");
             return nullptr;
         case RendererAPI::API::OpenGL:
-            return std::make_shared<OpenGLShader>(filepath);
+            return CreateRef<OpenGLShader>(filepath);
         default:
             break;
         }

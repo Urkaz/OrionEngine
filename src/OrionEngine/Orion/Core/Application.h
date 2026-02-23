@@ -1,13 +1,11 @@
 #pragma once
 
 #include "Orion/Core/Core.h"
-
-#include "Orion/Core/Timestep.h"
 #include "Orion/Core/Events/ApplicationEvent.h"
 #include "Orion/Core/Events/Event.h"
 #include "Orion/Core/LayerStack.h"
+#include "Orion/Core/Timestep.h"
 #include "Orion/Core/Window.h"
-
 #include "Orion/ImGui/ImGuiLayer.h"
 
 namespace Orion
@@ -33,7 +31,7 @@ namespace Orion
         /**
          * @brief Virtual destructor for proper cleanup.
          */
-        virtual ~Application() = default;
+        virtual ~Application();
 
         /**
          * @brief Main application loop.
@@ -104,7 +102,7 @@ namespace Orion
         Scope<Window> m_Window;   ///< Main application window
         ImGuiLayer* m_ImGuiLayer; ///< ImGui overlay layer
         LayerStack m_LayerStack;  ///< Stack of application layers
-        bool m_Running = true;    ///< Application running state
+        bool m_Running   = true;  ///< Application running state
         bool m_Minimized = false; ///< Application minimized state
 
         Timestep m_Timestep;          ///< Delta time for current frame

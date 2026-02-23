@@ -113,7 +113,7 @@ namespace Orion
          * @param props Configuration properties for the window.
          * @return Window* Pointer to newly created Window instance.
          */
-        static Window* Create(const WindowProps& props = WindowProps());
+        static Scope<Window> Create(const WindowProps& props = WindowProps());
     };
 
 } // namespace Orion

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Orion/Core/Core.h"
+
 #ifdef OE_PLATFORM_WINDOWS
 
 extern Orion::Application* Orion::CreateApplication();

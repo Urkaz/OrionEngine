@@ -1,9 +1,9 @@
 #pragma once
 
-#include "RendererAPI.h"
+#include "Orion/Renderer/RendererAPI.h"
 
-#include "OrthographicCamera.h"
-#include "Shader.h"
+#include "Orion/Renderer/OrthographicCamera.h"
+#include "Orion/Renderer/Shader.h"
 
 namespace Orion
 {
@@ -11,6 +11,8 @@ namespace Orion
     {
     public:
         static void Init();
+        static void Shutdown();
+
         static void OnWindowResize(uint32_t width, uint32_t height);
 
         static void BeginScene(OrthographicCamera& camera);

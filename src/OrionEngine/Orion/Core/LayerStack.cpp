@@ -1,10 +1,8 @@
 #include "oepch.h"
-#include "LayerStack.h"
+#include "Orion/Core/LayerStack.h"
 
 namespace Orion
 {
-    LayerStack::LayerStack() : m_Layers() {}
-
     LayerStack::~LayerStack()
     {
         for (Layer* layer : m_Layers)

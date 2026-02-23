@@ -1,5 +1,5 @@
 #include "oepch.h"
-#include "OpenGLVertexArray.h"
+#include "Orion/Platform/OpenGL/OpenGLVertexArray.h"
 
 #include <cstdint>
 #include <glad/glad.h>

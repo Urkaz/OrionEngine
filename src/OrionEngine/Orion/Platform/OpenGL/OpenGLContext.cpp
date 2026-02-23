@@ -1,5 +1,5 @@
 #include "oepch.h"
-#include "OpenGLContext.h"
+#include "Orion/Platform/OpenGL/OpenGLContext.h"
 
 #include "Orion/Renderer/RendererAPI.h"
 

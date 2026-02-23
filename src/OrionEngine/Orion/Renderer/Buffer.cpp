@@ -1,8 +1,8 @@
 #include "oepch.h"
-#include "Buffer.h"
+#include "Orion/Renderer/Buffer.h"
 
 #include "Orion/Platform/OpenGL/OpenGLBuffer.h"
-#include "Renderer.h"
+#include "Orion/Renderer/Renderer.h"
 
 namespace Orion
 {
@@ -14,7 +14,7 @@ namespace Orion
             OE_ASSERT(false, "RendererAPI::None is not supported!");
             return nullptr;
         case RendererAPI::API::OpenGL:
-            return std::make_shared<OpenGLVertexBuffer>(vertices, size);
+            return CreateRef<OpenGLVertexBuffer>(vertices, size);
         default:
             break;
         }
@@ -31,7 +31,7 @@ namespace Orion
             OE_ASSERT(false, "RendererAPI::None is not supported!");
             return nullptr;
         case RendererAPI::API::OpenGL:
-            return std::make_shared<OpenGLIndexBuffer>(indices, size);
+            return CreateRef<OpenGLIndexBuffer>(indices, size);
         default:
             break;
         }

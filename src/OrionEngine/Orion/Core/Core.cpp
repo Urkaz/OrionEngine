@@ -1,5 +1,5 @@
 #include "oepch.h"
-#include "Core.h"
+#include "Orion/Core/Core.h"
 
 namespace Orion
 {

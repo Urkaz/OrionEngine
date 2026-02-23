@@ -1,6 +1,7 @@
 target_sources(
     ${ENGINE_NAME}
     PRIVATE Buffer.cpp
+            GraphicsContext.cpp
             OrthographicCamera.cpp
             RenderCommand.cpp
             Renderer.cpp

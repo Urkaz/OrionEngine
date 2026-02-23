@@ -2,6 +2,8 @@
 
 // For use by Orion applications
 
+#include "Orion/Core/Core.h"
+
 #include "Orion/Core/Application.h"
 #include "Orion/Core/Layer.h"
 #include "Orion/Core/Log.h"

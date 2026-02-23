@@ -6,8 +6,8 @@
 #ifdef OE_ENABLE_LOGS
 namespace Orion
 {
-    std::shared_ptr<spdlog::logger> Log::m_sCoreLogger;
-    std::shared_ptr<spdlog::logger> Log::m_sClientLogger;
+    Ref<spdlog::logger> Log::m_sCoreLogger;
+    Ref<spdlog::logger> Log::m_sClientLogger;
 
     void Log::Init()
     {

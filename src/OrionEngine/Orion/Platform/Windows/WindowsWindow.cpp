@@ -1,5 +1,5 @@
 #include "oepch.h"
-#include "WindowsWindow.h"
+#include "Orion/Platform/Windows/WindowsWindow.h"
 
 #include "Orion/Core/Events/ApplicationEvent.h"
 #include "Orion/Core/Events/KeyEvent.h"
@@ -10,7 +10,7 @@
 
 namespace Orion
 {
-    static bool s_GLFWInitialized = false;
+    static uint8_t s_GLFWWindowCount = 0;
 
     namespace
     {
@@ -20,9 +20,9 @@ namespace Orion
         }
     } // namespace
 
-    Window* Window::Create(const WindowProps& props)
+    Scope<Window> Window::Create(const WindowProps& props)
     {
-        return new WindowsWindow(props);
+        return CreateScope<WindowsWindow>(props);
     }
 
     WindowsWindow::WindowsWindow(const WindowProps& props) : m_Window(nullptr), m_Context(nullptr), m_Data()
@@ -43,14 +43,12 @@ namespace Orion
 
         OE_CORE_LOG(info, "Creating window \"{0}\" ({1}, {2})", props.Title, props.Width, props.Height);
 
-        if (!s_GLFWInitialized)
+        if (s_GLFWWindowCount == 0)
         {
-            // TODO: glfwTerminate on system shutdown
+            OE_CORE_LOG(info, "Initializing GLFW");
             [[maybe_unused]] const int success = glfwInit();
             OE_CORE_ASSERT(success, "Could not initialize GLFW!");
-
             glfwSetErrorCallback(GLFWErrorCallback);
-            s_GLFWInitialized = true;
         }
 
         m_Window = glfwCreateWindow(static_cast<int>(props.Width),
@@ -58,8 +56,9 @@ namespace Orion
                                     m_Data.Title.c_str(),
                                     nullptr,
                                     nullptr);
+        ++s_GLFWWindowCount;
 
-        m_Context = CreateScope<OpenGLContext>(m_Window);
+        m_Context = GraphicsContext::Create(m_Window);
         m_Context->Init();
 
         glfwSetWindowUserPointer(m_Window, &m_Data);
@@ -157,6 +156,12 @@ namespace Orion
     void WindowsWindow::Shutdown()
     {
         glfwDestroyWindow(m_Window);
+        --s_GLFWWindowCount;
+        if (s_GLFWWindowCount == 0)
+        {
+            OE_CORE_LOG(info, "Terminating GLFW");
+            glfwTerminate();
+        }
     }
 
     void WindowsWindow::OnUpdate()

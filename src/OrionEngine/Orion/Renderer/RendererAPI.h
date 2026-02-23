@@ -42,6 +42,8 @@ namespace Orion
             return capabilities;
         }
 
+        static Scope<RendererAPI> Create();
+
     private:
         static API s_API;
     };

@@ -1,5 +1,5 @@
 #include "oepch.h"
-#include "Application.h"
+#include "Orion/Core/Application.h"
 
 #include "Orion/Core/Events/ApplicationEvent.h"
 #include "Orion/Core/Events/Event.h"
@@ -7,6 +7,7 @@
 #include "Orion/Core/Log.h"
 #include "Orion/Renderer/Renderer.h"
 
+#include "Application.h"
 #include <cstdint>
 #include <glfw/glfw3.h>
 
@@ -14,8 +15,7 @@ namespace Orion
 {
     Application* Application::s_Instance = nullptr;
 
-    Application::Application()
-        : m_Window(std::unique_ptr<Window>(Window::Create())), m_ImGuiLayer(new ImGuiLayer()), m_LayerStack()
+    Application::Application() : m_Window(Window::Create()), m_ImGuiLayer(new ImGuiLayer()), m_LayerStack()
     {
         OE_CORE_ASSERT(!s_Instance, "Application already exists!");
         s_Instance = this;
@@ -25,6 +25,12 @@ namespace Orion
         Renderer::Init();
 
         PushOverlay(m_ImGuiLayer);
+    }
+
+
+    Application::~Application()
+    {
+        Renderer::Shutdown();
     }
 
     void Application::Run()

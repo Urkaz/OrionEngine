@@ -1,11 +1,8 @@
 #include <Orion.h>
 
-#include <imgui.h>
-
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-
-#include "Orion/Platform/OpenGL/OpenGLShader.h"
+#include <imgui.h>
 
 class ExampleLayer : public Orion::Layer
 {
@@ -36,8 +33,8 @@ public:
         m_Texture     = Orion::Texture2D::Create("assets/textures/Checkerboard.png");
         m_TextureLogo = Orion::Texture2D::Create("assets/textures/fs_logo.png");
 
-        std::dynamic_pointer_cast<Orion::OpenGLShader>(m_TextureShader)->Bind();
-        std::dynamic_pointer_cast<Orion::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
+        m_TextureShader->Bind();
+        m_TextureShader->SetInt("u_Texture", 0);
     }
 
     void OnImguiRender() override
@@ -62,9 +59,8 @@ public:
 
         auto m_FlatColorShader = m_ShaderLibrary.Get("FlatColor");
 
-        std::dynamic_pointer_cast<Orion::OpenGLShader>(m_FlatColorShader)->Bind();
-        std::dynamic_pointer_cast<Orion::OpenGLShader>(m_FlatColorShader)
-            ->UploadUniformFloat3("u_Color", m_SquareColor);
+        m_FlatColorShader->Bind();
+        m_FlatColorShader->SetFloat3("u_Color", m_SquareColor);
 
         for (int y = 0; y < 20; y++)
         {
