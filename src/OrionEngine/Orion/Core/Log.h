@@ -40,32 +40,32 @@ enum class OELogLevel
 };
 
 #ifdef OE_ENABLE_LOGS
-// Función inline para mapear OELogLevel a la función de spdlog
-#include <utility>
-namespace Orion {
-    template<typename... Args>
-    inline void LogMessage(OELogLevel level, Ref<spdlog::logger>& logger, fmt::format_string<Args...> fmt, Args&&... args)
+    #include <utility>
+namespace Orion
+{
+    template <typename... Args>
+    inline void LogMessage(OELogLevel level, Ref<spdlog::logger>& logger, const std::string_view& fmt, Args&&... args)
     {
         switch (level)
         {
         case OELogLevel::Trace:
-            logger->trace(fmt, std::forward<Args>(args)...);
+            logger->trace(spdlog::fmt_lib::runtime(fmt), std::forward<Args>(args)...);
             break;
         case OELogLevel::Info:
-            logger->info(fmt, std::forward<Args>(args)...);
+            logger->info(spdlog::fmt_lib::runtime(fmt), std::forward<Args>(args)...);
             break;
         case OELogLevel::Warn:
-            logger->warn(fmt, std::forward<Args>(args)...);
+            logger->warn(spdlog::fmt_lib::runtime(fmt), std::forward<Args>(args)...);
             break;
         case OELogLevel::Error:
-            logger->error(fmt, std::forward<Args>(args)...);
+            logger->error(spdlog::fmt_lib::runtime(fmt), std::forward<Args>(args)...);
             break;
         case OELogLevel::Critical:
-            logger->critical(fmt, std::forward<Args>(args)...);
+            logger->critical(spdlog::fmt_lib::runtime(fmt), std::forward<Args>(args)...);
             break;
         }
     }
-}
+} // namespace Orion
 #endif
 
 #ifdef OE_ENABLE_LOGS
