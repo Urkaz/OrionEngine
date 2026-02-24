@@ -55,6 +55,7 @@ if(${ENABLE_CLANG_TIDY})
     add_clang_tidy_to_target(${ENGINE_NAME})
 endif()
 
+target_compile_definitions(${ENGINE_NAME} PRIVATE $<$<NOT:$<CONFIG:Release>>:OE_DEBUG>)
 target_compile_definitions(${ENGINE_NAME} PRIVATE $<$<NOT:$<CONFIG:Release>>:OE_ENABLE_LOGS>)
 target_compile_definitions(${ENGINE_NAME} PRIVATE $<$<NOT:$<CONFIG:Release>>:OE_ENABLE_ASSERTS>)
 target_compile_definitions(${ENGINE_NAME} PRIVATE GLFW_INCLUDE_NONE)

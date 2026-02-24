@@ -43,6 +43,7 @@ if(${ENABLE_CLANG_TIDY})
     add_clang_tidy_to_target(${SANDBOX_NAME})
 endif()
 
+target_compile_definitions(${SANDBOX_NAME} PRIVATE $<$<NOT:$<CONFIG:Release>>:OE_DEBUG>)
 target_compile_definitions(${SANDBOX_NAME} PRIVATE $<$<NOT:$<CONFIG:Release>>:OE_ENABLE_LOGS>)
 target_compile_definitions(${SANDBOX_NAME} PRIVATE $<$<NOT:$<CONFIG:Release>>:OE_ENABLE_ASSERTS>)
 
