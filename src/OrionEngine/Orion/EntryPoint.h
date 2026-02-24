@@ -6,7 +6,7 @@
 
 extern Orion::Application* Orion::CreateApplication();
 
-int main()
+int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 {
     Orion::InitializeCore();
 

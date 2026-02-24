@@ -8,6 +8,8 @@
 #include "Orion/Core/Window.h"
 #include "Orion/ImGui/ImGuiLayer.h"
 
+int main(int argc, char** argv);
+
 namespace Orion
 {
     /**
@@ -32,14 +34,6 @@ namespace Orion
          * @brief Virtual destructor for proper cleanup.
          */
         virtual ~Application();
-
-        /**
-         * @brief Main application loop.
-         *
-         * Processes events, updates layers, and renders until m_Running is false.
-         * Calculates delta time between frames for frame-rate independent updates.
-         */
-        void Run();
 
         /**
          * @brief Dispatch an event through the layer stack.
@@ -89,6 +83,14 @@ namespace Orion
 
     private:
         /**
+         * @brief Main application loop.
+         *
+         * Processes events, updates layers, and renders until m_Running is false.
+         * Calculates delta time between frames for frame-rate independent updates.
+         */
+        void Run();
+
+        /**
          * @brief Handle window close event.
          *
          * @param e The window close event.
@@ -100,6 +102,7 @@ namespace Orion
 
     private:
         static Application* s_Instance; ///< Singleton instance pointer
+        friend int ::main(int argc, char** argv);
 
         Scope<Window> m_Window;   ///< Main application window
         ImGuiLayer* m_ImGuiLayer; ///< ImGui overlay layer
