@@ -1,6 +1,8 @@
-set(LIBRARY_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/SandboxApp.cpp"
-                    "${CMAKE_CURRENT_SOURCE_DIR}/Sandbox2D.cpp")
-set(LIBRARY_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/Sandbox2D.h")
+set(LIBRARY_SOURCES
+    "${CMAKE_CURRENT_SOURCE_DIR}/SandboxApp.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/ExampleLayer.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Sandbox2D.cpp")
+set(LIBRARY_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/Sandbox2D.h"
+                    "${CMAKE_CURRENT_SOURCE_DIR}/ExampleLayer.h")
 #set(LIBRARY_INCLUDES "./" "${CMAKE_BINARY_DIR}/configured_files/include")
 
 add_executable(${SANDBOX_NAME} ${LIBRARY_SOURCES} ${LIBRARY_HEADERS})
