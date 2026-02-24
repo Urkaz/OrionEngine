@@ -20,11 +20,6 @@ namespace Orion
         }
     } // namespace
 
-    Scope<Window> Window::Create(const WindowProps& props)
-    {
-        return CreateScope<WindowsWindow>(props);
-    }
-
     WindowsWindow::WindowsWindow(const WindowProps& props) : m_Window(nullptr), m_Context(nullptr), m_Data()
     {
         Init(props);

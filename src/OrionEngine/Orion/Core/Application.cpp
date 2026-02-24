@@ -5,9 +5,9 @@
 #include "Orion/Core/Events/Event.h"
 #include "Orion/Core/Input.h"
 #include "Orion/Core/Log.h"
+#include "Orion/Core/Window.h"
 #include "Orion/Renderer/Renderer.h"
 
-#include "Application.h"
 #include <cstdint>
 #include <glfw/glfw3.h>
 

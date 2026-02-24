@@ -4,9 +4,11 @@ target_sources(
     ${ENGINE_NAME}
     PRIVATE Application.cpp
             Core.cpp
+            Input.cpp
             Layer.cpp
             LayerStack.cpp
-            Log.cpp)
+            Log.cpp
+            Window.cpp)
 
 target_sources(
     ${ENGINE_NAME}

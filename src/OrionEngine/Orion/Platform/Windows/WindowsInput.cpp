@@ -7,8 +7,6 @@
 
 namespace Orion
 {
-    Scope<Input> Input::s_Instance = CreateScope<WindowsInput>();
-
     bool WindowsInput::IsKeyPressedImpl(KeyCode key)
     {
         GLFWwindow* window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());

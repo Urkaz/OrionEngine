@@ -39,6 +39,8 @@ namespace Orion
             return s_Instance->GetMousePositionImpl();
         }
 
+        static Scope<Input> Create();
+
     protected:
         virtual bool IsKeyPressedImpl(KeyCode key)              = 0;
         virtual bool IsMouseButtonPressedImpl(MouseCode button) = 0;
