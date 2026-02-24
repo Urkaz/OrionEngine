@@ -11,7 +11,7 @@ namespace Orion
     class OrthographicCameraController
     {
     public:
-        OrthographicCameraController(float aspectRatio, bool rotationEnabled = false);
+        OrthographicCameraController(float aspectRatio, bool rotationEnabled = true);
 
         void OnUpdate(Timestep ts);
         void OnEvent(Event& event);
