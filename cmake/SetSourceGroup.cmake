@@ -5,7 +5,11 @@ function(set_source_group file_in)
     # message(STATUS "PARENT_DIR: ${PARENT_DIR}")
 
     # Remove common directory prefix to make the group
-    string(REPLACE "${CMAKE_CURRENT_SOURCE_DIR}" "" GROUP "${PARENT_DIR}")
+    string(
+        REPLACE "${CMAKE_CURRENT_SOURCE_DIR}"
+                ""
+                GROUP
+                "${PARENT_DIR}")
 
     # Make sure we are using windows slashes
     # string(REPLACE "/" "\\" GROUP "${GROUP}")
