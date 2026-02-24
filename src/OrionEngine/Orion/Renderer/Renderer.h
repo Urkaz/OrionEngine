@@ -3,6 +3,7 @@
 #include "Orion/Renderer/RendererAPI.h"
 
 #include "Orion/Renderer/OrthographicCamera.h"
+#include "Orion/Renderer/RenderCommandQueue.h"
 #include "Orion/Renderer/Shader.h"
 
 namespace Orion
@@ -27,12 +28,52 @@ namespace Orion
             return RendererAPI::GetAPI();
         }
 
+        inline static Renderer& Get()
+        {
+            return *s_Instance;
+        }
+
+        template <typename FuncT>
+        static void Submit(FuncT&& func)
+        {
+            // Create a wrapper (lambda) that knows how to execute and destroy the original object.
+            //    - Receives a void* (pointer to the memory where the real object lives)
+            //    - This is necessary because the real type of func is only known at compile time,
+            //      but the CommandQueue stores function pointers with a fixed signature (RenderCommandFn).
+            auto renderCmd = [](void* ptr) {
+                auto pFunc = (FuncT*)ptr;
+                (*pFunc)(); // Executes the real command
+
+                // We explicitly call the destructor because the object was constructed with placement-new.
+                // If FuncT were trivially destructible, we could omit this, but many lambdas
+                // may capture std::string or other resources that require destruction.
+                pFunc->~FuncT();
+            };
+
+            // Reserve space in the command buffer for the object and register the wrapper.
+            // std::decay_t<FuncT> removes references and qualifiers to get the real type.
+            auto storageBuffer = GetRenderCommandQueue().Allocate(renderCmd, sizeof(std::decay_t<FuncT>));
+
+            // Construct the func object in the reserved buffer using placement-new.
+            new (storageBuffer) FuncT(std::forward<FuncT>(func));
+        }
+
+        static void WaitAndRender()
+        {
+            s_Instance->GetRenderCommandQueue().Execute();
+        }
+
+    private:
+        static RenderCommandQueue& GetRenderCommandQueue();
+
     private:
         struct SceneData
         {
             glm::mat4 ViewProjectionMatrix;
         };
         static Scope<SceneData> s_SceneData;
+
+        static Scope<Renderer> s_Instance;
     };
 
 } // namespace Orion

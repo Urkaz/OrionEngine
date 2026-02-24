@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Orion/Renderer/Renderer.h"
 #include "Orion/Renderer/RendererAPI.h"
 
 namespace Orion
@@ -9,22 +10,22 @@ namespace Orion
     public:
         inline static void Init()
         {
-            s_RendererAPI->Init();
+            Renderer::Submit([]() { s_RendererAPI->Init(); });
         }
 
         inline static void SetViewPort(uint32_t x, uint32_t y, uint32_t width, uint32_t height)
         {
-            s_RendererAPI->SetViewPort(x, y, width, height);
+            Renderer::Submit([x, y, width, height]() { s_RendererAPI->SetViewPort(x, y, width, height); });
         }
 
         inline static void SetClearColor(const glm::vec4 color)
         {
-            s_RendererAPI->SetClearColor(color);
+            Renderer::Submit([color]() { s_RendererAPI->SetClearColor(color); });
         }
 
         inline static void Clear()
         {
-            s_RendererAPI->Clear();
+            Renderer::Submit([]() { s_RendererAPI->Clear(); });
         }
 
         inline static void DrawIndexed(const Ref<VertexArray>& vertexArray)

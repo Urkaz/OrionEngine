@@ -27,7 +27,6 @@ namespace Orion
         PushOverlay(m_ImGuiLayer);
     }
 
-
     Application::~Application()
     {
         Renderer::Shutdown();
@@ -47,10 +46,10 @@ namespace Orion
                     layer->OnUpdate(timestep);
             }
 
-            m_ImGuiLayer->Begin();
-            for (Layer* layer : m_LayerStack)
-                layer->OnImGuiRender();
-            m_ImGuiLayer->End();
+            Application* app = this;
+            Renderer::Submit([app]() { app->RenderImGui(); });
+
+            Renderer::Get().WaitAndRender();
 
             m_Window->OnUpdate();
         }
@@ -64,6 +63,14 @@ namespace Orion
     void Application::PushOverlay(Layer* overlay)
     {
         m_LayerStack.PushOverlay(overlay);
+    }
+
+    void Application::RenderImGui()
+    {
+        m_ImGuiLayer->Begin();
+        for (Layer* layer : m_LayerStack)
+            layer->OnImGuiRender();
+        m_ImGuiLayer->End();
     }
 
     void Application::OnEvent(Event& e)

@@ -65,6 +65,8 @@ namespace Orion
          */
         void PushOverlay(Layer* overlay);
 
+        void RenderImGui();
+
         /**
          * @brief Get the singleton instance of the Application.
          *

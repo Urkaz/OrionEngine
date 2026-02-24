@@ -4,6 +4,7 @@ target_sources(
             GraphicsContext.cpp
             OrthographicCamera.cpp
             RenderCommand.cpp
+            RenderCommandQueue.cpp
             Renderer.cpp
             Renderer2D.cpp
             RendererAPI.cpp
@@ -17,6 +18,7 @@ target_sources(
            GraphicsContext.h
            OrthographicCamera.h
            RenderCommand.h
+           RenderCommandQueue.h
            Renderer.h
            Renderer2D.h
            RendererAPI.h

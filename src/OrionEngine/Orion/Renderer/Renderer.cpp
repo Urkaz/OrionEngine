@@ -3,10 +3,14 @@
 
 #include "Orion/Renderer/RenderCommand.h"
 #include "Orion/Renderer/Renderer2D.h"
+#include "Renderer.h"
 
 namespace Orion
 {
     Scope<Renderer::SceneData> Renderer::s_SceneData = CreateScope<Renderer::SceneData>();
+
+    Scope<Renderer> Renderer::s_Instance            = CreateScope<Renderer>();
+    static Scope<RenderCommandQueue> s_CommandQueue = CreateScope<RenderCommandQueue>();
 
     void Renderer::Init()
     {
@@ -33,12 +37,19 @@ namespace Orion
 
     void Renderer::Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const glm::mat4 transform)
     {
-        shader->Bind();
-        shader->SetMat4("u_ViewProjection", s_SceneData->ViewProjectionMatrix);
-        shader->SetMat4("u_Transform", transform);
+        Renderer::Submit([shader, vertexArray, transform]() {
+            shader->Bind();
+            shader->SetMat4("u_ViewProjection", s_SceneData->ViewProjectionMatrix);
+            shader->SetMat4("u_Transform", transform);
 
-        vertexArray->Bind();
-        RenderCommand::DrawIndexed(vertexArray);
+            vertexArray->Bind();
+            RenderCommand::DrawIndexed(vertexArray);
+        });
+    }
+
+    RenderCommandQueue& Renderer::GetRenderCommandQueue()
+    {
+        return *s_CommandQueue;
     }
 
 } // namespace Orion
