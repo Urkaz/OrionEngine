@@ -29,4 +29,5 @@ void Orion::OpenGLRendererAPI::Clear()
 void Orion::OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& vertexArray)
 {
     glDrawElements(GL_TRIANGLES, static_cast<int>(vertexArray->GetIndexBuffer()->GetCount()), GL_UNSIGNED_INT, nullptr);
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
