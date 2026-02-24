@@ -5,13 +5,13 @@
 
 namespace Orion
 {
-    void OpenGLMessageCallback(unsigned source,
-                               unsigned type,
-                               unsigned id,
+    void OpenGLMessageCallback([[maybe_unused]] unsigned source,
+                               [[maybe_unused]] unsigned type,
+                               [[maybe_unused]] unsigned id,
                                unsigned severity,
-                               int length,
+                               [[maybe_unused]] int length,
                                const char* message,
-                               const void* userParam)
+                               [[maybe_unused]] const void* userParam)
     {
         switch (severity)
         {
