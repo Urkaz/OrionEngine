@@ -5,6 +5,7 @@
 #include "Orion/Core/Events/KeyEvent.h"
 #include "Orion/Core/Events/MouseEvent.h"
 #include "Orion/Platform/OpenGL/OpenGLContext.h"
+#include "Orion/Renderer/Renderer.h"
 
 #include <GLFW/glfw3.h>
 
@@ -45,6 +46,11 @@ namespace Orion
             OE_CORE_ASSERT(success, "Could not initialize GLFW!");
             glfwSetErrorCallback(GLFWErrorCallback);
         }
+
+#if defined(OE_DEBUG)
+        if (Renderer::GetAPI() == RendererAPI::API::OpenGL)
+            glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+#endif
 
         m_Window = glfwCreateWindow(static_cast<int>(props.Width),
                                     static_cast<int>(props.Height),
