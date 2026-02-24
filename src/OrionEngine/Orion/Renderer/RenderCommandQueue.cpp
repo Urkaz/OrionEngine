@@ -60,7 +60,7 @@ namespace Orion
 
     void RenderCommandQueue::Execute()
     {
-        OE_CORE_LOG(trace, "RenderCommandQueue::Execute -- {0} commands, {1} bytes", m_CommandCount, (m_CommandBufferPtr - m_CommandBuffer));
+        // OE_CORE_LOG(Trace, "RenderCommandQueue::Execute -- {0} commands, {1} bytes", m_CommandCount, (m_CommandBufferPtr - m_CommandBuffer));
 
         unsigned char* buffer = m_CommandBuffer;
 

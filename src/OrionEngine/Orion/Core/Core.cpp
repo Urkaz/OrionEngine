@@ -9,11 +9,11 @@ namespace Orion
         Log::Init();
 #endif
 
-        OE_CORE_LOG(trace, "--- Orion Engine ---");
-        OE_CORE_LOG(trace, "Initializing...");
+        OE_CORE_LOG(Info, "--- Orion Engine ---");
+        OE_CORE_LOG(Info, "Initializing...");
     }
     void ShutdownCore()
     {
-        OE_CORE_LOG(info, "Shutting down...");
+        OE_CORE_LOG(Info, "Shutting down...");
     }
 } // namespace Orion

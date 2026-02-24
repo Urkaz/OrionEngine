@@ -24,10 +24,10 @@ namespace Orion
         capabilities.Renderer = reinterpret_cast<const char*>(glGetString(GL_RENDERER));
         capabilities.Version  = reinterpret_cast<const char*>(glGetString(GL_VERSION));
 
-        OE_CORE_LOG(info, "OpenGL Info:");
-        OE_CORE_LOG(info, "   Vendor: {0}", capabilities.Vendor);
-        OE_CORE_LOG(info, "   Renderer: {0}", capabilities.Renderer);
-        OE_CORE_LOG(info, "   Version: {0}", capabilities.Version);
+        OE_CORE_LOG(Info, "OpenGL Info:");
+        OE_CORE_LOG(Info, "   Vendor: {0}", capabilities.Vendor);
+        OE_CORE_LOG(Info, "   Renderer: {0}", capabilities.Renderer);
+        OE_CORE_LOG(Info, "   Version: {0}", capabilities.Version);
 
 #ifdef OE_ENABLE_ASSERTS
         int versionMajor;

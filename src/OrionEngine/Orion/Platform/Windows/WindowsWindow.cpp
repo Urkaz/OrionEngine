@@ -16,7 +16,7 @@ namespace Orion
     {
         void GLFWErrorCallback([[maybe_unused]] int errorCode, [[maybe_unused]] const char* description)
         {
-            OE_CORE_LOG(error, "GLFW Error ({0}): {1}", errorCode, description);
+            OE_CORE_LOG(Error, "GLFW Error ({0}): {1}", errorCode, description);
         }
     } // namespace
 
@@ -41,11 +41,11 @@ namespace Orion
         m_Data.Width  = props.Width;
         m_Data.Height = props.Height;
 
-        OE_CORE_LOG(info, "Creating window \"{0}\" ({1}, {2})", props.Title, props.Width, props.Height);
+        OE_CORE_LOG(Info, "Creating window \"{0}\" ({1}, {2})", props.Title, props.Width, props.Height);
 
         if (s_GLFWWindowCount == 0)
         {
-            OE_CORE_LOG(info, "Initializing GLFW");
+            OE_CORE_LOG(Info, "Initializing GLFW");
             [[maybe_unused]] const int success = glfwInit();
             OE_CORE_ASSERT(success, "Could not initialize GLFW!");
             glfwSetErrorCallback(GLFWErrorCallback);
@@ -159,7 +159,7 @@ namespace Orion
         --s_GLFWWindowCount;
         if (s_GLFWWindowCount == 0)
         {
-            OE_CORE_LOG(info, "Terminating GLFW");
+            OE_CORE_LOG(Info, "Terminating GLFW");
             glfwTerminate();
         }
     }

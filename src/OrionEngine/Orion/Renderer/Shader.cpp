@@ -44,7 +44,7 @@ namespace Orion
     {
         OE_CORE_ASSERT(!Exists(name), "Shader already exists!");
         m_Shaders[name] = shader;
-        OE_CORE_LOG(info, "Shader added \"{0}\"", name);
+        OE_CORE_LOG(Info, "Shader added \"{0}\"", name);
     }
 
     void ShaderLibrary::Add(const Ref<Shader>& shader)

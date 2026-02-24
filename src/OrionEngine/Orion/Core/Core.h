@@ -54,7 +54,7 @@ namespace Orion
         {                                                                                                              \
             if (!(x))                                                                                                  \
             {                                                                                                          \
-                OE_CORE_LOG(error, "Assertion Failed: {0}", __VA_ARGS__);                                              \
+                OE_CORE_LOG(Error, "Assertion Failed: {0}", __VA_ARGS__);                                              \
                 __debugbreak();                                                                                        \
             }                                                                                                          \
         }
@@ -62,7 +62,7 @@ namespace Orion
         {                                                                                                              \
             if (!(x))                                                                                                  \
             {                                                                                                          \
-                OE_CORE_LOG(error, "Assertion Failed: {0}", __VA_ARGS__);                                              \
+                OE_CORE_LOG(Error, "Assertion Failed: {0}", __VA_ARGS__);                                              \
                 __debugbreak();                                                                                        \
             }                                                                                                          \
         }

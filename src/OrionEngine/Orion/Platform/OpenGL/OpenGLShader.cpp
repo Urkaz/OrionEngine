@@ -50,7 +50,7 @@ namespace Orion
         std::ifstream in(filepath, std::ios::in | std::ios::binary);
         if (!in)
         {
-            OE_CORE_LOG(error, "Could not read shader file: '{0}'", filepath);
+            OE_CORE_LOG(Error, "Could not read shader file: '{0}'", filepath);
             return {};
         }
 
@@ -58,7 +58,7 @@ namespace Orion
         std::streampos endPos = in.tellg();
         if (endPos <= 0)
         {
-            OE_CORE_LOG(error, "Could not read from file '{0}'", filepath);
+            OE_CORE_LOG(Error, "Could not read from file '{0}'", filepath);
             return {};
         }
 
@@ -133,7 +133,7 @@ namespace Orion
                 // We don't need the shader anymore.
                 glDeleteShader(shader);
 
-                OE_CORE_LOG(error, "{0}", infoLog.data());
+                OE_CORE_LOG(Error, "{0}", infoLog.data());
                 OE_CORE_ASSERT(false, "Shader compilarion failed!");
                 return;
             }
@@ -168,7 +168,7 @@ namespace Orion
             for (auto id : glShaderIDs)
                 glDeleteShader(id);
 
-            OE_CORE_LOG(error, "{0}", infoLog.data());
+            OE_CORE_LOG(Error, "{0}", infoLog.data());
             OE_ASSERT(false, "Shader link error!");
             return;
         }
