@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 4.0.0)
+cmake_minimum_required(VERSION 3.21)
 
 project(
     "OrionEngine"
@@ -11,7 +11,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-add_compile_definitions(_GLIBCXX_USE_CXX11_ABI=0)
+if(MINGW)
+    add_compile_definitions(_GLIBCXX_USE_CXX11_ABI=0)
+endif()
 
 # Options
 option(USE_VCPKG "Whether to use VCPKG." OFF)
@@ -131,6 +133,7 @@ elseif(USE_CONAN OR USE_VCPKG)
     endif()
 else()
     message(STATUS "Using FetchContent")
+    include(FetchContent)
 
     FetchContent_Declare(
         spdlog

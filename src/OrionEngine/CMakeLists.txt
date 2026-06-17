@@ -32,7 +32,7 @@ target_precompile_headers(${ENGINE_NAME} PUBLIC "oepch.h")
 # Misc settings
 setup_output_dirs(${ENGINE_NAME})
 
-if(${ENABLE_WARNINGS})
+if(ENABLE_WARNINGS)
     target_set_warnings(
         TARGET
         ${ENGINE_NAME}
@@ -43,7 +43,7 @@ if(${ENABLE_WARNINGS})
 endif()
 target_set_compiler_flags(TARGET ${ENGINE_NAME})
 
-if(${ENABLE_LTO})
+if(ENABLE_LTO)
     target_enable_lto(
         TARGET
         ${ENGINE_NAME}
@@ -51,11 +51,10 @@ if(${ENABLE_LTO})
         ON)
 endif()
 
-if(${ENABLE_CLANG_TIDY})
+if(ENABLE_CLANG_TIDY)
     add_clang_tidy_to_target(${ENGINE_NAME})
 endif()
 
-target_compile_definitions(${ENGINE_NAME} PRIVATE $<$<NOT:$<CONFIG:Release>>:OE_DEBUG>)
-target_compile_definitions(${ENGINE_NAME} PRIVATE $<$<NOT:$<CONFIG:Release>>:OE_ENABLE_LOGS>)
-target_compile_definitions(${ENGINE_NAME} PRIVATE $<$<NOT:$<CONFIG:Release>>:OE_ENABLE_ASSERTS>)
-target_compile_definitions(${ENGINE_NAME} PRIVATE GLFW_INCLUDE_NONE)
+target_compile_definitions(${ENGINE_NAME} PUBLIC $<$<NOT:$<CONFIG:Release>>:OE_DEBUG>)
+target_compile_definitions(${ENGINE_NAME} PUBLIC $<$<NOT:$<CONFIG:Release>>:OE_ENABLE_LOGS>)
+target_compile_definitions(${ENGINE_NAME} PUBLIC $<$<NOT:$<CONFIG:Release>>:OE_ENABLE_ASSERTS>)

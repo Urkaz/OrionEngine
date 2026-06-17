@@ -7,7 +7,7 @@ function(target_set_warnings)
         "${multiValueArgs}"
         ${ARGN})
 
-    if(NOT ${TARGET_SET_WARNINGS_ENABLE})
+    if(NOT TARGET_SET_WARNINGS_ENABLE)
         message(STATUS "Warnings Disabled for: ${TARGET_SET_WARNINGS_TARGET}")
         return()
     endif()
@@ -27,7 +27,6 @@ function(target_set_warnings)
         /w14296 # expression is always 'boolean_value'
         /w14311 # pointer truncation from 'type1' to 'type2'
         /w44062 # enumerator in a switch of enum 'enumeration' is not handled
-        /w44242 # conversion from 'type1' to 'type2', possible loss of data
         /w14826 # Conversion from 'type1' to 'type_2' is sign-extended
         /w14905 # wide string literal cast to 'LPSTR'
         /w14906 # string literal cast to 'LPWSTR'
@@ -37,6 +36,7 @@ function(target_set_warnings)
         /w14640 # Enable warning on thread un-safe static member initialization
         /w14928 # more than one implicitly user-defined conversion
         /w14289 # nonstandard extension used: 'variable'
+        /w15038 # data member will be initialized after another data member
     )
 
     set(CLANG_WARNINGS
@@ -57,6 +57,7 @@ function(target_set_warnings)
         -Wnon-virtual-dtor # if a class with virtual func has a non-virtual dest
         -Wold-style-cast # warn for c-style casts
         -Woverloaded-virtual # if you overload (not override) a virtual function
+        -Wimplicit-fallthrough # warn on implicit fallthrough in switch statements
         # -Weffc++ # violations from Scott Meyers' Effective C++
     )
 
@@ -67,7 +68,7 @@ function(target_set_warnings)
         -Wlogical-op # warn about logical operations being used where bitwise were probably wanted
     )
 
-    if(${TARGET_SET_WARNINGS_AS_ERRORS})
+    if(TARGET_SET_WARNINGS_AS_ERRORS)
         set(CLANG_WARNINGS ${CLANG_WARNINGS} -Werror)
         set(GCC_WARNINGS ${GCC_WARNINGS} -Werror)
         set(MSVC_WARNINGS ${MSVC_WARNINGS} /WX)

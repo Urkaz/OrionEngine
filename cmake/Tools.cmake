@@ -1,5 +1,5 @@
 function(add_cmake_format_target)
-    if(NOT ${ENABLE_CMAKE_FORMAT})
+    if(NOT ENABLE_CMAKE_FORMAT)
         return()
     endif()
     set(ROOT_CMAKE_FILES "${CMAKE_SOURCE_DIR}/CMakeLists.txt")
@@ -35,7 +35,7 @@ function(add_cmake_format_target)
 endfunction()
 
 function(add_clang_format_target)
-    if(NOT ${ENABLE_CLANG_FORMAT})
+    if(NOT ENABLE_CLANG_FORMAT)
         return()
     endif()
     find_package(
@@ -61,7 +61,7 @@ function(add_clang_format_target)
         EXCLUDE
         REGEX
         "${CMAKE_SOURCE_DIR}/(build|external|src/ThirdParty)/.*")
-    find_program(CLANGFORMAT clang-format REQUIRED)
+    find_program(CLANGFORMAT clang-format)
     if(CLANGFORMAT)
         message(STATUS "Added Clang Format")
         add_custom_target(
