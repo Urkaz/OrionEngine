@@ -36,7 +36,8 @@ namespace Orion
         template <typename FuncT>
         static void Submit(FuncT&& func)
         {
-            // Create a wrapper (lambda) that knows how to execute and destroy the original object.
+            // Create a wrapper (lambda) with the same signature as RenderCommandFn that knows
+            // how to execute and destroy the original object.
             //    - Receives a void* (pointer to the memory where the real object lives)
             //    - This is necessary because the real type of func is only known at compile time,
             //      but the CommandQueue stores function pointers with a fixed signature (RenderCommandFn).
@@ -53,6 +54,8 @@ namespace Orion
             // Reserve space in the command buffer for the object and register the wrapper.
             // std::decay_t<FuncT> removes references and qualifiers to get the real type.
             auto storageBuffer = GetRenderCommandQueue().Allocate(renderCmd, sizeof(std::decay_t<FuncT>));
+
+            OE_CORE_ASSERT(storageBuffer, "RenderCommandQueue overflow");
 
             // Construct the func object in the reserved buffer using placement-new.
             new (storageBuffer) FuncT(std::forward<FuncT>(func));

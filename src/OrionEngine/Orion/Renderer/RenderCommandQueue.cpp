@@ -1,6 +1,5 @@
 #include "oepch.h"
 #include "Orion/Renderer/RenderCommandQueue.h"
-#include "RenderCommandQueue.h"
 
 #include <cstdint>
 #include <cstring>
