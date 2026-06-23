@@ -19,6 +19,8 @@ namespace Orion
 
     void ImGuiLayer::OnAttach()
     {
+        OE_PROFILE_FUNCTION();
+
         // Setup Dear ImGui context
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
@@ -69,17 +71,17 @@ namespace Orion
 
     void ImGuiLayer::OnDetach()
     {
+        OE_PROFILE_FUNCTION();
+
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
     }
 
-    void ImGuiLayer::OnImGuiRender()
-    {
-    }
-
     void ImGuiLayer::Begin()
     {
+        OE_PROFILE_FUNCTION();
+
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
@@ -87,6 +89,8 @@ namespace Orion
 
     void ImGuiLayer::End()
     {
+        OE_PROFILE_FUNCTION();
+
         ImGuiIO& io      = ImGui::GetIO();
         Application& app = Application::Get();
         io.DisplaySize =

@@ -14,12 +14,16 @@ namespace Orion
 
     void Renderer::Init()
     {
+        OE_PROFILE_FUNCTION();
+
         RenderCommand::Init();
         Renderer2D::Init();
     }
 
     void Renderer::Shutdown()
     {
+        OE_PROFILE_FUNCTION();
+
         Renderer2D::Shutdown();
     }
 

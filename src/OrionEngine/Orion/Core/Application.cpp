@@ -17,6 +17,8 @@ namespace Orion
 
     Application::Application() : m_Window(Window::Create()), m_ImGuiLayer(new ImGuiLayer()), m_LayerStack()
     {
+        OE_PROFILE_FUNCTION();
+
         OE_CORE_ASSERT(!s_Instance, "Application already exists!");
         s_Instance = this;
 
@@ -29,25 +31,35 @@ namespace Orion
 
     Application::~Application()
     {
+        OE_PROFILE_FUNCTION();
+
         Renderer::Shutdown();
     }
 
     void Application::Run()
     {
+        OE_PROFILE_FUNCTION();
+
         while (m_Running)
         {
+            OE_PROFILE_SCOPE("RunLoop");
+
             float time        = static_cast<float>(glfwGetTime()); // Platform::GetTime
             Timestep timestep = time - m_LastFrameTime;
             m_LastFrameTime   = time;
 
             if (!m_Minimized)
             {
-                for (Layer* layer : m_LayerStack)
-                    layer->OnUpdate(timestep);
-            }
+                {
+                    OE_PROFILE_SCOPE("LayerStack OnUpdate");
 
-            Application* app = this;
-            Renderer::Submit([app]() { app->RenderImGui(); });
+                    for (Layer* layer : m_LayerStack)
+                        layer->OnUpdate(timestep);
+                }
+
+                Application* app = this;
+                Renderer::Submit([app]() { app->RenderImGui(); });
+            }
 
             Renderer::Get().WaitAndRender();
 
@@ -57,24 +69,37 @@ namespace Orion
 
     void Application::PushLayer(Layer* layer)
     {
+        OE_PROFILE_FUNCTION();
+
         m_LayerStack.PushLayer(layer);
+        layer->OnAttach();
     }
 
     void Application::PushOverlay(Layer* overlay)
     {
+        OE_PROFILE_FUNCTION();
+
         m_LayerStack.PushOverlay(overlay);
+        overlay->OnAttach();
     }
 
     void Application::RenderImGui()
     {
+        OE_PROFILE_FUNCTION();
+
         m_ImGuiLayer->Begin();
-        for (Layer* layer : m_LayerStack)
-            layer->OnImGuiRender();
+        {
+            OE_PROFILE_SCOPE("RenderImGui OnImGuiRender");
+            for (Layer* layer : m_LayerStack)
+                layer->OnImGuiRender();
+        }
         m_ImGuiLayer->End();
     }
 
     void Application::OnEvent(Event& e)
     {
+        OE_PROFILE_FUNCTION();
+
         EventDispatcher dispatcher(e);
         dispatcher.Dispatch<WindowCloseEvent>(OE_BIND_EVENT_FN(Application::OnWindowClose));
         dispatcher.Dispatch<WindowResizeEvent>(OE_BIND_EVENT_FN(Application::OnWindowResize));
@@ -95,6 +120,8 @@ namespace Orion
 
     bool Application::OnWindowResize(WindowResizeEvent& e)
     {
+        OE_PROFILE_FUNCTION();
+
         if (e.GetWidth() == 0 || e.GetHeight() == 0)
         {
             m_Minimized = true;

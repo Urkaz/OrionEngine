@@ -23,16 +23,22 @@ namespace Orion
 
     WindowsWindow::WindowsWindow(const WindowProps& props) : m_Window(nullptr), m_Context(nullptr), m_Data()
     {
+        OE_PROFILE_FUNCTION();
+
         Init(props);
     }
 
     WindowsWindow::~WindowsWindow()
     {
+        OE_PROFILE_FUNCTION();
+
         Shutdown();
     }
 
     void WindowsWindow::Init(const WindowProps& props)
     {
+        OE_PROFILE_FUNCTION();
+
         m_Data.Title  = props.Title;
         m_Data.Width  = props.Width;
         m_Data.Height = props.Height;
@@ -41,6 +47,8 @@ namespace Orion
 
         if (s_GLFWWindowCount == 0)
         {
+            OE_PROFILE_SCOPE("glfwInit");
+
             OE_CORE_LOG(Info, "Initializing GLFW");
             [[maybe_unused]] const int success = glfwInit();
             OE_CORE_ASSERT(success, "Could not initialize GLFW!");
@@ -52,12 +60,16 @@ namespace Orion
             glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
 #endif
 
-        m_Window = glfwCreateWindow(static_cast<int>(props.Width),
-                                    static_cast<int>(props.Height),
-                                    m_Data.Title.c_str(),
-                                    nullptr,
-                                    nullptr);
-        ++s_GLFWWindowCount;
+        {
+            OE_PROFILE_SCOPE("glfwCreateWindow");
+
+            m_Window = glfwCreateWindow(static_cast<int>(props.Width),
+                                        static_cast<int>(props.Height),
+                                        m_Data.Title.c_str(),
+                                        nullptr,
+                                        nullptr);
+            ++s_GLFWWindowCount;
+        }
 
         m_Context = GraphicsContext::Create(m_Window);
         m_Context->Init();
@@ -167,12 +179,16 @@ namespace Orion
 
     void WindowsWindow::OnUpdate()
     {
+        OE_PROFILE_FUNCTION();
+
         glfwPollEvents();
         m_Context->SwapBuffers();
     }
 
     void WindowsWindow::SetVSync(bool enabled)
     {
+        OE_PROFILE_FUNCTION();
+
         if (enabled)
             glfwSwapInterval(1);
         else

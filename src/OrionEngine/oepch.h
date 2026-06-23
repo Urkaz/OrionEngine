@@ -18,6 +18,8 @@
 
 #include "Orion/Core/Log.h"
 
+#include "Orion/Profiling/Instrumentor.h"
+
 #ifdef OE_PLATFORM_WINDOWS
     #include <Windows.h>
 #endif

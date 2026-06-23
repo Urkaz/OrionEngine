@@ -20,6 +20,8 @@ namespace Orion
 
     void Renderer2D::Init()
     {
+        OE_PROFILE_FUNCTION();
+
         s_Data                  = CreateScope<Renderer2DStorage>();
         s_Data->QuadVertexArray = VertexArray::Create();
 
@@ -45,18 +47,25 @@ namespace Orion
 
     void Renderer2D::Shutdown()
     {
+        OE_PROFILE_FUNCTION();
+
         s_Data.reset();
     }
 
     void Renderer2D::BeginScene(const OrthographicCamera& camera)
     {
+        OE_PROFILE_FUNCTION();
+
         Renderer::Submit([camera]() {
             s_Data->TextureShader->Bind();
             s_Data->TextureShader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
         });
     }
 
-    void Renderer2D::EndScene() {}
+    void Renderer2D::EndScene()
+    {
+        OE_PROFILE_FUNCTION();
+    }
 
     void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
     {
@@ -65,6 +74,8 @@ namespace Orion
 
     void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
     {
+        OE_PROFILE_FUNCTION();
+
         Renderer::Submit([position, size, color]() {
             s_Data->TextureShader->SetFloat4("u_Color", color);
             s_Data->WhiteTexture->Bind();
@@ -85,6 +96,8 @@ namespace Orion
 
     void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture)
     {
+        OE_PROFILE_FUNCTION();
+
         Renderer::Submit([position, size, texture]() {
             s_Data->TextureShader->SetFloat4("u_Color", glm::vec4(1.0f));
             texture->Bind();

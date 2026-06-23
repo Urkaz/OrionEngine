@@ -11,8 +11,8 @@ namespace Orion
     RenderCommandQueue::RenderCommandQueue()
     {
         m_CommandBufferSize = DEFAULT_COMMAND_BUFFER_SIZE;
-        m_CommandBuffer = new unsigned char[m_CommandBufferSize];
-        m_CommandBufferPtr = m_CommandBuffer;
+        m_CommandBuffer     = new unsigned char[m_CommandBufferSize];
+        m_CommandBufferPtr  = m_CommandBuffer;
         memset(m_CommandBuffer, 0, m_CommandBufferSize);
     }
 
@@ -23,9 +23,11 @@ namespace Orion
 
     void* RenderCommandQueue::Allocate(RenderCommandFn func, unsigned int size)
     {
+        OE_PROFILE_FUNCTION();
+
         // We store: [RenderCommandFn][size:uint32][padding to alignment][object bytes]
 
-        uintptr_t base = (uintptr_t)m_CommandBuffer;
+        uintptr_t base     = (uintptr_t)m_CommandBuffer;
         uintptr_t writePtr = (uintptr_t)m_CommandBufferPtr;
 
         // Check if we have enough buffer space to store everything
@@ -42,7 +44,7 @@ namespace Orion
 
         // Align the payload to max alignment so any object can be safely created with placement-new here
         const size_t align = alignof(std::max_align_t);
-        uintptr_t aligned = (writePtr + (align - 1)) & ~(align - 1);
+        uintptr_t aligned  = (writePtr + (align - 1)) & ~(align - 1);
 
         // Check again if we have enough space, but this time using the aligned ptr
         if (aligned + size > base + m_CommandBufferSize)
@@ -59,6 +61,8 @@ namespace Orion
 
     void RenderCommandQueue::Execute()
     {
+        OE_PROFILE_FUNCTION();
+
         // OE_CORE_LOG(Trace, "RenderCommandQueue::Execute -- {0} commands, {1} bytes", m_CommandCount, (m_CommandBufferPtr - m_CommandBuffer));
 
         unsigned char* buffer = m_CommandBuffer;
@@ -76,7 +80,7 @@ namespace Orion
             // Align to the same alignment used in Allocate
             const size_t align = alignof(std::max_align_t);
             uintptr_t writePtr = (uintptr_t)buffer;
-            uintptr_t aligned = (writePtr + (align - 1)) & ~(align - 1);
+            uintptr_t aligned  = (writePtr + (align - 1)) & ~(align - 1);
 
             unsigned char* payload = (unsigned char*)aligned;
             function(payload);
@@ -86,7 +90,7 @@ namespace Orion
         }
 
         m_CommandBufferPtr = m_CommandBuffer;
-        m_CommandCount = 0;
+        m_CommandCount     = 0;
     }
 
 } // namespace Orion

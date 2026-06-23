@@ -36,6 +36,8 @@ namespace Orion
         template <typename FuncT>
         static void Submit(FuncT&& func)
         {
+            OE_PROFILE_FUNCTION();
+
             // Create a wrapper (lambda) with the same signature as RenderCommandFn that knows
             // how to execute and destroy the original object.
             //    - Receives a void* (pointer to the memory where the real object lives)

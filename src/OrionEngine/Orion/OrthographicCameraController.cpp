@@ -13,6 +13,8 @@ namespace Orion
 
     void OrthographicCameraController::OnUpdate(Timestep ts)
     {
+        OE_PROFILE_FUNCTION();
+
         if (Orion::Input::IsKeyPressed(Orion::Key::A))
         {
             m_CameraPosition.x -= glm::cos(glm::radians(m_CameraRotation)) * m_CameraTranslationSpeed * ts;
@@ -57,6 +59,8 @@ namespace Orion
 
     void OrthographicCameraController::OnEvent(Event& event)
     {
+        OE_PROFILE_FUNCTION();
+
         EventDispatcher dispatcher(event);
         dispatcher.Dispatch<MouseScrolledEvent>(OE_BIND_EVENT_FN(OrthographicCameraController::OnMouseScrolled));
         dispatcher.Dispatch<WindowResizeEvent>(OE_BIND_EVENT_FN(OrthographicCameraController::OnWindowResize));
@@ -64,6 +68,8 @@ namespace Orion
 
     bool OrthographicCameraController::OnMouseScrolled(MouseScrolledEvent& e)
     {
+        OE_PROFILE_FUNCTION();
+
         m_ZoomLevel -= e.GetYOffset() * 0.25f;
         m_ZoomLevel = std::max(m_ZoomLevel, 0.25f);
         m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
@@ -72,6 +78,8 @@ namespace Orion
 
     bool OrthographicCameraController::OnWindowResize(WindowResizeEvent& e)
     {
+        OE_PROFILE_FUNCTION();
+
         m_AspectRatio = static_cast<float>(e.GetWidth()) / static_cast<float>(e.GetHeight());
         m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
         return false;
