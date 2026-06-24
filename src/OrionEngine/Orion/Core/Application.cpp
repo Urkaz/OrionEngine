@@ -44,8 +44,8 @@ namespace Orion
         {
             OE_PROFILE_SCOPE("RunLoop");
 
-            float time        = static_cast<float>(glfwGetTime()); // Platform::GetTime
-            Timestep timestep = time - m_LastFrameTime;
+            const float time        = static_cast<float>(glfwGetTime()); // Platform::GetTime
+            const Timestep timestep = time - m_LastFrameTime;
             m_LastFrameTime   = time;
 
             if (!m_Minimized)

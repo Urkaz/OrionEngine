@@ -27,7 +27,7 @@ namespace Orion
 
         // We store: [RenderCommandFn][size:uint32][padding to alignment][object bytes]
 
-        uintptr_t base     = reinterpret_cast<uintptr_t>(m_CommandBuffer);
+        const uintptr_t base     = reinterpret_cast<uintptr_t>(m_CommandBuffer);
         uintptr_t writePtr = reinterpret_cast<uintptr_t>(m_CommandBufferPtr);
 
         // Check if we have enough buffer space to store everything
@@ -44,7 +44,7 @@ namespace Orion
 
         // Align the payload to max alignment so any object can be safely created with placement-new here
         const size_t align = alignof(std::max_align_t);
-        uintptr_t aligned  = (writePtr + (align - 1)) & ~(align - 1);
+        const uintptr_t aligned  = (writePtr + (align - 1)) & ~(align - 1);
 
         // Check again if we have enough space, but this time using the aligned ptr
         if (aligned + size > base + m_CommandBufferSize)
@@ -79,8 +79,8 @@ namespace Orion
 
             // Align to the same alignment used in Allocate
             const size_t align = alignof(std::max_align_t);
-            uintptr_t writePtr = reinterpret_cast<uintptr_t>(buffer);
-            uintptr_t aligned  = (writePtr + (align - 1)) & ~(align - 1);
+            const uintptr_t writePtr = reinterpret_cast<uintptr_t>(buffer);
+            const uintptr_t aligned  = (writePtr + (align - 1)) & ~(align - 1);
 
             unsigned char* payload = reinterpret_cast<unsigned char*>(aligned);
             function(payload);

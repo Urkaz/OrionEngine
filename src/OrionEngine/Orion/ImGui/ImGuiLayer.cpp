@@ -38,7 +38,7 @@ namespace Orion
         //ImGui::StyleColorsLight();
 
         // Setup scaling
-        float main_scale  = ImGui_ImplGlfw_GetContentScaleForMonitor(glfwGetPrimaryMonitor());
+        const float main_scale  = ImGui_ImplGlfw_GetContentScaleForMonitor(glfwGetPrimaryMonitor());
         ImGuiStyle& style = ImGui::GetStyle();
         style.ScaleAllSizes(
             main_scale); // Bake a fixed style scale. (until we have a solution for dynamic style scaling, changing this requires resetting Style + calling this again)

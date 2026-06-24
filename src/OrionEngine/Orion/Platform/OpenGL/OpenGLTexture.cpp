@@ -91,7 +91,7 @@ namespace Orion
     {
         OE_PROFILE_FUNCTION();
 
-        [[maybe_unused]] uint32_t bpp = m_DataFormat == GL_RGBA ? 4 : 3;
+        [[maybe_unused]] const uint32_t bpp = m_DataFormat == GL_RGBA ? 4 : 3;
         OE_CORE_ASSERT(size == m_Width * m_Height * bpp, "Data must be entire texture!");
         glTextureSubImage2D(m_RendererID,
                             0,
