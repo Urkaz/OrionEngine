@@ -98,5 +98,5 @@
         "filesystem": "cpp",
         "regex": "cpp"
     },
-    "cmake.useCMakePresets": "auto"
+    "cmake.useCMakePresets": "always"
 }
