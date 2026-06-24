@@ -7,7 +7,7 @@ rem configured and built as a standalone CMake project, independent from the eng
 set "ROOT=%~dp0.."
 set "PROFILER_SRC=%ROOT%\src\ThirdParty\Tracy\source\profiler"
 set "BUILD_DIR=%ROOT%\build-tracy-profiler"
-set "CPM_SOURCE_CACHE=%ROOT%\build-tracy-profiler-cache"
+if not defined CPM_SOURCE_CACHE set "CPM_SOURCE_CACHE=%ROOT%\build-cpm-cache"
 
 if not exist "%BUILD_DIR%\CMakeCache.txt" (
     echo [tracy-profiler] Configuring standalone build in "%BUILD_DIR%"...

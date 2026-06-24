@@ -15,6 +15,11 @@ if(MINGW)
     add_compile_definitions(_GLIBCXX_USE_CXX11_ABI=0)
 endif()
 
+# Use a single CPM download cache between this and any other projects that use CPM. Avoids redownloading dependancies.
+if(NOT DEFINED ENV{CPM_SOURCE_CACHE})
+    set(ENV{CPM_SOURCE_CACHE} "${CMAKE_SOURCE_DIR}/build-cpm-cache")
+endif()
+
 # Options
 option(USE_VCPKG "Whether to use VCPKG." OFF)
 option(USE_CPM "Whether to use CPM." ON)
