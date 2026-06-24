@@ -11,10 +11,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-if(MINGW)
-    add_compile_definitions(_GLIBCXX_USE_CXX11_ABI=0)
-endif()
-
 # Use a single CPM download cache between this and any other projects that use CPM. Avoids redownloading dependancies.
 if(NOT DEFINED ENV{CPM_SOURCE_CACHE})
     set(ENV{CPM_SOURCE_CACHE} "${CMAKE_SOURCE_DIR}/build-cpm-cache")
@@ -31,7 +27,9 @@ option(ENABLE_CLANG_TIDY "Enable to add clang tidy." ON)
 
 option(ENABLE_DOCS "Enable to generate docs." ON)
 
-option(ENABLE_PROFILING "Enable Tracy profiling instrumentation in Debug builds and the tracy-profiler GUI target." ON)
+option(
+    ENABLE_PROFILING
+    "Enable Tracy profiling instrumentation in Debug builds and the tracy-profiler GUI target." ON)
 
 option(ENABLE_SANITIZE_ADDR "Enable address sanitize." OFF)
 option(ENABLE_SANITIZE_UNDEF "Enable undefined sanitize." OFF)
@@ -89,21 +87,23 @@ endif()
 # External libraries
 
 include(CPM)
+
 cpmaddpackage("gh:gabime/spdlog#v1.16.0")
 set_target_properties(spdlog PROPERTIES FOLDER "Dependencies")
-cpmaddpackage(
-    NAME
-    glfw
-    GITHUB_REPOSITORY
-    glfw/glfw
-    GIT_TAG
-    3.4
-    OPTIONS
-    "GLFW_BUILD_DOCS OFF"
-    "GLFW_BUILD_TESTS OFF"
-    "GLFW_BUILD_EXAMPLES OFF"
-    "GLFW_INSTALL OFF")
-target_compile_definitions(glfw PRIVATE _CRT_SECURE_NO_WARNINGS _GLFW_WIN32)
+
+set(GLFW_BUILD_DOCS
+    OFF
+    CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS
+    OFF
+    CACHE BOOL "" FORCE)
+set(GLFW_BUILD_EXAMPLES
+    OFF
+    CACHE BOOL "" FORCE)
+set(GLFW_INSTALL
+    OFF
+    CACHE BOOL "" FORCE)
+cpmaddpackage("gh:glfw/glfw#3.4")
 set_target_properties(glfw PROPERTIES FOLDER "Dependencies/GLFW")
 set_target_properties(update_mappings PROPERTIES FOLDER "Dependencies/GLFW")
 

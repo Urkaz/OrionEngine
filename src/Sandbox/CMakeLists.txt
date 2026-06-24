@@ -41,7 +41,6 @@ if(ENABLE_CLANG_TIDY)
     add_clang_tidy_to_target(${SANDBOX_NAME})
 endif()
 
-
 # Copy assets
 add_custom_command(
     TARGET ${SANDBOX_NAME}
