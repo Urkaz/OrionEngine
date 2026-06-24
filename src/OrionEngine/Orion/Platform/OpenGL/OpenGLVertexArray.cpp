@@ -30,7 +30,7 @@ namespace Orion
         }
     }
 
-    OpenGLVertexArray::OpenGLVertexArray()
+    OpenGLVertexArray::OpenGLVertexArray() : m_RendererID(0)
     {
         OE_PROFILE_FUNCTION();
 

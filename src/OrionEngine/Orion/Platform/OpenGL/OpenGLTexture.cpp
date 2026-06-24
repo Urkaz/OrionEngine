@@ -7,12 +7,9 @@
 
 namespace Orion
 {
-    OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height) : m_Width(width), m_Height(height)
+    OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height) : m_RendererID(0), m_Width(width), m_Height(height), m_InternalFormat(GL_RGBA8), m_DataFormat(GL_RGBA)
     {
         OE_PROFILE_FUNCTION();
-
-        m_InternalFormat = GL_RGBA8;
-        m_DataFormat     = GL_RGBA;
 
         glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
         glTextureStorage2D(m_RendererID,
@@ -28,7 +25,7 @@ namespace Orion
         glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
     }
 
-    OpenGLTexture2D::OpenGLTexture2D(const std::string& path)
+    OpenGLTexture2D::OpenGLTexture2D(const std::string& path) : m_RendererID(0)
     {
         OE_PROFILE_FUNCTION();
 

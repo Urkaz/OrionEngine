@@ -18,7 +18,7 @@ namespace Orion
     }
 
     OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc)
-        : m_Name(name)
+        : m_RendererID(0), m_Name(name)
     {
         OE_PROFILE_FUNCTION();
 
@@ -29,6 +29,7 @@ namespace Orion
     }
 
     OpenGLShader::OpenGLShader(const std::string& filepath)
+        : m_RendererID(0)
     {
         OE_PROFILE_FUNCTION();
 
@@ -112,7 +113,7 @@ namespace Orion
 
         const GLuint program = glCreateProgram();
         OE_CORE_ASSERT(shaderSources.size() <= 2, "Too many shader sources")
-        std::array<GLenum, 2> glShaderIDs;
+        std::array<GLenum, 2> glShaderIDs = {0, 0};
 
         size_t glShaderIDIndex = 0;
         for (auto& kv : shaderSources)

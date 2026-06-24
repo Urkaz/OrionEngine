@@ -7,7 +7,7 @@ namespace Orion
 {
     // Vertex Buffer -----------------------------
 
-    OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, uint32_t size)
+    OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, uint32_t size) : m_RendererID(0)
     {
         OE_PROFILE_FUNCTION();
 
@@ -49,7 +49,7 @@ namespace Orion
 
     // Index Buffer -----------------------------
 
-    OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* indices, uint32_t count) : m_Count(count)
+    OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* indices, uint32_t count) : m_RendererID(0), m_Count(count)
     {
         OE_PROFILE_FUNCTION();
 
