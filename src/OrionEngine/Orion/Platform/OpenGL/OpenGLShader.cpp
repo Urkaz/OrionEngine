@@ -126,7 +126,7 @@ namespace Orion
 
             // Send the shader source code to GL
             const GLchar* sourceCStr = source.c_str();
-            glShaderSource(shader, 1, &sourceCStr, 0);
+            glShaderSource(shader, 1, &sourceCStr, nullptr);
 
             // Compile the shader
             glCompileShader(shader);
