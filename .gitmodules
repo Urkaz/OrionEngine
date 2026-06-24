@@ -4,3 +4,6 @@
 [submodule "src/ThirdParty/ImGui/source"]
 	path = src/ThirdParty/ImGui/source
 	url = https://github.com/ocornut/imgui
+[submodule "src/ThirdParty/Tracy/source"]
+	path = src/ThirdParty/Tracy/source
+	url = https://github.com/wolfpld/tracy

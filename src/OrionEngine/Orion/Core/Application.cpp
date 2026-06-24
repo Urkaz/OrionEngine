@@ -64,6 +64,8 @@ namespace Orion
             Renderer::Get().WaitAndRender();
 
             m_Window->OnUpdate();
+
+            OE_PROFILE_FRAME();
         }
     }
 

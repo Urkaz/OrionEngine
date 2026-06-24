@@ -30,6 +30,8 @@ option(ENABLE_CLANG_TIDY "Enable to add clang tidy." ON)
 
 option(ENABLE_DOCS "Enable to generate docs." ON)
 
+option(ENABLE_PROFILING "Enable Tracy profiling instrumentation in Debug builds and the tracy-profiler GUI target." ON)
+
 option(ENABLE_SANITIZE_ADDR "Enable address sanitize." OFF)
 option(ENABLE_SANITIZE_UNDEF "Enable undefined sanitize." OFF)
 option(ENABLE_SANITIZE_LEAK "Enable leak sanitize (Gcc/Clang only)." OFF)

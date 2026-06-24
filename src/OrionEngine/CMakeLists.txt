@@ -22,6 +22,11 @@ target_link_libraries(
             ImGui_GLFW
             stb_image)
 
+if(ENABLE_PROFILING)
+    target_link_libraries(${ENGINE_NAME} PUBLIC Tracy::TracyClient)
+    target_compile_definitions(${ENGINE_NAME} PUBLIC OE_ENABLE_PROFILING)
+endif()
+
 if(WIN32)
     target_link_libraries(${ENGINE_NAME} PRIVATE gdi32 user32 kernel32)
 endif()
@@ -58,4 +63,3 @@ endif()
 target_compile_definitions(${ENGINE_NAME} PUBLIC $<$<NOT:$<CONFIG:Release>>:OE_DEBUG>)
 target_compile_definitions(${ENGINE_NAME} PUBLIC $<$<NOT:$<CONFIG:Release>>:OE_ENABLE_LOGS>)
 target_compile_definitions(${ENGINE_NAME} PUBLIC $<$<NOT:$<CONFIG:Release>>:OE_ENABLE_ASSERTS>)
-target_compile_definitions(${ENGINE_NAME} PUBLIC $<$<NOT:$<CONFIG:Release>>:OE_PROFILE>)

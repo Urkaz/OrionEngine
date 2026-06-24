@@ -18,7 +18,7 @@
 
 #include "Orion/Core/Log.h"
 
-#include "Orion/Profiling/Instrumentor.h"
+#include "Orion/Profiling/Profiling.h"
 
 #ifdef OE_PLATFORM_WINDOWS
     #include <Windows.h>
