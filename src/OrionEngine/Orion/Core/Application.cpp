@@ -8,6 +8,7 @@
 #include "Orion/Core/Window.h"
 #include "Orion/Renderer/Renderer.h"
 
+#include <ranges>
 #include <cstdint>
 #include <glfw/glfw3.h>
 
@@ -106,9 +107,9 @@ namespace Orion
         dispatcher.Dispatch<WindowCloseEvent>(OE_BIND_EVENT_FN(Application::OnWindowClose));
         dispatcher.Dispatch<WindowResizeEvent>(OE_BIND_EVENT_FN(Application::OnWindowResize));
 
-        for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it)
+        for (auto & it : std::ranges::reverse_view(m_LayerStack))
         {
-            (*it)->OnEvent(e);
+            it->OnEvent(e);
             if (e.Handled)
                 break;
         }
