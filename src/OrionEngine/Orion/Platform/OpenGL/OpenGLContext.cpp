@@ -32,8 +32,8 @@ namespace Orion
         OE_CORE_LOG(Info, "   Version: {0}", capabilities.Version);
 
 #ifdef OE_ENABLE_ASSERTS
-        int versionMajor;
-        int versionMinor;
+        int versionMajor = 0;
+        int versionMinor = 0;
         glGetIntegerv(GL_MAJOR_VERSION, &versionMajor);
         glGetIntegerv(GL_MINOR_VERSION, &versionMinor);
 

@@ -69,11 +69,11 @@ namespace Orion
 
         for (unsigned int i = 0; i < m_CommandCount; i++)
         {
-            RenderCommandFn function;
+            RenderCommandFn function = nullptr;
             std::memcpy(&function, buffer, sizeof(RenderCommandFn));
             buffer += sizeof(RenderCommandFn);
 
-            unsigned int size;
+            unsigned int size = 0;
             std::memcpy(&size, buffer, sizeof(unsigned int));
             buffer += sizeof(unsigned int);
 

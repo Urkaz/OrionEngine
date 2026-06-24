@@ -36,7 +36,7 @@ namespace Orion
     std::pair<float, float> WindowsInput::GetMousePositionImpl()
     {
         GLFWwindow* window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
-        double xpos, ypos;
+        double xpos = 0.0, ypos = 0.0;
         glfwGetCursorPos(window, &xpos, &ypos);
         return {static_cast<float>(xpos), static_cast<float>(ypos)};
     }
