@@ -22,7 +22,7 @@ namespace Orion
     private:
         unsigned char* m_CommandBuffer;
         unsigned char* m_CommandBufferPtr;
-        unsigned int m_CommandCount = 0;
+        unsigned int m_CommandCount      = 0;
         unsigned int m_CommandBufferSize = 0;
     };
 

@@ -7,7 +7,7 @@
 
 #ifdef OE_ENABLE_LOGS
 
-#include <utility>
+    #include <utility>
 
 namespace Orion
 {
@@ -43,7 +43,10 @@ namespace Orion
     };
 
     template <typename... Args>
-    inline void LogMessage(Orion::LogLevel level, Ref<spdlog::logger>& logger, const std::string_view& fmt, Args&&... args)
+    inline void LogMessage(Orion::LogLevel level,
+                           Ref<spdlog::logger>& logger,
+                           const std::string_view& fmt,
+                           Args&&... args)
     {
         std::string message = spdlog::fmt_lib::format(spdlog::fmt_lib::runtime(fmt), std::forward<Args>(args)...);
 

@@ -17,7 +17,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 
     app->Run();
 
-    delete  app;
+    delete app;
     Orion::ShutdownCore();
 
     return 0;

@@ -2,8 +2,8 @@
 
 #if defined(OE_ENABLE_PROFILING)
 
-#include <cstdlib>
-#include <new>
+    #include <cstdlib>
+    #include <new>
 
 // Replaces the global allocator so every new/delete in the process (engine, sandbox and any
 // statically-linked third-party code) shows up in Tracy's memory profiler. Uses the "secure"
