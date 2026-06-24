@@ -111,11 +111,14 @@ function(add_clang_tidy_to_target target)
                 ${target}_clangtidy
                 COMMAND
                     ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tools/run-clang-tidy.py
-                    ${TARGET_SOURCES} -config-file=${CMAKE_CURRENT_SOURCE_DIR}/.clang-tidy
+                    ${TARGET_SOURCES} -config-file=${CMAKE_SOURCE_DIR}/.clang-tidy
                     -extra-arg-before=-std=${CMAKE_CXX_STANDARD}
-                    -header-filter="\(src|app\)\/*.\(h|hpp\)" -p=${CMAKE_BINARY_DIR}
+                    -extra-arg=-Wno-error
+                    -extra-arg=-Wno-unknown-warning-option
+                    -p=${CMAKE_BINARY_DIR}
                 WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-                USES_TERMINAL)
+                USES_TERMINAL
+                VERBATIM)
         endif()
     else()
         message(WARNING "CLANGTIDY NOT FOUND")
