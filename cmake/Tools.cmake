@@ -5,12 +5,16 @@ function(add_cmake_format_target)
     set(ROOT_CMAKE_FILES "${CMAKE_SOURCE_DIR}/CMakeLists.txt")
     file(GLOB_RECURSE CMAKE_FILES_TXT "*/CMakeLists.txt")
     file(GLOB_RECURSE CMAKE_FILES_C "cmake/*.cmake")
+    set(EXCLUDE_REGEX "${CMAKE_BINARY_DIR}/.*|${CMAKE_SOURCE_DIR}/(external|src/ThirdParty)/.*")
+    if(DEFINED ENV{CPM_SOURCE_CACHE})
+        string(APPEND EXCLUDE_REGEX "|$ENV{CPM_SOURCE_CACHE}/.*")
+    endif()
     list(
         FILTER
         CMAKE_FILES_TXT
         EXCLUDE
         REGEX
-        "${CMAKE_SOURCE_DIR}/(build|external|src/ThirdParty)/.*")
+        "${EXCLUDE_REGEX}")
     set(CMAKE_FILES ${ROOT_CMAKE_FILES} ${CMAKE_FILES_TXT} ${CMAKE_FILES_C})
     find_program(CMAKE_FORMAT cmake-format)
     if(CMAKE_FORMAT)
@@ -55,12 +59,16 @@ function(add_clang_format_target)
         ${CMAKE_FILES_CPP}
         ${CMAKE_FILES_H}
         ${CMAKE_FILES_HPP})
+    set(EXCLUDE_REGEX "${CMAKE_BINARY_DIR}/.*|${CMAKE_SOURCE_DIR}/(external|src/ThirdParty)/.*")
+    if(DEFINED ENV{CPM_SOURCE_CACHE})
+        string(APPEND EXCLUDE_REGEX "|$ENV{CPM_SOURCE_CACHE}/.*")
+    endif()
     list(
         FILTER
         CPP_FILES
         EXCLUDE
         REGEX
-        "${CMAKE_SOURCE_DIR}/(build|external|src/ThirdParty)/.*")
+        "${EXCLUDE_REGEX}")
     find_program(CLANGFORMAT clang-format)
     if(CLANGFORMAT)
         message(STATUS "Added Clang Format")
