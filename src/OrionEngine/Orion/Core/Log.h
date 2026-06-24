@@ -45,22 +45,29 @@ namespace Orion
     template <typename... Args>
     inline void LogMessage(Orion::LogLevel level, Ref<spdlog::logger>& logger, const std::string_view& fmt, Args&&... args)
     {
+        std::string message = spdlog::fmt_lib::format(spdlog::fmt_lib::runtime(fmt), std::forward<Args>(args)...);
+
         switch (level)
         {
         case Orion::LogLevel::Trace:
-            logger->trace(spdlog::fmt_lib::runtime(fmt), std::forward<Args>(args)...);
+            logger->trace(message);
+            OE_PROFILE_LOG_MESSAGE(message, 0x999999);
             break;
         case Orion::LogLevel::Info:
-            logger->info(spdlog::fmt_lib::runtime(fmt), std::forward<Args>(args)...);
+            logger->info(message);
+            OE_PROFILE_LOG_MESSAGE(message, 0xFFFFFF);
             break;
         case Orion::LogLevel::Warn:
-            logger->warn(spdlog::fmt_lib::runtime(fmt), std::forward<Args>(args)...);
+            logger->warn(message);
+            OE_PROFILE_LOG_MESSAGE(message, 0xFFAA00);
             break;
         case Orion::LogLevel::Error:
-            logger->error(spdlog::fmt_lib::runtime(fmt), std::forward<Args>(args)...);
+            logger->error(message);
+            OE_PROFILE_LOG_MESSAGE(message, 0xFF3333);
             break;
         case Orion::LogLevel::Critical:
-            logger->critical(spdlog::fmt_lib::runtime(fmt), std::forward<Args>(args)...);
+            logger->critical(message);
+            OE_PROFILE_LOG_MESSAGE(message, 0xFF0000);
             break;
         }
     }

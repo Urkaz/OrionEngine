@@ -14,11 +14,11 @@
 #include <unordered_set>
 #include <vector>
 
+#include "Orion/Profiling/Profiling.h"
+
 #include "Orion/Core/Warnings.h"
 
 #include "Orion/Core/Log.h"
-
-#include "Orion/Profiling/Profiling.h"
 
 #ifdef OE_PLATFORM_WINDOWS
     #include <Windows.h>

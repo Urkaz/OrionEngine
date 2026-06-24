@@ -10,6 +10,7 @@
     #define OE_PROFILE_SCOPE(name) ZoneScopedN(name)
     #define OE_PROFILE_FUNCTION() ZoneScoped
     #define OE_PROFILE_FRAME() FrameMark
+    #define OE_PROFILE_LOG_MESSAGE(message, color) TracyMessageC((message).c_str(), (message).size(), color)
 
 namespace Orion
 {
@@ -31,5 +32,6 @@ namespace Orion
     #define OE_PROFILE_SCOPE(name)
     #define OE_PROFILE_FUNCTION()
     #define OE_PROFILE_FRAME()
+    #define OE_PROFILE_LOG_MESSAGE(message, color)
     #define OE_PROFILE_WAIT_FOR_CONNECTION()
 #endif
