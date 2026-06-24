@@ -7,7 +7,7 @@
 
 namespace Orion
 {
-    OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height) : m_RendererID(0), m_Width(width), m_Height(height), m_InternalFormat(GL_RGBA8), m_DataFormat(GL_RGBA)
+    OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height) : m_Width(width), m_Height(height), m_RendererID(0), m_InternalFormat(GL_RGBA8), m_DataFormat(GL_RGBA)
     {
         OE_PROFILE_FUNCTION();
 
