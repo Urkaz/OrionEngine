@@ -44,7 +44,7 @@ namespace Orion
             //    - This is necessary because the real type of func is only known at compile time,
             //      but the CommandQueue stores function pointers with a fixed signature (RenderCommandFn).
             auto renderCmd = [](void* ptr) {
-                auto pFunc = (FuncT*)ptr;
+                auto pFunc = static_cast<FuncT*>(ptr);
                 (*pFunc)(); // Executes the real command
 
                 // We explicitly call the destructor because the object was constructed with placement-new.

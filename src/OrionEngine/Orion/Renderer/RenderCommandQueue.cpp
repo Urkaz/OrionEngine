@@ -27,19 +27,19 @@ namespace Orion
 
         // We store: [RenderCommandFn][size:uint32][padding to alignment][object bytes]
 
-        uintptr_t base     = (uintptr_t)m_CommandBuffer;
-        uintptr_t writePtr = (uintptr_t)m_CommandBufferPtr;
+        uintptr_t base     = reinterpret_cast<uintptr_t>(m_CommandBuffer);
+        uintptr_t writePtr = reinterpret_cast<uintptr_t>(m_CommandBufferPtr);
 
         // Check if we have enough buffer space to store everything
         if (writePtr + sizeof(RenderCommandFn) + sizeof(unsigned int) + size > base + m_CommandBufferSize)
             return nullptr; // Out of buffer
 
         // Write RenderCommandFn pointer and advance writePtr
-        std::memcpy((void*)writePtr, &func, sizeof(RenderCommandFn));
+        std::memcpy(reinterpret_cast<void*>(writePtr), &func, sizeof(RenderCommandFn));
         writePtr += sizeof(RenderCommandFn);
 
         // Write int representing the size and advance writePtr
-        std::memcpy((void*)writePtr, &size, sizeof(unsigned int));
+        std::memcpy(reinterpret_cast<void*>(writePtr), &size, sizeof(unsigned int));
         writePtr += sizeof(unsigned int);
 
         // Align the payload to max alignment so any object can be safely created with placement-new here
@@ -50,10 +50,10 @@ namespace Orion
         if (aligned + size > base + m_CommandBufferSize)
             return nullptr; // out of buffer
 
-        void* memory = (void*)aligned;
+        void* memory = reinterpret_cast<void*>(aligned);
 
         // Advance the buffer pointer past the object
-        m_CommandBufferPtr = (unsigned char*)(aligned + size);
+        m_CommandBufferPtr = reinterpret_cast<unsigned char*>(aligned + size);
 
         m_CommandCount++;
         return memory;
@@ -79,10 +79,10 @@ namespace Orion
 
             // Align to the same alignment used in Allocate
             const size_t align = alignof(std::max_align_t);
-            uintptr_t writePtr = (uintptr_t)buffer;
+            uintptr_t writePtr = reinterpret_cast<uintptr_t>(buffer);
             uintptr_t aligned  = (writePtr + (align - 1)) & ~(align - 1);
 
-            unsigned char* payload = (unsigned char*)aligned;
+            unsigned char* payload = reinterpret_cast<unsigned char*>(aligned);
             function(payload);
 
             // Advance buffer pointer past the current object
