@@ -1,0 +1,14 @@
+{
+    "recommendations": [
+        "ms-vscode.cmake-tools",
+        "ms-vscode.cpptools",
+        "llvm-vs-code-extensions.vscode-clangd",
+        "editorconfig.editorconfig",
+        "cheshirekow.cmake-format",
+        "slevesque.shader"
+    ],
+    "unwantedRecommendations": [
+        "ms-vscode.cpptools-extension-pack",
+        "twxs.cmake"
+    ]
+}

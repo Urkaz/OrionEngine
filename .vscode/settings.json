@@ -98,5 +98,8 @@
         "filesystem": "cpp",
         "regex": "cpp"
     },
-    "cmake.useCMakePresets": "always"
+    "cmake.useCMakePresets": "always",
+    "cmake.copyCompileCommands": "${workspaceFolder}/compile_commands.json",
+    "git.detectSubmodules": false,
+    "C_Cpp.intelliSenseEngine": "disabled"
 }
