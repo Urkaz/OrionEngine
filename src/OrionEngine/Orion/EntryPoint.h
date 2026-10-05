@@ -2,7 +2,7 @@
 
 #include "Orion/Core/Core.h"
 
-#ifdef OE_PLATFORM_WINDOWS
+#if defined(OE_PLATFORM_WINDOWS) || defined(OE_PLATFORM_LINUX)
 
 extern Orion::Application* Orion::CreateApplication();
 
@@ -23,4 +23,6 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
     return 0;
 }
 
+#else
+    #error "No entrypoint defined for this platform!"
 #endif

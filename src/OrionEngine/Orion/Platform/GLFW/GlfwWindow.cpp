@@ -1,5 +1,5 @@
 #include "oepch.h"
-#include "Orion/Platform/Windows/WindowsWindow.h"
+#include "Orion/Platform/GLFW/GlfwWindow.h"
 
 #include "Orion/Core/Events/ApplicationEvent.h"
 #include "Orion/Core/Events/KeyEvent.h"
@@ -21,21 +21,21 @@ namespace Orion
         }
     } // namespace
 
-    WindowsWindow::WindowsWindow(const WindowProps& props) : m_Window(nullptr), m_Context(nullptr), m_Data()
+    GlfwWindow::GlfwWindow(const WindowProps& props) : m_Window(nullptr), m_Context(nullptr), m_Data()
     {
         OE_PROFILE_FUNCTION();
 
         Init(props);
     }
 
-    WindowsWindow::~WindowsWindow()
+    GlfwWindow::~GlfwWindow()
     {
         OE_PROFILE_FUNCTION();
 
         Shutdown();
     }
 
-    void WindowsWindow::Init(const WindowProps& props)
+    void GlfwWindow::Init(const WindowProps& props)
     {
         OE_PROFILE_FUNCTION();
 
@@ -166,7 +166,7 @@ namespace Orion
         });
     }
 
-    void WindowsWindow::Shutdown()
+    void GlfwWindow::Shutdown()
     {
         glfwDestroyWindow(m_Window);
         --s_GLFWWindowCount;
@@ -177,7 +177,7 @@ namespace Orion
         }
     }
 
-    void WindowsWindow::OnUpdate()
+    void GlfwWindow::OnUpdate()
     {
         OE_PROFILE_FUNCTION();
 
@@ -185,7 +185,7 @@ namespace Orion
         m_Context->SwapBuffers();
     }
 
-    void WindowsWindow::SetVSync(bool enabled)
+    void GlfwWindow::SetVSync(bool enabled)
     {
         OE_PROFILE_FUNCTION();
 
@@ -197,7 +197,7 @@ namespace Orion
         m_Data.VSync = enabled;
     }
 
-    bool WindowsWindow::IsVSync() const
+    bool GlfwWindow::IsVSync() const
     {
         return m_Data.VSync;
     }

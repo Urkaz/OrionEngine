@@ -14,6 +14,11 @@ add_library(ImGui_GLFW STATIC "source/backends/imgui_impl_glfw.cpp")
 target_link_libraries(ImGui_GLFW PUBLIC ImGui_Core glfw)
 set_target_properties(ImGui_GLFW PROPERTIES FOLDER "Dependencies/ImGui")
 target_compile_definitions(ImGui_GLFW PRIVATE _CRT_SECURE_NO_WARNINGS)
+# The GLFW backend calls X11 directly on Linux/BSD (ImGui_ImplGlfw_SetWindowFloating)
+if(UNIX AND NOT APPLE)
+    find_package(X11 REQUIRED)
+    target_link_libraries(ImGui_GLFW PRIVATE X11::X11)
+endif()
 
 # OpenGL3 Backend
 add_library(ImGui_OpenGL3 STATIC "source/backends/imgui_impl_opengl3.cpp")

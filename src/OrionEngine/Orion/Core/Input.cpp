@@ -1,8 +1,8 @@
 #include "oepch.h"
 #include "Orion/Core/Input.h"
 
-#ifdef OE_PLATFORM_WINDOWS
-    #include "Orion/Platform/Windows/WindowsInput.h"
+#if defined(OE_PLATFORM_WINDOWS) || defined(OE_PLATFORM_LINUX)
+    #include "Orion/Platform/GLFW/GlfwInput.h"
 #endif
 
 namespace Orion
@@ -11,8 +11,8 @@ namespace Orion
 
     Scope<Input> Input::Create()
     {
-#ifdef OE_PLATFORM_WINDOWS
-        return CreateScope<WindowsInput>();
+#if defined(OE_PLATFORM_WINDOWS) || defined(OE_PLATFORM_LINUX)
+        return CreateScope<GlfwInput>();
 #else
         OE_CORE_ASSERT(false, "Unknown platform!");
         return nullptr;

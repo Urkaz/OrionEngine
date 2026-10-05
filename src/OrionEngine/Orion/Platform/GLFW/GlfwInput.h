@@ -4,7 +4,7 @@
 
 namespace Orion
 {
-    class WindowsInput : public Input
+    class GlfwInput : public Input
     {
     protected:
         virtual bool IsKeyPressedImpl(KeyCode key) override;

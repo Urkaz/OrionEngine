@@ -1,2 +1,2 @@
 add_subdirectory(OpenGL)
-add_subdirectory(Windows)
+add_subdirectory(GLFW)

@@ -7,15 +7,15 @@ struct GLFWwindow;
 
 namespace Orion
 {
-    class WindowsWindow : public Window
+    class GlfwWindow : public Window
     {
     public:
-        WindowsWindow(const WindowProps& props);
-        virtual ~WindowsWindow();
+        GlfwWindow(const WindowProps& props);
+        virtual ~GlfwWindow();
 
         // Prevent copying
-        WindowsWindow(const WindowsWindow&)            = delete;
-        WindowsWindow& operator=(const WindowsWindow&) = delete;
+        GlfwWindow(const GlfwWindow&)            = delete;
+        GlfwWindow& operator=(const GlfwWindow&) = delete;
 
         void OnUpdate() override;
 

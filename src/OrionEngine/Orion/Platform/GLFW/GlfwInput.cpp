@@ -1,5 +1,5 @@
 #include "oepch.h"
-#include "WindowsInput.h"
+#include "GlfwInput.h"
 
 #include "Orion/Core/Application.h"
 
@@ -7,33 +7,33 @@
 
 namespace Orion
 {
-    bool WindowsInput::IsKeyPressedImpl(KeyCode key)
+    bool GlfwInput::IsKeyPressedImpl(KeyCode key)
     {
         GLFWwindow* window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
         const int state    = glfwGetKey(window, static_cast<int32_t>(key));
         return state == GLFW_PRESS || state == GLFW_REPEAT;
     }
 
-    bool WindowsInput::IsMouseButtonPressedImpl(MouseCode button)
+    bool GlfwInput::IsMouseButtonPressedImpl(MouseCode button)
     {
         GLFWwindow* window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
         const int state    = glfwGetMouseButton(window, static_cast<int32_t>(button));
         return state == GLFW_PRESS;
     }
 
-    float WindowsInput::GetMouseXImpl()
+    float GlfwInput::GetMouseXImpl()
     {
         auto [x, y] = GetMousePositionImpl();
         return x;
     }
 
-    float WindowsInput::GetMouseYImpl()
+    float GlfwInput::GetMouseYImpl()
     {
         auto [x, y] = GetMousePositionImpl();
         return y;
     }
 
-    std::pair<float, float> WindowsInput::GetMousePositionImpl()
+    std::pair<float, float> GlfwInput::GetMousePositionImpl()
     {
         GLFWwindow* window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
         double xpos = 0.0, ypos = 0.0;

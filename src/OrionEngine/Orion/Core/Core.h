@@ -43,11 +43,17 @@ namespace Orion
     #error "Android is not supported!"
 #elif defined(__linux__)
     #define OE_PLATFORM_LINUX
-    #error "Linux is not supported!"
 #else
     /* Unknown compiler/platform */
     #error "Unknown platform!"
 #endif // End of platform detection
+
+#ifdef OE_PLATFORM_WINDOWS
+    #define OE_DEBUGBREAK() __debugbreak()
+#elif defined(OE_PLATFORM_LINUX)
+    #include <csignal>
+    #define OE_DEBUGBREAK() raise(SIGTRAP)
+#endif
 
 #ifdef OE_ENABLE_ASSERTS
     #define OE_ASSERT(x, ...)                                                                                          \
@@ -55,7 +61,7 @@ namespace Orion
             if (!(x))                                                                                                  \
             {                                                                                                          \
                 OE_CORE_LOG(Error, "Assertion Failed: {0}", __VA_ARGS__);                                              \
-                __debugbreak();                                                                                        \
+                OE_DEBUGBREAK();                                                                                       \
             }                                                                                                          \
         }
     #define OE_CORE_ASSERT(x, ...)                                                                                     \
@@ -63,7 +69,7 @@ namespace Orion
             if (!(x))                                                                                                  \
             {                                                                                                          \
                 OE_CORE_LOG(Error, "Assertion Failed: {0}", __VA_ARGS__);                                              \
-                __debugbreak();                                                                                        \
+                OE_DEBUGBREAK();                                                                                       \
             }                                                                                                          \
         }
 #else
