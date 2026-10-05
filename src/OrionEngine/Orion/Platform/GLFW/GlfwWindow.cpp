@@ -50,6 +50,13 @@ namespace Orion
             OE_PROFILE_SCOPE("glfwInit");
 
             OE_CORE_LOG(Info, "Initializing GLFW");
+#ifdef OE_PLATFORM_LINUX
+            // ImGui disables multi-viewports on Wayland (apps can't position their windows), so prefer X11/XWayland
+            if (glfwPlatformSupported(GLFW_PLATFORM_X11) == GLFW_TRUE)
+            {
+                glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_X11);
+            }
+#endif
             [[maybe_unused]] const int success = glfwInit();
             OE_CORE_ASSERT(success, "Could not initialize GLFW!");
             glfwSetErrorCallback(GLFWErrorCallback);
