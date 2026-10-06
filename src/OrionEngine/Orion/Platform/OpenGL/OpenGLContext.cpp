@@ -18,7 +18,10 @@ namespace Orion
         OE_PROFILE_FUNCTION();
 
         glfwMakeContextCurrent(m_WindowHandle);
-        [[maybe_unused]] const int status = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
+        const GLADloadproc loader = [](const char* name) -> void* {
+            return reinterpret_cast<void*>(glfwGetProcAddress(name));
+        };
+        [[maybe_unused]] const int status = gladLoadGLLoader(loader);
         OE_ASSERT(status, "Failed to initialize GLAD!");
 
         auto& capabilities    = RendererAPI::GetCapabilities();
