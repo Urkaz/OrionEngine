@@ -1,6 +1,8 @@
 target_sources(
     ${ENGINE_NAME}
     PRIVATE Buffer.cpp
+            Camera.cpp
+            FlyCamera.cpp
             GraphicsContext.cpp
             OrthographicCamera.cpp
             RenderCommand.cpp
@@ -15,6 +17,8 @@ target_sources(
 target_sources(
     ${ENGINE_NAME}
     PUBLIC Buffer.h
+           Camera.h
+           FlyCamera.h
            GraphicsContext.h
            OrthographicCamera.h
            RenderCommand.h

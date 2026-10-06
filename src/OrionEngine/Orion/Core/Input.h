@@ -7,6 +7,13 @@
 
 namespace Orion
 {
+    enum class CursorMode : uint8_t
+    {
+        Normal,     ///< Cursor is visible and can move freely.
+        Hidden,     ///< Cursor is hidden but can still move.
+        Locked      ///< Cursor is hidden and cannot move (locked to the window).
+    };
+
     class Input
     {
     protected:
@@ -38,6 +45,10 @@ namespace Orion
         {
             return s_Instance->GetMousePositionImpl();
         }
+        inline static void SetCursorMode(CursorMode mode)
+        {
+            s_Instance->SetCursorModeImpl(mode);
+        }
 
         static Scope<Input> Create();
 
@@ -47,7 +58,7 @@ namespace Orion
         virtual float GetMouseXImpl()                           = 0;
         virtual float GetMouseYImpl()                           = 0;
         virtual std::pair<float, float> GetMousePositionImpl()  = 0;
-
+        virtual void SetCursorModeImpl(CursorMode mode)         = 0;
     private:
         static Scope<Input> s_Instance;
     };
