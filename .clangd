@@ -1,0 +1,4 @@
+Diagnostics:
+  Includes:
+    # The precompiled header is included in every .cpp for its transitive includes
+    IgnoreHeader: [oepch\.h]

@@ -5,7 +5,8 @@
         "llvm-vs-code-extensions.vscode-clangd",
         "editorconfig.editorconfig",
         "cheshirekow.cmake-format",
-        "slevesque.shader"
+        "slevesque.shader",
+        "amiralizadeh9480.cpp-helper"
     ],
     "unwantedRecommendations": [
         "ms-vscode.cpptools-extension-pack",

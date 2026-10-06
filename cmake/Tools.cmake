@@ -112,12 +112,17 @@ function(add_clang_tidy_to_target target)
             set_target_properties(${target} PROPERTIES VS_GLOBAL_EnableClangTidyCodeAnalysis true)
         else()
             message(STATUS "[${target}] Added Clang Tidy for Target")
+            if(CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "MSVC")
+                set(CLANGTIDY_COMPILER_ARGS -extra-arg=/Y-)
+            else()
+                set(CLANGTIDY_COMPILER_ARGS -extra-arg-before=-std=${CMAKE_CXX_STANDARD})
+            endif()
             add_custom_target(
                 ${target}_clangtidy
                 COMMAND
                     ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tools/run-clang-tidy.py
                     ${TARGET_SOURCES} -config-file=${CMAKE_SOURCE_DIR}/.clang-tidy
-                    -extra-arg-before=-std=${CMAKE_CXX_STANDARD}
+                    ${CLANGTIDY_COMPILER_ARGS}
                     -extra-arg=-Wno-error
                     -extra-arg=-Wno-unknown-warning-option
                     -p=${CMAKE_BINARY_DIR}
