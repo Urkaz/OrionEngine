@@ -1,3 +1,14 @@
+# Paths that must never be formatted: third-party code and the output of any build preset (not only the current one).
+function(get_format_exclude_regex out_var)
+    set(regex "${CMAKE_BINARY_DIR}/.*|${CMAKE_SOURCE_DIR}/(external|src/ThirdParty|out|bin|build[^/]*)/.*")
+    if(DEFINED ENV{CPM_SOURCE_CACHE})
+        string(APPEND regex "|$ENV{CPM_SOURCE_CACHE}/.*")
+    endif()
+    set(${out_var}
+        "${regex}"
+        PARENT_SCOPE)
+endfunction()
+
 function(add_cmake_format_target)
     if(NOT ENABLE_CMAKE_FORMAT)
         return()
@@ -5,10 +16,7 @@ function(add_cmake_format_target)
     set(ROOT_CMAKE_FILES "${CMAKE_SOURCE_DIR}/CMakeLists.txt")
     file(GLOB_RECURSE CMAKE_FILES_TXT "*/CMakeLists.txt")
     file(GLOB_RECURSE CMAKE_FILES_C "cmake/*.cmake")
-    set(EXCLUDE_REGEX "${CMAKE_BINARY_DIR}/.*|${CMAKE_SOURCE_DIR}/(external|src/ThirdParty)/.*")
-    if(DEFINED ENV{CPM_SOURCE_CACHE})
-        string(APPEND EXCLUDE_REGEX "|$ENV{CPM_SOURCE_CACHE}/.*")
-    endif()
+    get_format_exclude_regex(EXCLUDE_REGEX)
     list(
         FILTER
         CMAKE_FILES_TXT
@@ -59,10 +67,7 @@ function(add_clang_format_target)
         ${CMAKE_FILES_CPP}
         ${CMAKE_FILES_H}
         ${CMAKE_FILES_HPP})
-    set(EXCLUDE_REGEX "${CMAKE_BINARY_DIR}/.*|${CMAKE_SOURCE_DIR}/(external|src/ThirdParty)/.*")
-    if(DEFINED ENV{CPM_SOURCE_CACHE})
-        string(APPEND EXCLUDE_REGEX "|$ENV{CPM_SOURCE_CACHE}/.*")
-    endif()
+    get_format_exclude_regex(EXCLUDE_REGEX)
     list(
         FILTER
         CPP_FILES
