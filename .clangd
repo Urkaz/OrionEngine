@@ -2,3 +2,9 @@ Diagnostics:
   Includes:
     # The precompiled header is included in every .cpp for its transitive includes
     IgnoreHeader: [oepch\.h]
+---
+# The PCH only exists to gather includes, none of them is "used directly" there
+If:
+  PathMatch: .*/oepch\.h
+Diagnostics:
+  UnusedIncludes: None
