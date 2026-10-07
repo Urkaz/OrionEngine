@@ -35,18 +35,19 @@ namespace Orion
         RenderCommand::SetViewPort(0, 0, width, height);
     }
 
-    void Renderer::BeginScene(OrthographicCamera& camera)
+    void Renderer::BeginScene(const Camera& camera, const glm::mat4& viewMatrix)
     {
-        s_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
+        s_SceneData->ViewProjectionMatrix = camera.GetProjectionMatrix() * viewMatrix;
     }
 
     void Renderer::EndScene() {}
 
     void Renderer::Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray, const glm::mat4 transform)
     {
-        Renderer::Submit([shader, vertexArray, transform]() {
+        const glm::mat4 viewProjection = s_SceneData->ViewProjectionMatrix;
+        Renderer::Submit([shader, vertexArray, transform, viewProjection]() {
             shader->Bind();
-            shader->SetMat4("u_ViewProjection", s_SceneData->ViewProjectionMatrix);
+            shader->SetMat4("u_ViewProjection", viewProjection);
             shader->SetMat4("u_Transform", transform);
 
             vertexArray->Bind();

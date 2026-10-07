@@ -13,7 +13,6 @@
 #include "Orion/Core/Input.h"
 #include "Orion/Core/KeyCodes.h"
 #include "Orion/Core/MouseCodes.h"
-#include "Orion/OrthographicCameraController.h"
 
 #include "Orion/ImGui/ImGuiLayer.h"
 
@@ -28,5 +27,5 @@
 #include "Orion/Renderer/VertexArray.h"
 
 #include "Orion/Renderer/Camera.h"
-#include "Orion/Renderer/OrthographicCamera.h"
+#include "Orion/Renderer/FlyCamera.h"
 // -------------------------

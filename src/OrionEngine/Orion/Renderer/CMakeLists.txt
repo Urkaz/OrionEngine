@@ -4,7 +4,6 @@ target_sources(
             Camera.cpp
             FlyCamera.cpp
             GraphicsContext.cpp
-            OrthographicCamera.cpp
             RenderCommand.cpp
             RenderCommandQueue.cpp
             Renderer.cpp
@@ -20,7 +19,6 @@ target_sources(
            Camera.h
            FlyCamera.h
            GraphicsContext.h
-           OrthographicCamera.h
            RenderCommand.h
            RenderCommandQueue.h
            Renderer.h

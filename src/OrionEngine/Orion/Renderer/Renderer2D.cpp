@@ -53,13 +53,14 @@ namespace Orion
         s_Data.reset();
     }
 
-    void Renderer2D::BeginScene(const OrthographicCamera& camera)
+    void Renderer2D::BeginScene(const Camera& camera, const glm::mat4& viewMatrix)
     {
         OE_PROFILE_FUNCTION();
 
-        Renderer::Submit([camera]() {
+        const glm::mat4 viewProjection = camera.GetProjectionMatrix() * viewMatrix;
+        Renderer::Submit([camera, viewProjection]() {
             s_Data->TextureShader->Bind();
-            s_Data->TextureShader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
+            s_Data->TextureShader->SetMat4("u_ViewProjection", viewProjection);
         });
     }
 

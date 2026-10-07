@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Orion/Renderer/OrthographicCamera.h"
+#include "Orion/Renderer/Camera.h"
 #include "Orion/Renderer/Texture.h"
 
 namespace Orion
@@ -11,7 +11,7 @@ namespace Orion
         static void Init();
         static void Shutdown();
 
-        static void BeginScene(const OrthographicCamera& camera);
+        static void BeginScene(const Camera& camera, const glm::mat4& viewMatrix);
         static void EndScene();
 
         // Primitives
