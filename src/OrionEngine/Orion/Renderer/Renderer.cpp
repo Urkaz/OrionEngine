@@ -9,7 +9,6 @@ namespace Orion
 {
     Scope<Renderer::SceneData> Renderer::s_SceneData = CreateScope<Renderer::SceneData>();
 
-    Scope<Renderer> Renderer::s_Instance            = CreateScope<Renderer>();
     static Scope<RenderCommandQueue> s_CommandQueue = CreateScope<RenderCommandQueue>();
 
     void Renderer::Init()
@@ -23,6 +22,10 @@ namespace Orion
     void Renderer::Shutdown()
     {
         OE_PROFILE_FUNCTION();
+
+        // Run (and destroy) whatever is still queued while every system and the GL context are alive.
+        // Must happen BEFORE Renderer2D::Shutdown: pending commands may use its data.
+        WaitAndRender();
 
         Renderer2D::Shutdown();
     }
@@ -47,7 +50,7 @@ namespace Orion
             shader->SetMat4("u_Transform", transform);
 
             vertexArray->Bind();
-            RenderCommand::DrawIndexed(vertexArray);
+            RenderCommand::RT_DrawIndexed(vertexArray);
         });
     }
 

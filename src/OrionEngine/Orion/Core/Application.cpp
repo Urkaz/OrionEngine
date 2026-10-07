@@ -62,7 +62,7 @@ namespace Orion
                 Renderer::Submit([app]() { app->RenderImGui(); });
             }
 
-            Renderer::Get().WaitAndRender();
+            Renderer::WaitAndRender();
 
             m_Window->OnUpdate();
 

@@ -28,8 +28,10 @@ namespace Orion
             Renderer::Submit([]() { s_RendererAPI->Clear(); });
         }
 
-        inline static void DrawIndexed(const Ref<VertexArray>& vertexArray)
+        // RT_ = render thread: only valid inside a command already submitted with Renderer::Submit
+        inline static void RT_DrawIndexed(const Ref<VertexArray>& vertexArray)
         {
+            OE_CORE_ASSERT(Renderer::IsExecutingCommands(), "RT_ function called outside a render command");
             s_RendererAPI->DrawIndexed(vertexArray);
         }
 

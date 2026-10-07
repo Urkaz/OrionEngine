@@ -88,7 +88,7 @@ namespace Orion
             s_Data->TextureShader->SetMat4("u_Transform", transform);
 
             s_Data->QuadVertexArray->Bind();
-            RenderCommand::DrawIndexed(s_Data->QuadVertexArray);
+            RenderCommand::RT_DrawIndexed(s_Data->QuadVertexArray);
         });
     }
 
@@ -120,7 +120,7 @@ namespace Orion
             s_Data->TextureShader->SetMat4("u_Transform", transform);
 
             s_Data->QuadVertexArray->Bind();
-            RenderCommand::DrawIndexed(s_Data->QuadVertexArray);
+            RenderCommand::RT_DrawIndexed(s_Data->QuadVertexArray);
         });
     }
     void Renderer2D::DrawRotatedQuad(const glm::vec2& position,
@@ -150,7 +150,7 @@ namespace Orion
             s_Data->TextureShader->SetMat4("u_Transform", transform);
 
             s_Data->QuadVertexArray->Bind();
-            RenderCommand::DrawIndexed(s_Data->QuadVertexArray);
+            RenderCommand::RT_DrawIndexed(s_Data->QuadVertexArray);
         });
     }
 
@@ -185,7 +185,7 @@ namespace Orion
             s_Data->TextureShader->SetMat4("u_Transform", transform);
 
             s_Data->QuadVertexArray->Bind();
-            RenderCommand::DrawIndexed(s_Data->QuadVertexArray);
+            RenderCommand::RT_DrawIndexed(s_Data->QuadVertexArray);
         });
     }
 

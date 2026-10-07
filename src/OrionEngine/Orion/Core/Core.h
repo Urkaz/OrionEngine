@@ -77,7 +77,18 @@ namespace Orion
     #define OE_CORE_ASSERT(x, ...)
 #endif // End of assert macros
 
-#define BIT(x) (1 << x)
+// Like OE_CORE_ASSERT, but always checked (also in builds without asserts).
+// For unrecoverable errors where continuing would be undefined behaviour.
+#define OE_CORE_VERIFY(x, ...)                                                                                         \
+    {                                                                                                                  \
+        if (!(x))                                                                                                      \
+        {                                                                                                              \
+            OE_CORE_LOG(Critical, "Verify Failed: {0}", __VA_ARGS__);                                                  \
+            std::abort();                                                                                              \
+        }                                                                                                              \
+    }
+
+#define BIT(x) (1 << (x))
 
 #define OE_BIND_EVENT_FN(fn)                                                                                           \
     [this](auto&&... args) -> decltype(auto) { return this->fn(std::forward<decltype(args)>(args)...); }

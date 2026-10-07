@@ -28,15 +28,16 @@ namespace Orion
             return RendererAPI::GetAPI();
         }
 
-        inline static Renderer& Get()
-        {
-            return *s_Instance;
-        }
-
         template <typename FuncT>
         static void Submit(FuncT&& func)
         {
             OE_PROFILE_FUNCTION();
+
+            // The "clean" type of the lambda: if an lvalue is passed, FuncT is deduced as Lambda&,
+            // and we need the type itself to allocate, construct, call and destroy it.
+            using Fn = std::decay_t<FuncT>;
+            static_assert(alignof(Fn) <= RenderCommandQueue::PayloadAlignment,
+                          "Render command captures a type with an alignment the queue does not support");
 
             // Create a wrapper (lambda) with the same signature as RenderCommandFn that knows
             // how to execute and destroy the original object.
@@ -44,28 +45,33 @@ namespace Orion
             //    - This is necessary because the real type of func is only known at compile time,
             //      but the CommandQueue stores function pointers with a fixed signature (RenderCommandFn).
             auto renderCmd = [](void* ptr) {
-                auto pFunc = static_cast<FuncT*>(ptr);
+                auto* pFunc = static_cast<Fn*>(ptr);
                 (*pFunc)(); // Executes the real command
 
                 // We explicitly call the destructor because the object was constructed with placement-new.
-                // If FuncT were trivially destructible, we could omit this, but many lambdas
+                // If Fn were trivially destructible, we could omit this, but many lambdas
                 // may capture std::string or other resources that require destruction.
-                pFunc->~FuncT();
+                pFunc->~Fn();
             };
 
             // Reserve space in the command buffer for the object and register the wrapper.
-            // std::decay_t<FuncT> removes references and qualifiers to get the real type.
-            auto storageBuffer = GetRenderCommandQueue().Allocate(renderCmd, sizeof(std::decay_t<FuncT>));
-
-            OE_CORE_ASSERT(storageBuffer, "RenderCommandQueue overflow");
+            void* storage = GetRenderCommandQueue().Allocate(renderCmd, static_cast<uint32_t>(sizeof(Fn)));
+            OE_CORE_VERIFY(storage, "RenderCommandQueue is full");
 
             // Construct the func object in the reserved buffer using placement-new.
-            new (storageBuffer) FuncT(std::forward<FuncT>(func));
+            new (storage) Fn(std::forward<FuncT>(func));
         }
 
+        // Executes every pending render command. Called once per frame by Application.
         static void WaitAndRender()
         {
-            s_Instance->GetRenderCommandQueue().Execute();
+            GetRenderCommandQueue().Execute();
+        }
+
+        // True while the queued commands are being executed: the only moment RT_ functions may be called
+        static bool IsExecutingCommands()
+        {
+            return GetRenderCommandQueue().IsExecuting();
         }
 
     private:
@@ -77,8 +83,6 @@ namespace Orion
             glm::mat4 ViewProjectionMatrix;
         };
         static Scope<SceneData> s_SceneData;
-
-        static Scope<Renderer> s_Instance;
     };
 
 } // namespace Orion

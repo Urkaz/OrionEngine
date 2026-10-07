@@ -3,94 +3,82 @@
 
 #include <cstdint>
 #include <cstring>
+#include <new>
 
 namespace Orion
 {
-    static constexpr unsigned int DEFAULT_COMMAND_BUFFER_SIZE = 10 * 1024 * 1024; // 10 MB
-
-    RenderCommandQueue::RenderCommandQueue()
+    namespace
     {
-        m_CommandBufferSize = DEFAULT_COMMAND_BUFFER_SIZE;
-        m_CommandBuffer     = new unsigned char[m_CommandBufferSize];
-        m_CommandBufferPtr  = m_CommandBuffer;
-        memset(m_CommandBuffer, 0, m_CommandBufferSize);
+        // Rounds "value" up to the next multiple of "alignment" (a power of two)
+        constexpr size_t AlignUp(size_t value, size_t alignment)
+        {
+            return (value + alignment - 1) & ~(alignment - 1);
+        }
+    } // namespace
+
+
+    RenderCommandQueue::RenderCommandQueue(uint32_t capacity) : m_Capacity(capacity)
+    {
+        // Force alignment of the command buffer to PayloadAlignment
+        m_CommandBuffer = static_cast<unsigned char*>(::operator new(m_Capacity, std::align_val_t{PayloadAlignment}));
+        memset(m_CommandBuffer, 0, m_Capacity);
     }
 
     RenderCommandQueue::~RenderCommandQueue()
     {
-        delete[] m_CommandBuffer;
+        OE_CORE_ASSERT(m_CommandCount == 0, "RenderCommandQueue destroyed with pending commands (their captures leak)");
+        ::operator delete(m_CommandBuffer, std::align_val_t{PayloadAlignment});
     }
 
-    void* RenderCommandQueue::Allocate(RenderCommandFn func, unsigned int size)
+    // NOLINTBEGIN(cppcoreguidelines-pro-bounds-pointer-arithmetic, cppcoreguidelines-pro-type-reinterpret-cast)
+
+    void* RenderCommandQueue::Allocate(RenderCommandFn func, uint32_t size)
     {
         OE_PROFILE_FUNCTION();
 
-        // We store: [RenderCommandFn][size:uint32][padding to alignment][object bytes]
-
-        const uintptr_t base     = reinterpret_cast<uintptr_t>(m_CommandBuffer);
-        uintptr_t writePtr = reinterpret_cast<uintptr_t>(m_CommandBufferPtr);
-
-        // Check if we have enough buffer space to store everything
-        if (writePtr + sizeof(RenderCommandFn) + sizeof(unsigned int) + size > base + m_CommandBufferSize)
-            return nullptr; // Out of buffer
-
-        // Write RenderCommandFn pointer and advance writePtr
-        std::memcpy(reinterpret_cast<void*>(writePtr), &func, sizeof(RenderCommandFn));
-        writePtr += sizeof(RenderCommandFn);
-
-        // Write int representing the size and advance writePtr
-        std::memcpy(reinterpret_cast<void*>(writePtr), &size, sizeof(unsigned int));
-        writePtr += sizeof(unsigned int);
-
-        // Align the payload to max alignment so any object can be safely created with placement-new here
-        const size_t align = alignof(std::max_align_t);
-        const uintptr_t aligned  = (writePtr + (align - 1)) & ~(align - 1);
+        const size_t headerOffset  = AlignUp(m_Offset, alignof(CommandHeader));
+        const size_t payloadOffset = AlignUp(headerOffset + sizeof(CommandHeader), PayloadAlignment);
+        const size_t end           = payloadOffset + size;
 
         // Check again if we have enough space, but this time using the aligned ptr
-        if (aligned + size > base + m_CommandBufferSize)
-            return nullptr; // out of buffer
+        if (end > m_Capacity)
+            return nullptr; // Out of buffer
 
-        void* memory = reinterpret_cast<void*>(aligned);
+        // The header is a trivial struct: construct it in place
+        new (m_CommandBuffer + headerOffset) CommandHeader{.Function = func, .PayloadSize = size};
 
-        // Advance the buffer pointer past the object
-        m_CommandBufferPtr = reinterpret_cast<unsigned char*>(aligned + size);
-
+        // Advance the offset past the object
+        m_Offset = static_cast<uint32_t>(payloadOffset + size);
         m_CommandCount++;
-        return memory;
+        return m_CommandBuffer + payloadOffset;
     }
 
     void RenderCommandQueue::Execute()
     {
         OE_PROFILE_FUNCTION();
+        OE_CORE_ASSERT(!m_Executing, "RenderCommandQueue::Execute is not reentrant");
 
-        // OE_CORE_LOG(Trace, "RenderCommandQueue::Execute -- {0} commands, {1} bytes", m_CommandCount, (m_CommandBufferPtr - m_CommandBuffer));
-
-        unsigned char* buffer = m_CommandBuffer;
+        m_Executing   = true;
+        size_t offset = 0;
 
         for (unsigned int i = 0; i < m_CommandCount; i++)
         {
-            RenderCommandFn function = nullptr;
-            std::memcpy(&function, buffer, sizeof(RenderCommandFn));
-            buffer += sizeof(RenderCommandFn);
+            const size_t headerOffset = AlignUp(offset, alignof(CommandHeader));
+            // launder: tells the compiler a CommandHeader lives here (built with placement new in Allocate)
+            const auto* header = std::launder(reinterpret_cast<CommandHeader*>(m_CommandBuffer + headerOffset));
 
-            unsigned int size = 0;
-            std::memcpy(&size, buffer, sizeof(unsigned int));
-            buffer += sizeof(unsigned int);
+            const size_t payloadOffset = AlignUp(headerOffset + sizeof(CommandHeader), PayloadAlignment);
+            header->Function(m_CommandBuffer + payloadOffset);
 
-            // Align to the same alignment used in Allocate
-            const size_t align = alignof(std::max_align_t);
-            const uintptr_t writePtr = reinterpret_cast<uintptr_t>(buffer);
-            const uintptr_t aligned  = (writePtr + (align - 1)) & ~(align - 1);
-
-            unsigned char* payload = reinterpret_cast<unsigned char*>(aligned);
-            function(payload);
-
-            // Advance buffer pointer past the current object
-            buffer = payload + size;
+            // Advance past the current payload
+            offset = payloadOffset + header->PayloadSize;
         }
 
-        m_CommandBufferPtr = m_CommandBuffer;
-        m_CommandCount     = 0;
+        m_Offset       = 0;
+        m_CommandCount = 0;
+        m_Executing   = false;
     }
+
+    // NOLINTEND(cppcoreguidelines-pro-bounds-pointer-arithmetic, cppcoreguidelines-pro-type-reinterpret-cast)
 
 } // namespace Orion
