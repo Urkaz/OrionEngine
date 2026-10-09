@@ -32,6 +32,7 @@ namespace Orion
             return m_Position;
         }
         void SetPosition(const glm::vec3& position);
+        void SetRotation(float yawDegrees, float pitchDegrees);
 
         [[nodiscard]] glm::vec3 GetRightDirection() const;
         [[nodiscard]] glm::vec3 GetUpDirection() const;

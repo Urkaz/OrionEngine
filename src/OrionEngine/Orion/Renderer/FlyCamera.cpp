@@ -93,6 +93,13 @@ namespace Orion
         UpdateView();
     }
 
+    void FlyCamera::SetRotation(float yawDegrees, float pitchDegrees)
+    {
+        m_Yaw   = yawDegrees;
+        m_Pitch = pitchDegrees;
+        UpdateView();
+    }
+
     glm::vec3 FlyCamera::GetRightDirection() const
     {
         return GetRotation() * glm::vec3(1.0f, 0.0f, 0.0f);
