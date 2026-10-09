@@ -76,6 +76,8 @@ namespace Orion
             if (glm::dot(direction, direction) > 0.0f)
                 m_Position += glm::normalize(direction) * speed * ts.GetSeconds();
         }
+
+        UpdateView();
     }
 
     void FlyCamera::OnEvent(Event& e)

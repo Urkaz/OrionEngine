@@ -1,12 +1,14 @@
 #include <Orion.h>
 #include <Orion/EntryPoint.h>
 
+#include "Sandbox3D.h"
+
 class Sandbox : public Orion::Application
 {
 public:
     Sandbox()
     {
-        //PushLayer(new Sandbox2D());
+        PushLayer(new Sandbox3D());
     };
     ~Sandbox() override = default;
 };

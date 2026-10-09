@@ -48,6 +48,9 @@ namespace Orion
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         glEnable(GL_DEPTH_TEST);
+        glEnable(GL_CULL_FACE);
+        glCullFace(GL_BACK); // discard triangles facing away from the camera
+        glFrontFace(GL_CCW); // counter-clockwise on screen = front face (OpenGL default)
     }
 
     void OpenGLRendererAPI::SetViewPort(uint32_t x, uint32_t y, uint32_t width, uint32_t height)
@@ -63,6 +66,22 @@ namespace Orion
     void OpenGLRendererAPI::Clear()
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    }
+
+    void OpenGLRendererAPI::SetDepthTest(bool enabled)
+    {
+        if (enabled)
+            glEnable(GL_DEPTH_TEST);
+        else
+            glDisable(GL_DEPTH_TEST);
+    }
+
+    void OpenGLRendererAPI::SetFaceCulling(bool enabled)
+    {
+        if (enabled)
+            glEnable(GL_CULL_FACE);
+        else
+            glDisable(GL_CULL_FACE);
     }
 
     void OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& vertexArray)

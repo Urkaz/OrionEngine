@@ -28,6 +28,16 @@ namespace Orion
             Renderer::Submit([]() { s_RendererAPI->Clear(); });
         }
 
+        inline static void SetDepthTest(bool enabled)
+        {
+            Renderer::Submit([enabled]() { s_RendererAPI->SetDepthTest(enabled); });
+        }
+
+        inline static void SetFaceCulling(bool enabled)
+        {
+            Renderer::Submit([enabled]() { s_RendererAPI->SetFaceCulling(enabled); });
+        }
+
         // RT_ = render thread: only valid inside a command already submitted with Renderer::Submit
         inline static void RT_DrawIndexed(const Ref<VertexArray>& vertexArray)
         {

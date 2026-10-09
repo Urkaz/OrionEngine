@@ -9,15 +9,15 @@ namespace Orion
 {
     bool GlfwInput::IsKeyPressedImpl(KeyCode key)
     {
-        auto* window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
-        const int state    = glfwGetKey(window, static_cast<int32_t>(key));
+        auto* window    = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
+        const int state = glfwGetKey(window, static_cast<int32_t>(key));
         return state == GLFW_PRESS || state == GLFW_REPEAT;
     }
 
     bool GlfwInput::IsMouseButtonPressedImpl(MouseCode button)
     {
-        auto* window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
-        const int state    = glfwGetMouseButton(window, static_cast<int32_t>(button));
+        auto* window    = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
+        const int state = glfwGetMouseButton(window, static_cast<int32_t>(button));
         return state == GLFW_PRESS;
     }
 
