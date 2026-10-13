@@ -7,7 +7,7 @@ namespace Orion
     class OpenGLVertexBuffer : public VertexBuffer
     {
     public:
-        OpenGLVertexBuffer(float* vertices, uint32_t size);
+        OpenGLVertexBuffer(const void* vertices, uint32_t size);
         virtual ~OpenGLVertexBuffer();
 
         virtual void Bind() const override;
@@ -24,7 +24,7 @@ namespace Orion
     class OpenGLIndexBuffer : public IndexBuffer
     {
     public:
-        OpenGLIndexBuffer(uint32_t* indices, uint32_t count);
+        OpenGLIndexBuffer(const uint32_t* indices, uint32_t count);
         virtual ~OpenGLIndexBuffer();
 
         virtual uint32_t GetCount() const override

@@ -32,6 +32,10 @@ namespace Orion
         virtual void SetFaceCulling(bool enabled)                                         = 0;
 
         virtual void DrawIndexed(const Ref<VertexArray>& vertexArray) = 0;
+        virtual void DrawIndexed(const Ref<VertexArray>& vertexArray,
+                                 uint32_t indexCount,
+                                 uint32_t firstIndex,
+                                 uint32_t vertexOffset) = 0;
 
         inline static API GetAPI()
         {

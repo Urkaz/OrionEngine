@@ -87,9 +87,23 @@ namespace Orion
     void OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& vertexArray)
     {
         glDrawElements(GL_TRIANGLES,
-                       static_cast<int>(vertexArray->GetIndexBuffer()->GetCount()),
+                       static_cast<GLsizei>(vertexArray->GetIndexBuffer()->GetCount()),
                        GL_UNSIGNED_INT,
                        nullptr);
+    }
+
+    void OpenGLRendererAPI::DrawIndexed([[maybe_unused]] const Ref<VertexArray>& vertexArray,
+                                        uint32_t indexCount,
+                                        uint32_t firstIndex,
+                                        uint32_t vertexOffset)
+    {
+        glDrawElementsBaseVertex(GL_TRIANGLES,
+                                 static_cast<GLsizei>(indexCount),
+                                 GL_UNSIGNED_INT,
+                                 reinterpret_cast<const void*>(static_cast<uintptr_t>(firstIndex) * sizeof(uint32_t)),
+                                 static_cast<GLint>(vertexOffset)
+
+        )
     }
 
 } // namespace Orion

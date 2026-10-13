@@ -45,6 +45,15 @@ namespace Orion
             s_RendererAPI->DrawIndexed(vertexArray);
         }
 
+        inline static void RT_DrawIndexed(const Ref<VertexArray>& vertexArray,
+                                          uint32_t indexCount,
+                                          uint32_t firstIndex,
+                                          uint32_t vertexOffset)
+        {
+            OE_CORE_ASSERT(Renderer::IsExecutingCommands(), "RT_ function called outside a render command");
+            s_RendererAPI->DrawIndexed(vertexArray, indexCount, firstIndex, vertexOffset);
+        }
+
     private:
         static Scope<RendererAPI> s_RendererAPI;
     };
