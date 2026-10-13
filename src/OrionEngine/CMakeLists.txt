@@ -20,7 +20,8 @@ target_link_libraries(
             GLAD
             ImGui_OpenGL3
             ImGui_GLFW
-            stb_image)
+            stb_image
+            assimp::assimp)
 
 if(ENABLE_PROFILING)
     target_link_libraries(${ENGINE_NAME} PUBLIC Tracy::TracyClient)

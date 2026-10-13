@@ -88,9 +88,11 @@ endif()
 
 include(CPM)
 
+# SPDLog
 cpmaddpackage("gh:gabime/spdlog#v1.16.0")
 set_target_properties(spdlog PROPERTIES FOLDER "Dependencies")
 
+# GLFW
 set(GLFW_BUILD_DOCS
     OFF
     CACHE BOOL "" FORCE)
@@ -107,16 +109,56 @@ cpmaddpackage("gh:glfw/glfw#3.4")
 set_target_properties(glfw PROPERTIES FOLDER "Dependencies/GLFW")
 set_target_properties(update_mappings PROPERTIES FOLDER "Dependencies/GLFW")
 
+# GLM
 cpmaddpackage("gh:g-truc/glm#1.0.2")
 set_target_properties(glm PROPERTIES FOLDER "Dependencies")
 
+# Catch2
 if(ENABLE_TESTING)
     cpmaddpackage("gh:catchorg/Catch2#v3.11.0")
     set_target_properties(Catch2 PROPERTIES FOLDER "Dependencies")
     list(APPEND CMAKE_MODULE_PATH ${Catch2_SOURCE_DIR}/extras)
 endif()
 
+# OpenGL
 find_package(OpenGL REQUIRED)
+
+# Assimp
+set(BUILD_SHARED_LIBS
+    OFF
+    CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_TESTS
+    OFF
+    CACHE BOOL "" FORCE)
+set(ASSIMP_INSTALL
+    OFF
+    CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_ASSIMP_VIEW
+    OFF
+    CACHE BOOL "" FORCE)
+set(ASSIMP_NO_EXPORT
+    ON
+    CACHE BOOL "" FORCE)
+set(ASSIMP_WARNINGS_AS_ERRORS
+    OFF
+    CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_ZLIB
+    ON
+    CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_ALL_IMPORTERS_BY_DEFAULT
+    OFF
+    CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_GLTF_IMPORTER
+    ON
+    CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_FBX_IMPORTER
+    ON
+    CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_OBJ_IMPORTER
+    ON
+    CACHE BOOL "" FORCE)
+cpmaddpackage("gh:assimp/assimp#v6.0.5")
+set_target_properties(assimp PROPERTIES FOLDER "Dependencies")
 
 add_subdirectory(src)
 
