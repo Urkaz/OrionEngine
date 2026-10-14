@@ -103,7 +103,7 @@ namespace Orion
                                  reinterpret_cast<const void*>(static_cast<uintptr_t>(firstIndex) * sizeof(uint32_t)),
                                  static_cast<GLint>(vertexOffset)
 
-        )
+        );
     }
 
 } // namespace Orion

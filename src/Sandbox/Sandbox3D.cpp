@@ -1,9 +1,13 @@
+#include "Orion/Renderer/AssimpMeshImporter.h"
 #include "Orion/Renderer/Buffer.h"
+#include "Orion/Renderer/MeshRenderData.h"
 #include "Orion/Renderer/RenderCommand.h"
 #include "Orion/Renderer/Renderer.h"
+#include "Orion/Renderer/Shader.h"
 #include "Orion/Renderer/VertexArray.h"
 #include "Sandbox3D.h"
 
+#include <glm/ext/matrix_transform.hpp>
 #include <glm/fwd.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <imgui.h>
@@ -73,6 +77,13 @@ void Sandbox3D::OnAttach()
     m_CubeVA->SetIndexBuffer(ib);
 
     m_CubeShader = Orion::Shader::Create("assets/shaders/Cube.glsl");
+
+
+    Orion::Ref<Orion::MeshSource> source = Orion::AssimpMeshImporter::Import("assets/models/ambulance.glb");
+    if (!source)
+        return;
+    m_Model      = Orion::CreateRef<Orion::MeshRenderData>(source);
+    m_MeshShader = Orion::Shader::Create("assets/shaders/MeshDebug.glsl");
 }
 
 void Sandbox3D::OnUpdate(Orion::Timestep ts)
@@ -106,6 +117,18 @@ void Sandbox3D::OnUpdate(Orion::Timestep ts)
         }
     }
 
+    if (m_Model)
+    {
+        const glm::mat4 modelTransform =
+            glm::translate(glm::mat4(1.0f), {2.0f, 0.0f, 0.0f}) * glm::scale(glm::mat4(1.0f), glm::vec3(m_ModelScale));
+
+        Orion::Renderer::Submit([shader = m_MeshShader, mode = m_DebugMode]() {
+            shader->Bind();
+            shader->SetInt("u_DebugMode", mode);
+        });
+        Orion::Renderer::SubmitMesh(m_MeshShader, m_Model, modelTransform);
+    }
+
     Orion::Renderer::EndScene();
 }
 
@@ -136,9 +159,51 @@ void Sandbox3D::OnImGuiRender()
     ImGui::Checkbox("Back-face culling", &m_FaceCulling);
 
     ImGui::End();
+
+
+    ImGui::Begin("Model");
+
+    ImGui::Combo("Debug view", &m_DebugMode, "Normal\0Tangent\0Bitangent\0UV\0Submesh\0");
+    ImGui::DragFloat("Scale", &m_ModelScale, 0.01f, 0.0001f, 100.0f, "%.4f", ImGuiSliderFlags_Logarithmic);
+
+    ImGui::Separator();
+
+    const Orion::MeshSource& source = *m_Model->GetSource();
+    ImGui::Text("Vertices: %zu", source.Vertices.size());
+    ImGui::Text("Indices: %zu", source.Indices.size());
+    ImGui::Text("Triangles: %zu", source.Indices.size() / 3);
+    ImGui::Text("Submeshes: %zu", source.Submeshes.size());
+    ImGui::Text("Nodes: %zu", source.Nodes.size());
+
+    ImGui::Separator();
+
+    DrawNodeTree(source, 0);
+
+    ImGui::End();
 }
 
 void Sandbox3D::OnEvent(Orion::Event& e)
 {
     m_Camera.OnEvent(e);
+}
+
+void Sandbox3D::DrawNodeTree(const Orion::MeshSource& source, uint32_t nodeIndex)
+{
+    const Orion::MeshNode& node = source.Nodes[nodeIndex];
+
+    ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_DefaultOpen;
+    if (node.Children.empty())
+        flags |= ImGuiTreeNodeFlags_Leaf;
+
+    if (ImGui::TreeNodeEx(reinterpret_cast<void*>(static_cast<uintptr_t>(nodeIndex)),
+                          flags,
+                          "%s  (%zu submeshes)",
+                          node.Name.c_str(),
+                          node.Submeshes.size()))
+    {
+
+        for (const uint32_t child : node.Children)
+            DrawNodeTree(source, child);
+        ImGui::TreePop();
+    }
 }

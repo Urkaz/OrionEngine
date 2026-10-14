@@ -1,9 +1,12 @@
 target_sources(
     ${ENGINE_NAME}
-    PRIVATE Buffer.cpp
+    PRIVATE AssimpMeshImporter.cpp
+            Buffer.cpp
             Camera.cpp
             FlyCamera.cpp
             GraphicsContext.cpp
+            MeshRenderData.cpp
+            MeshSource.cpp
             RenderCommand.cpp
             RenderCommandQueue.cpp
             Renderer.cpp
@@ -15,10 +18,14 @@ target_sources(
 
 target_sources(
     ${ENGINE_NAME}
-    PUBLIC Buffer.h
+    PUBLIC AssimpMeshImporter.h
+           AssimpUtils.h
+           Buffer.h
            Camera.h
            FlyCamera.h
            GraphicsContext.h
+           MeshRenderData.h
+           MeshSource.h
            RenderCommand.h
            RenderCommandQueue.h
            Renderer.h

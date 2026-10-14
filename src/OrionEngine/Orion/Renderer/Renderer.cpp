@@ -1,9 +1,11 @@
 #include "oepch.h"
+#include "Orion/Renderer/MeshSource.h"
 #include "Orion/Renderer/Renderer.h"
 
 #include "Orion/Renderer/RenderCommand.h"
 #include "Orion/Renderer/Renderer2D.h"
 #include "Renderer.h"
+#include <cstdint>
 
 namespace Orion
 {
@@ -53,6 +55,42 @@ namespace Orion
             vertexArray->Bind();
             RenderCommand::RT_DrawIndexed(vertexArray);
         });
+    }
+
+    void Renderer::SubmitMesh(const Ref<Shader>& shader,
+                              const Ref<MeshRenderData>& renderData,
+                              const glm::mat4& transform)
+    {
+        const MeshSource& source           = *renderData->GetSource();
+        const Ref<VertexArray> vertexArray = renderData->GetVertexArray();
+        const glm::mat4 viewProjection     = s_SceneData->ViewProjectionMatrix;
+
+        for (const MeshNode& node : source.Nodes)
+        {
+            const glm::mat4 world = transform * node.WorldTransform;
+
+            for (const uint32_t submeshIndex : node.Submeshes)
+            {
+                const Submesh& submesh = source.Submeshes[submeshIndex];
+                if (submesh.IndexCount == 0)
+                    return;
+
+                const uint32_t indexCount   = submesh.IndexCount;
+                const uint32_t firstIndex   = submesh.FirstIndex;
+                const uint32_t vertexOffset = submesh.VertexOffset;
+
+                Renderer::Submit(
+                    [shader, vertexArray, viewProjection, world, submeshIndex, indexCount, firstIndex, vertexOffset]() {
+                        shader->Bind();
+                        shader->SetMat4("u_ViewProjection", viewProjection);
+                        shader->SetMat4("u_Transform", world);
+                        shader->SetInt("u_SubmeshIndex", static_cast<int>(submeshIndex));
+
+                        vertexArray->Bind();
+                        RenderCommand::RT_DrawIndexed(vertexArray, indexCount, firstIndex, vertexOffset);
+                    });
+            }
+        }
     }
 
     RenderCommandQueue& Renderer::GetRenderCommandQueue()

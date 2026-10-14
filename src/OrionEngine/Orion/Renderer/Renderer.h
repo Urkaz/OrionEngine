@@ -1,8 +1,10 @@
 #pragma once
 
+#include "Orion/Renderer/MeshRenderData.h"
 #include "Orion/Renderer/RendererAPI.h"
 
 #include "Orion/Renderer/Camera.h"
+#include "Orion/Renderer/MeshRenderData.h"
 #include "Orion/Renderer/RenderCommandQueue.h"
 #include "Orion/Renderer/Shader.h"
 
@@ -22,6 +24,10 @@ namespace Orion
         static void Submit(const Ref<Shader>& shader,
                            const Ref<VertexArray>& vertexArray,
                            const glm::mat4 transform = glm::mat4(1.0f));
+
+        static void SubmitMesh(const Ref<Shader>& shader,
+                               const Ref<MeshRenderData>& renderData,
+                               const glm::mat4& transform = glm::mat4(1.0f));
 
         inline static RendererAPI::API GetAPI()
         {
