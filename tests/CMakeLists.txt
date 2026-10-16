@@ -1,6 +1,9 @@
 set(TEST_NAME "OrionTests")
 
-set(TEST_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/Renderer/CameraTests.cpp")
+set(TEST_SOURCES
+    "${CMAKE_CURRENT_SOURCE_DIR}/TestSetup.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Renderer/CameraTests.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Renderer/MeshTests.cpp")
 
 add_executable(${TEST_NAME} ${TEST_SOURCES})
 
@@ -8,7 +11,7 @@ foreach(FILE ${TEST_SOURCES})
     set_source_group(${FILE})
 endforeach()
 
-target_link_libraries(${TEST_NAME} PRIVATE ${ENGINE_NAME} Catch2::Catch2WithMain)
+target_link_libraries(${TEST_NAME} PRIVATE ${ENGINE_NAME} Catch2::Catch2WithMain assimp::assimp)
 
 setup_output_dirs(${TEST_NAME})
 

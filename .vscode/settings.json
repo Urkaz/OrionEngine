@@ -115,6 +115,7 @@
         "regex": "cpp"
     },
     "cmake.useCMakePresets": "always",
+    "cmake.ctest.testSuiteDelimiter": "/",
     "cmake.copyCompileCommands": "${workspaceFolder}/compile_commands.json",
     "git.detectSubmodules": false,
     "C_Cpp.intelliSenseEngine": "disabled"

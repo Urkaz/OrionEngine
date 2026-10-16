@@ -24,7 +24,7 @@ namespace
     }
 } // namespace
 
-TEST_CASE("Camera: perspective maps the near and far planes to NDC z -1 and +1", "[Renderer][Camera]")
+TEST_CASE("Renderer/Camera/Camera: perspective maps the near and far planes to NDC z -1 and +1", "[Renderer][Camera]")
 {
     constexpr float nearClip = 0.1f;
     constexpr float farClip  = 100.0f;
@@ -37,7 +37,7 @@ TEST_CASE("Camera: perspective maps the near and far planes to NDC z -1 and +1",
     CHECK_THAT(ToNDC(projection, {0.0f, 0.0f, -farClip}).z, WithinAbs(1.0, Epsilon));
 }
 
-TEST_CASE("FlyCamera: the view matrix is the inverse of the camera transform", "[Renderer][Camera]")
+TEST_CASE("Renderer/Camera/FlyCamera: the view matrix is the inverse of the camera transform", "[Renderer][Camera]")
 {
     Orion::FlyCamera camera(45.0f, 16.0f / 9.0f, 0.1f, 1000.0f);
     const glm::vec3 position = {1.0f, 2.0f, 3.0f};
@@ -59,7 +59,7 @@ TEST_CASE("FlyCamera: the view matrix is the inverse of the camera transform", "
     CHECK_THAT(ndc.y, WithinAbs(0.0, Epsilon));
 }
 
-TEST_CASE("FlyCamera: a 0x0 resize keeps a valid projection", "[Renderer][Camera]")
+TEST_CASE("Renderer/Camera/FlyCamera: a 0x0 resize keeps a valid projection", "[Renderer][Camera]")
 {
     Orion::FlyCamera camera(45.0f, 16.0f / 9.0f, 0.1f, 1000.0f);
     Orion::WindowResizeEvent resize(0, 0);
