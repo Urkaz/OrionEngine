@@ -2,8 +2,10 @@ set(TEST_NAME "OrionTests")
 
 set(TEST_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/TestSetup.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Core/LayerStackTests.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Renderer/CameraTests.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Renderer/MeshTests.cpp")
+    "${CMAKE_CURRENT_SOURCE_DIR}/Renderer/MeshTests.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Renderer/RenderCommandQueueTests.cpp")
 
 add_executable(${TEST_NAME} ${TEST_SOURCES})
 

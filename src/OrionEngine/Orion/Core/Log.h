@@ -14,7 +14,7 @@ namespace Orion
     class Log
     {
     public:
-        static void Init();
+        static void Init(bool logToFile = true);
         static Ref<spdlog::logger>& GetCoreLogger()
         {
             return s_CoreLogger;

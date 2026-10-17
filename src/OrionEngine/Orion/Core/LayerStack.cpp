@@ -8,6 +8,8 @@ namespace Orion
         for (Layer* layer : m_Layers)
         {
             layer->OnDetach();
+            // Unppopped layer belongs to the stack
+            // NOLINTNEXTLINE(cppcoreguidelines-owning-memory)
             delete layer;
         }
     }

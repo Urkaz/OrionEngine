@@ -14,7 +14,8 @@ namespace
         void testRunStarting(Catch::TestRunInfo const& /*testRunInfo*/) override
         {
 #ifdef OE_ENABLE_LOGS
-            Orion::Log::Init();
+            // No file sink: parallel ctest processes would truncate the same Orion.log
+            Orion::Log::Init(false);
 #endif
         }
     };
