@@ -136,12 +136,19 @@ void Sandbox3D::OnImGuiRender()
 {
     ImGui::Begin("Camera");
 
-    ImGui::Text("%.2f ms (%.0f FPS)", m_FrameTime * 1000.0f, 1.0f / m_FrameTime);
+    ImGui::Text("%.2f ms (%.0f FPS)",
+                static_cast<double>(m_FrameTime * 1000.0f),
+                static_cast<double>(1.0f / m_FrameTime));
 
     const glm::vec3& p = m_Camera.GetPosition();
-    ImGui::Text("Position: %.2f, %.2f, %.2f", p.x, p.y, p.z);
-    ImGui::Text("Yaw: %.1f  Pitch: %.1f", m_Camera.GetYaw(), m_Camera.GetPitch());
-    ImGui::Text("Move speed: %.2f u/s (mouse wheel)", m_Camera.GetMoveSpeed());
+    ImGui::Text("Position: %.2f, %.2f, %.2f",
+                static_cast<double>(p.x),
+                static_cast<double>(p.y),
+                static_cast<double>(p.z));
+    ImGui::Text("Yaw: %.1f  Pitch: %.1f",
+                static_cast<double>(m_Camera.GetYaw()),
+                static_cast<double>(m_Camera.GetPitch()));
+    ImGui::Text("Move speed: %.2f u/s (mouse wheel)", static_cast<double>(m_Camera.GetMoveSpeed()));
 
     float fov = m_Camera.GetFOV();
     if (ImGui::SliderFloat("FOV", &fov, 10.0f, 120.0f))

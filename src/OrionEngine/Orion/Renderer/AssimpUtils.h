@@ -1,6 +1,7 @@
 #pragma once
 
 #include <assimp/matrix4x4.h>
+#include <assimp/matrix4x4.inl>
 #include <glm/glm.hpp>
 
 namespace Orion
