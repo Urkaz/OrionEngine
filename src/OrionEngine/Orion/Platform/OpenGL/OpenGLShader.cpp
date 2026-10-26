@@ -1,5 +1,7 @@
 #include "oepch.h"
+#include "Orion/Core/Core.h"
 #include "Orion/Platform/OpenGL/OpenGLShader.h"
+#include "Orion/Renderer/ShaderSourceParser.h"
 
 #include <fstream>
 #include <glad/glad.h>
@@ -7,16 +9,6 @@
 
 namespace Orion
 {
-    static GLenum ShaderTypeFromString(const std::string& type)
-    {
-        if (type == "vertex")
-            return GL_VERTEX_SHADER;
-        if (type == "fragment")
-            return GL_FRAGMENT_SHADER;
-        OE_CORE_ASSERT(false, "Invalid shader type");
-        return 0;
-    }
-
     OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc)
         : m_RendererID(0), m_Name(name)
     {
@@ -28,13 +20,12 @@ namespace Orion
         Compile(shaderSources);
     }
 
-    OpenGLShader::OpenGLShader(const std::string& filepath)
-        : m_RendererID(0)
+    OpenGLShader::OpenGLShader(const std::string& filepath) : m_RendererID(0)
     {
         OE_PROFILE_FUNCTION();
 
         const std::string source = ReadFile(filepath);
-        auto shaderSources = PreProcess(source);
+        auto shaderSources       = PreProcess(source);
         Compile(shaderSources);
 
         // Extract name from filepath
@@ -84,25 +75,12 @@ namespace Orion
     {
         OE_PROFILE_FUNCTION();
 
+        const ShaderParseResult parsed = ParseShaderSource(source);
+        OE_CORE_ASSERT(parsed.Ok(), parsed.Error);
+
         std::unordered_map<GLenum, std::string> shaderSources;
-
-        const char* typeToken  = "#type";
-        const size_t rtpeTokenLength = strlen(typeToken);
-        size_t pos             = source.find(typeToken, 0); //Start of shader type declaration line
-        while (pos != std::string::npos)
-        {
-            const size_t eol = source.find_first_of("\r\n", pos); //End of shader type declaration line
-            OE_CORE_ASSERT(eol != std::string::npos, "Syntax error");
-            const size_t begin     = pos + rtpeTokenLength + 1;
-            const std::string type = source.substr(begin, eol - begin); //Start of shader type name (after "#type " keyword)
-
-            const size_t nextLinePos =
-                source.find_first_not_of("\r\n", eol); //Start of shader code after shader type declaration line
-            OE_CORE_ASSERT(nextLinePos != std::string::npos, "Syntax error");
-            pos = source.find(typeToken, nextLinePos); //Start of next shader type declaration line
-            shaderSources[ShaderTypeFromString(type)] =
-                (pos == std::string::npos) ? source.substr(nextLinePos) : source.substr(nextLinePos, pos - nextLinePos);
-        }
+        for(const auto& [stage, code] : parsed.Stages)
+            shaderSources[stage == ShaderStage::Vertex ? GL_VERTEX_SHADER : GL_FRAGMENT_SHADER] = code;
 
         return shaderSources;
     }
@@ -118,7 +96,7 @@ namespace Orion
         size_t glShaderIDIndex = 0;
         for (auto& kv : shaderSources)
         {
-            const GLenum shaderType         = kv.first;
+            const GLenum shaderType   = kv.first;
             const std::string& source = kv.second;
 
             // Create an empty vertex shader handle

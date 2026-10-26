@@ -13,6 +13,7 @@ target_sources(
             Renderer2D.cpp
             RendererAPI.cpp
             Shader.cpp
+            ShaderSourceParser.cpp
             Texture.cpp
             VertexArray.cpp)
 
@@ -32,5 +33,6 @@ target_sources(
            Renderer2D.h
            RendererAPI.h
            Shader.h
+           ShaderSourceParser.h
            Texture.h
            VertexArray.h)
