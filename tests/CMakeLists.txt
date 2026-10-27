@@ -7,7 +7,8 @@ set(TEST_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/Renderer/CameraTests.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Renderer/FlyCameraTests.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Renderer/MeshTests.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/Renderer/RenderCommandQueueTests.cpp")
+    "${CMAKE_CURRENT_SOURCE_DIR}/Renderer/RenderCommandQueueTests.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Renderer/ShaderSourceParserTests.cpp")
 
 add_executable(${TEST_NAME} ${TEST_SOURCES})
 
