@@ -25,34 +25,6 @@ void main()
     gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
 }
 
-#type vertex
-#version 450 core
-
-layout(location = 0) in vec3 a_Position;
-layout(location = 1) in vec3 a_Normal;
-layout(location = 2) in vec3 a_Tangent;
-layout(location = 3) in vec3 a_Bitangent;
-layout(location = 4) in vec2 a_TexCoord;
-
-uniform mat4 u_ViewProjection;
-uniform mat4 u_Transform;
-
-out vec3 v_Normal;
-out vec3 v_Tangent;
-out vec3 v_Bitangent;
-out vec2 v_TexCoord;
-
-void main()
-{
-    // Rotating the directions with the model matrix is only correct while the scale is uniform.
-    // Lesson 3 explains the normal matrix that fixes it.
-    v_Normal    = mat3(u_Transform) * a_Normal;
-    v_Tangent   = mat3(u_Transform) * a_Tangent;
-    v_Bitangent = mat3(u_Transform) * a_Bitangent;
-    v_TexCoord  = a_TexCoord;
-    gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
-}
-
 #type fragment
 #version 450 core
 
