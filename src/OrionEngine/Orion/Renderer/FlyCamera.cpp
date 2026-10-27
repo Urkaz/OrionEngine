@@ -152,7 +152,11 @@ namespace Orion
     bool FlyCamera::OnMouseScrolled(MouseScrolledEvent& e)
     {
         // Multiplivative steps feel uniform at any speed (x1.2 per notch)
-        m_MoveSpeed *= (e.GetYOffset() > 0.0f) ? 1.2f : 1.0f / 1.2f;
+        const float yOffset = e.GetYOffset();
+        if (yOffset == 0.0f)
+            return false;
+
+        m_MoveSpeed *= (yOffset > 0.0f) ? 1.2f : 1.0f / 1.2f;
         m_MoveSpeed = std::clamp(m_MoveSpeed, 0.1f, 500.0f);
         return false;
     }
