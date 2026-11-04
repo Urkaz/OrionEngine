@@ -6,9 +6,6 @@
 #include "Orion/Core/Core.h"
 #include "Orion/Core/Log.h"
 
-#include <cstdio>
-#include <cstdlib>
-
 #ifdef OE_PLATFORM_WINDOWS
     #define OE_DEBUGBREAK() __debugbreak()
 #elif defined(OE_PLATFORM_LINUX)
