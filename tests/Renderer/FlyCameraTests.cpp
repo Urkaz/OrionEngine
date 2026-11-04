@@ -24,8 +24,9 @@ TEST_CASE("Renderer/Camera/FlyCamera: forward, right and up follow yaw and pitch
 {
     Orion::FlyCamera camera = MakeCamera();
 
-    const auto approxEqual = [](const glm::vec3& a, const glm::vec3& b)
-    { return glm::all(glm::epsilonEqual(a, b, static_cast<float>(Epsilon))); };
+    const auto approxEqual = [](const glm::vec3& a, const glm::vec3& b) {
+        return glm::all(glm::epsilonEqual(a, b, static_cast<float>(Epsilon)));
+    };
 
     SECTION("yaw 0, pitch 0 looks down -Z")
     {
@@ -120,12 +121,12 @@ TEST_CASE("Renderer/Camera/FlyCamera: a horizontal scroll does not change the mo
     CHECK(camera.GetMoveSpeed() == initial);
 }
 
-TEST_CASE("Renderer/Camera/FlyCamera: resizing the window updates the aspect ratio of the projection", "[Renderer][FlyCamera]")
+TEST_CASE("Renderer/Camera/FlyCamera: resizing the window updates the aspect ratio of the projection",
+          "[Renderer][FlyCamera]")
 {
     Orion::FlyCamera camera = MakeCamera();
 
-    const auto aspectOf = [&camera]()
-    {
+    const auto aspectOf = [&camera]() {
         const glm::mat4& p = camera.GetProjectionMatrix();
         return static_cast<double>(p[1][1] / p[0][0]);
     };

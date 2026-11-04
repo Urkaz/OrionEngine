@@ -14,7 +14,7 @@ namespace Orion
     {
         // 'size' is the visible height in world units.
         const float halfHeight = size * 0.5f;
-        const float halfWidth = halfHeight * aspectRatio;
-        m_ProjectionMatrix = glm::ortho(-halfWidth, halfWidth, -halfHeight, halfHeight, nearPlane, farPlane);
+        const float halfWidth  = halfHeight * aspectRatio;
+        m_ProjectionMatrix     = glm::ortho(-halfWidth, halfWidth, -halfHeight, halfHeight, nearPlane, farPlane);
     }
 } // namespace Orion

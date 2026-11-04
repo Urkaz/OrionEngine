@@ -2,8 +2,8 @@
 
 #include "Orion/Core/Events/ApplicationEvent.h"
 #include "Orion/Core/Events/MouseEvent.h"
-#include "Orion/Renderer/Camera.h"
 #include "Orion/Core/Timestep.h"
+#include "Orion/Renderer/Camera.h"
 
 namespace Orion
 {
@@ -22,7 +22,7 @@ namespace Orion
         {
             return m_ViewMatrix;
         }
-        [[nodiscard]]glm::mat4 GetViewProjectionMatrix() const
+        [[nodiscard]] glm::mat4 GetViewProjectionMatrix() const
         {
             return m_ProjectionMatrix * m_ViewMatrix;
         }
@@ -62,7 +62,7 @@ namespace Orion
         void SetFOV(float fov);
         void SetClipPlanes(float nearClip, float farClip);
 
-        [[nodiscard]]float GetMoveSpeed() const
+        [[nodiscard]] float GetMoveSpeed() const
         {
             return m_MoveSpeed;
         }

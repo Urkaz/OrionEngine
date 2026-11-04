@@ -76,7 +76,7 @@ namespace Orion
 
         m_Offset       = 0;
         m_CommandCount = 0;
-        m_Executing   = false;
+        m_Executing    = false;
     }
 
     // NOLINTEND(cppcoreguidelines-pro-bounds-pointer-arithmetic, cppcoreguidelines-pro-type-reinterpret-cast)

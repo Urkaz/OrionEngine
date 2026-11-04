@@ -73,11 +73,12 @@ TEST_CASE("Renderer/Shader/ParseShaderSource: accepts CRLF line endings and extr
 TEST_CASE("Renderer/Shader/ParseShaderSource: a '#type' that is not at the start of a line is plain code",
           "[Renderer][Shader]")
 {
-    const Orion::ShaderParseResult result = Orion::ParseShaderSource("#type vertex\n"
-                                                                     "// this #type shouldn't split the vertex shader in 2\n"
-                                                                     "void main() {}\n"
-                                                                     "#type fragment\n"
-                                                                     "void main() {}\n");
+    const Orion::ShaderParseResult result =
+        Orion::ParseShaderSource("#type vertex\n"
+                                 "// this #type shouldn't split the vertex shader in 2\n"
+                                 "void main() {}\n"
+                                 "#type fragment\n"
+                                 "void main() {}\n");
 
     REQUIRE(result.Ok());
     CHECK(result.Stages.size() == 2);

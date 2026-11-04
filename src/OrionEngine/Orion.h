@@ -26,9 +26,9 @@
 #include "Orion/Renderer/Texture.h"
 #include "Orion/Renderer/VertexArray.h"
 
-#include "Orion/Renderer/MeshSource.h"
-#include "Orion/Renderer/MeshRenderData.h"
 #include "Orion/Renderer/AssimpMeshImporter.h"
+#include "Orion/Renderer/MeshRenderData.h"
+#include "Orion/Renderer/MeshSource.h"
 
 #include "Orion/Renderer/Camera.h"
 #include "Orion/Renderer/FlyCamera.h"

@@ -79,7 +79,7 @@ namespace Orion
         OE_CORE_ASSERT(parsed.Ok(), parsed.Error);
 
         std::unordered_map<GLenum, std::string> shaderSources;
-        for(const auto& [stage, code] : parsed.Stages)
+        for (const auto& [stage, code] : parsed.Stages)
             shaderSources[stage == ShaderStage::Vertex ? GL_VERTEX_SHADER : GL_FRAGMENT_SHADER] = code;
 
         return shaderSources;

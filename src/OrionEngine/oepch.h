@@ -22,4 +22,3 @@
 
 #include "Orion/Core/Assert.h"
 #include "Orion/Core/Log.h"
-

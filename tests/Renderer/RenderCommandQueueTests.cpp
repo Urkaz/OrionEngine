@@ -208,7 +208,7 @@ namespace
 
     void ObseveExecuting(void* payload)
     {
-        auto* observer              = static_cast<ExecutingObserver*>(payload);
+        auto* observer               = static_cast<ExecutingObserver*>(payload);
         *observer->ObservedExecuting = observer->Queue->IsExecuting();
     }
 
