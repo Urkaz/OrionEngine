@@ -1,7 +1,5 @@
 #pragma once
 
-#include "oepch.h"
-
 #include "Orion/Core/Core.h"
 #include "Orion/Core/Events/Event.h"
 

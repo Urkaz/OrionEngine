@@ -1,0 +1,49 @@
+#pragma once
+
+// Assert macros live apart from Core.h because they expand to OE_CORE_LOG, and Log.h already
+// includes Core.h: defining them there would require a circular include.
+
+#include "Orion/Core/Core.h"
+#include "Orion/Core/Log.h"
+
+#include <cstdlib>
+
+#ifdef OE_PLATFORM_WINDOWS
+    #define OE_DEBUGBREAK() __debugbreak()
+#elif defined(OE_PLATFORM_LINUX)
+    #include <csignal>
+    #define OE_DEBUGBREAK() raise(SIGTRAP)
+#endif
+
+#ifdef OE_ENABLE_ASSERTS
+    #define OE_ASSERT(x, ...)                                                                                          \
+        {                                                                                                              \
+            if (!(x))                                                                                                  \
+            {                                                                                                          \
+                OE_LOG(Error, "Assertion Failed: {0}", __VA_ARGS__);                                                   \
+                OE_DEBUGBREAK();                                                                                       \
+            }                                                                                                          \
+        }
+    #define OE_CORE_ASSERT(x, ...)                                                                                     \
+        {                                                                                                              \
+            if (!(x))                                                                                                  \
+            {                                                                                                          \
+                OE_CORE_LOG(Error, "Assertion Failed: {0}", __VA_ARGS__);                                              \
+                OE_DEBUGBREAK();                                                                                       \
+            }                                                                                                          \
+        }
+#else
+    #define OE_ASSERT(x, ...)
+    #define OE_CORE_ASSERT(x, ...)
+#endif // End of assert macros
+
+// Like OE_CORE_ASSERT, but always checked (also in builds without asserts).
+// For unrecoverable errors where continuing would be undefined behaviour.
+#define OE_CORE_VERIFY(x, ...)                                                                                         \
+    {                                                                                                                  \
+        if (!(x))                                                                                                      \
+        {                                                                                                              \
+            OE_CORE_LOG(Critical, "Verify Failed: {0}", __VA_ARGS__);                                                  \
+            std::abort();                                                                                              \
+        }                                                                                                              \
+    }

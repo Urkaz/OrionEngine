@@ -18,6 +18,9 @@ endforeach()
 
 target_link_libraries(${TEST_NAME} PRIVATE ${ENGINE_NAME} Catch2::Catch2WithMain assimp::assimp)
 
+# Precompiled header for the tests
+target_precompile_headers(${TEST_NAME} PRIVATE "oetestpch.h")
+
 setup_output_dirs(${TEST_NAME})
 
 if(ENABLE_WARNINGS)

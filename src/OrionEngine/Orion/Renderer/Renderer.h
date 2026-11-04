@@ -1,10 +1,11 @@
 #pragma once
 
-#include "Orion/Renderer/MeshRenderData.h"
-#include "Orion/Renderer/RendererAPI.h"
+#include "Orion/Core/Assert.h"
+#include "Orion/Profiling/Profiling.h"
 
 #include "Orion/Renderer/Camera.h"
 #include "Orion/Renderer/MeshRenderData.h"
+#include "Orion/Renderer/RendererAPI.h"
 #include "Orion/Renderer/RenderCommandQueue.h"
 #include "Orion/Renderer/Shader.h"
 

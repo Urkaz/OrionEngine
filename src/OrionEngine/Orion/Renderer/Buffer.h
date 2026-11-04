@@ -1,5 +1,11 @@
 #pragma once
 
+#include "Orion/Core/Assert.h"
+
+#include <cstdint>
+#include <string>
+#include <vector>
+
 namespace Orion
 {
     enum class ShaderDataType : uint8_t

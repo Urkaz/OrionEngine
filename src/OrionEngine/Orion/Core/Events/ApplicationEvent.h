@@ -1,5 +1,7 @@
 #pragma once
 
+#include <sstream>
+
 #include "Orion/Core/Events/Event.h"
 
 namespace Orion

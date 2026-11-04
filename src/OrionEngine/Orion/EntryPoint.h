@@ -1,6 +1,9 @@
 #pragma once
 
+#include "Orion/Core/Application.h"
+#include "Orion/Core/Assert.h"
 #include "Orion/Core/Core.h"
+#include "Orion/Profiling/Profiling.h"
 
 #if defined(OE_PLATFORM_WINDOWS) || defined(OE_PLATFORM_LINUX)
 

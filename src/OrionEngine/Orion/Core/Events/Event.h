@@ -1,6 +1,6 @@
 #pragma once
 
-#include "oepch.h"
+#include <functional>
 
 #include "Orion/Core/Core.h"
 

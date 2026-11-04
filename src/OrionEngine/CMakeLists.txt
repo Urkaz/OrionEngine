@@ -33,7 +33,7 @@ if(WIN32)
 endif()
 
 # Precompiled header
-target_precompile_headers(${ENGINE_NAME} PUBLIC "oepch.h")
+target_precompile_headers(${ENGINE_NAME} PRIVATE "oepch.h")
 
 # Misc settings
 setup_output_dirs(${ENGINE_NAME})

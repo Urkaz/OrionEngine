@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Orion/Core/Core.h"
+#include "Orion/Profiling/Profiling.h"
 
 #include <spdlog/fmt/ostr.h>
 #include <spdlog/spdlog.h>

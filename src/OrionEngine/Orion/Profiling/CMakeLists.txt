@@ -1,4 +1,4 @@
 target_sources(
     ${ENGINE_NAME}
     PUBLIC Profiling.h
-    PRIVATE MemoryProfiling.cpp)
+    PRIVATE MemoryProfiling.cpp Profiling.cpp)

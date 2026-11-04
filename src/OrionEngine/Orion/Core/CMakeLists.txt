@@ -13,6 +13,7 @@ target_sources(
 target_sources(
     ${ENGINE_NAME}
     PUBLIC Application.h
+           Assert.h
            Core.h
            Input.h
            KeyCodes.h
