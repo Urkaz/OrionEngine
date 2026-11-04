@@ -1,6 +1,8 @@
 # Paths that must never be formatted: third-party code and the output of any build preset (not only the current one).
 function(get_format_exclude_regex out_var)
-    set(regex "${CMAKE_BINARY_DIR}/.*|${CMAKE_SOURCE_DIR}/(external|src/ThirdParty|out|bin|build[^/]*)/.*")
+    set(regex
+        "${CMAKE_BINARY_DIR}/.*|${CMAKE_SOURCE_DIR}/(external|src/ThirdParty|out|bin|build[^/]*)/.*"
+    )
     if(DEFINED ENV{CPM_SOURCE_CACHE})
         string(APPEND regex "|$ENV{CPM_SOURCE_CACHE}/.*")
     endif()
@@ -122,13 +124,10 @@ function(add_clang_tidy_to_target target)
                 COMMAND
                     ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tools/run-clang-tidy.py
                     ${TARGET_SOURCES} -config-file=${CMAKE_SOURCE_DIR}/.clang-tidy
-                    ${CLANGTIDY_COMPILER_ARGS}
-                    -extra-arg=-Wno-error
-                    -extra-arg=-Wno-unknown-warning-option
-                    -p=${CMAKE_BINARY_DIR}
+                    ${CLANGTIDY_COMPILER_ARGS} -extra-arg=-Wno-error
+                    -extra-arg=-Wno-unknown-warning-option -p=${CMAKE_BINARY_DIR}
                 WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-                USES_TERMINAL
-                VERBATIM)
+                USES_TERMINAL VERBATIM)
         endif()
     else()
         message(WARNING "CLANGTIDY NOT FOUND")
