@@ -1,5 +1,7 @@
 #include "oepch.h"
+
 #include "Orion/Core/Log.h"
+#include "Orion/Profiling/Profiling.h"
 
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
@@ -35,6 +37,13 @@ namespace Orion
 
         OE_CORE_LOG(Trace, "Initialized Core Log!");
         OE_LOG(Trace, "Initialized Client Log!");
+    }
+
+    void WriteLog(LogLevel level, spdlog::logger& logger, spdlog::string_view_t fmt, spdlog::fmt_lib::format_args args)
+    {
+        std::string message = spdlog::fmt_lib::vformat(fmt, args);
+        logger.log(ToSpdlogLevel(level), message);
+        OE_PROFILE_LOG_MESSAGE(message, LogLevelColor(level));
     }
 } // namespace Orion
 #endif

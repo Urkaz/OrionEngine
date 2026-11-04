@@ -16,16 +16,16 @@ namespace Orion
         switch (severity)
         {
         case GL_DEBUG_SEVERITY_HIGH:
-            OE_CORE_LOG(Critical, message);
+            OE_CORE_LOG(Critical, "{}", message);
             return;
         case GL_DEBUG_SEVERITY_MEDIUM:
-            OE_CORE_LOG(Error, message);
+            OE_CORE_LOG(Error, "{}", message);
             return;
         case GL_DEBUG_SEVERITY_LOW:
-            OE_CORE_LOG(Warn, message);
+            OE_CORE_LOG(Warn, "{}", message);
             return;
         case GL_DEBUG_SEVERITY_NOTIFICATION:
-            OE_CORE_LOG(Trace, message);
+            OE_CORE_LOG(Trace, "{}", message);
             return;
         }
         OE_CORE_ASSERT(false, "Unknown severity level!");

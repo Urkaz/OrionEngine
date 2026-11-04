@@ -1,14 +1,10 @@
 #pragma once
 
 #include "Orion/Core/Core.h"
-#include "Orion/Profiling/Profiling.h"
 
-#include <spdlog/fmt/ostr.h>
 #include <spdlog/spdlog.h>
 
 #ifdef OE_ENABLE_LOGS
-
-    #include <utility>
 
 namespace Orion
 {
@@ -43,37 +39,60 @@ namespace Orion
         Critical
     };
 
+    constexpr spdlog::level::level_enum ToSpdlogLevel(LogLevel level)
+    {
+        switch (level)
+        {
+        case LogLevel::Trace:
+            return spdlog::level::trace;
+        case LogLevel::Info:
+            return spdlog::level::info;
+        case LogLevel::Warn:
+            return spdlog::level::warn;
+        case LogLevel::Error:
+            return spdlog::level::err;
+        case LogLevel::Critical:
+            return spdlog::level::critical;
+        }
+        return spdlog::level::off;
+    }
+
+    #if defined(OE_ENABLE_PROFILING)
+    constexpr uint32_t LogLevelColor(Orion::LogLevel level)
+    {
+        switch (level)
+        {
+        case LogLevel::Trace:
+            return 0x999999;
+        case LogLevel::Info:
+            return 0xFFFFFF;
+        case LogLevel::Warn:
+            return 0xFFAA00;
+        case LogLevel::Error:
+            return 0xFF3333;
+        case LogLevel::Critical:
+            return 0xFF0000;
+        }
+        return 0xFFFFFF;
+    }
+    #endif
+
+    void WriteLog(Orion::LogLevel level,
+                  spdlog::logger& logger,
+                  spdlog::string_view_t fmt,
+                  spdlog::fmt_lib::format_args args);
+
+
     template <typename... Args>
     inline void LogMessage(Orion::LogLevel level,
                            Ref<spdlog::logger>& logger,
-                           const std::string_view& fmt,
+                           spdlog::format_string_t<Args...> fmt,
                            Args&&... args)
     {
-        std::string message = spdlog::fmt_lib::format(spdlog::fmt_lib::runtime(fmt), std::forward<Args>(args)...);
+        if (!logger->should_log(ToSpdlogLevel(level)))
+            return;
 
-        switch (level)
-        {
-        case Orion::LogLevel::Trace:
-            logger->trace(message);
-            OE_PROFILE_LOG_MESSAGE(message, 0x999999);
-            break;
-        case Orion::LogLevel::Info:
-            logger->info(message);
-            OE_PROFILE_LOG_MESSAGE(message, 0xFFFFFF);
-            break;
-        case Orion::LogLevel::Warn:
-            logger->warn(message);
-            OE_PROFILE_LOG_MESSAGE(message, 0xFFAA00);
-            break;
-        case Orion::LogLevel::Error:
-            logger->error(message);
-            OE_PROFILE_LOG_MESSAGE(message, 0xFF3333);
-            break;
-        case Orion::LogLevel::Critical:
-            logger->critical(message);
-            OE_PROFILE_LOG_MESSAGE(message, 0xFF0000);
-            break;
-        }
+        WriteLog(level, *logger, fmt.get(), spdlog::fmt_lib::make_format_args(args...));
     }
 } // namespace Orion
 #endif
