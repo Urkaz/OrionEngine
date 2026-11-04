@@ -7,7 +7,7 @@
 
 #if defined(OE_PLATFORM_WINDOWS) || defined(OE_PLATFORM_LINUX)
 
-extern Orion::Application* Orion::CreateApplication();
+extern Orion::Scope<Orion::Application> Orion::CreateApplication();
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 {
