@@ -6,7 +6,7 @@
 
 namespace Orion
 {
-    Scope<GraphicsContext> GraphicsContext::Create(void* window)
+    [[nodiscard]] Scope<GraphicsContext> GraphicsContext::Create(void* window)
     {
         switch (Renderer::GetAPI())
         {

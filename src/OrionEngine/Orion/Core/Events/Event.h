@@ -1,14 +1,8 @@
 #pragma once
 
-#include <functional>
-
 #include "Orion/Core/Core.h"
 
-#ifdef SPDLOG_FMT_EXTERNAL
-    #include <fmt/core.h>
-#else
-    #include <spdlog/fmt/bundled/core.h>
-#endif
+#include <string>
 
 namespace Orion
 {
@@ -139,7 +133,7 @@ namespace Orion
          * @param category Category to test.
          * @return true if event is in category, false otherwise.
          */
-        inline bool IsInCategory(EventCategory category)
+        [[nodiscard]] bool IsInCategory(EventCategory category) const
         {
             return GetCategoryFlags() & category;
         }
@@ -157,9 +151,6 @@ namespace Orion
      */
     class EventDispatcher
     {
-        template <typename T>
-        using EventFn = std::function<bool(T&)>;
-
     public:
         /**
          * @brief Construct the dispatcher for a given event.

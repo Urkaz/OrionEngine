@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <memory>
 
 namespace Orion
@@ -48,7 +49,13 @@ namespace Orion
     #error "Unknown platform!"
 #endif // End of platform detection
 
-#define BIT(x) (1 << (x))
+namespace Orion
+{
+    constexpr uint32_t BIT(uint32_t x)
+    {
+        return 1u << x;
+    }
+} // namespace Orion
 
 #define OE_BIND_EVENT_FN(fn)                                                                                           \
     [this](auto&&... args) -> decltype(auto) { return this->fn(std::forward<decltype(args)>(args)...); }

@@ -9,7 +9,7 @@ namespace Orion
 {
     Scope<Input> Input::s_Instance = Input::Create();
 
-    Scope<Input> Input::Create()
+    [[nodiscard]] Scope<Input> Input::Create()
     {
 #if defined(OE_PLATFORM_WINDOWS) || defined(OE_PLATFORM_LINUX)
         return CreateScope<GlfwInput>();

@@ -7,7 +7,7 @@
 
 namespace Orion
 {
-    Scope<Window> Window::Create(const WindowProps& props)
+    [[nodiscard]] Scope<Window> Window::Create(const WindowProps& props)
     {
 #if defined(OE_PLATFORM_WINDOWS) || defined(OE_PLATFORM_LINUX)
         return CreateScope<GlfwWindow>(props);

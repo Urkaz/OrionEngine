@@ -24,7 +24,7 @@ namespace Orion
         Bool
     };
 
-    static uint32_t ShaderDataTypeSize(ShaderDataType type)
+    constexpr uint32_t ShaderDataTypeSize(ShaderDataType type)
     {
         switch (type)
         {
