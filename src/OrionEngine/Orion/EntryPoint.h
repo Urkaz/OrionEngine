@@ -15,12 +15,11 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 
     Orion::InitializeCore();
 
-    Orion::Application* app = Orion::CreateApplication();
+    Orion::Scope<Orion::Application> app = Orion::CreateApplication();
     OE_CORE_ASSERT(app, "Client Application is null!");
 
     app->Run();
 
-    delete app;
     Orion::ShutdownCore();
 
     return 0;

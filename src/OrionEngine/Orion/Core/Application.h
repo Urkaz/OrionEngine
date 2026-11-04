@@ -122,5 +122,5 @@ namespace Orion
      *
      * @return Application* Pointer to a dynamically allocated Application instance.
      */
-    Application* CreateApplication();
+    Orion::Scope<Orion::Application> CreateApplication();
 } // namespace Orion

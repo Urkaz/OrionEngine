@@ -13,7 +13,7 @@ public:
     ~Sandbox() override = default;
 };
 
-Orion::Application* Orion::CreateApplication()
+Orion::Scope<Orion::Application> Orion::CreateApplication()
 {
-    return new Sandbox();
+    return Orion::CreateScope<Sandbox>();
 }
