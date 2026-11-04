@@ -76,7 +76,7 @@ namespace Orion
         OE_PROFILE_FUNCTION();
 
         const ShaderParseResult parsed = ParseShaderSource(source);
-        OE_CORE_ASSERT(parsed.Ok(), parsed.Error);
+        OE_CORE_ASSERT(parsed.Ok(), "{}", parsed.Error);
 
         std::unordered_map<GLenum, std::string> shaderSources;
         for (const auto& [stage, code] : parsed.Stages)
@@ -90,7 +90,7 @@ namespace Orion
         OE_PROFILE_FUNCTION();
 
         const GLuint program = glCreateProgram();
-        OE_CORE_ASSERT(shaderSources.size() <= 2, "Too many shader sources")
+        OE_CORE_ASSERT(shaderSources.size() <= 2, "Too many shader sources");
         std::array<GLenum, 2> glShaderIDs = {0, 0};
 
         size_t glShaderIDIndex = 0;

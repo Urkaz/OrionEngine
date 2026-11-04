@@ -54,7 +54,7 @@ namespace Orion
             m_DataFormat     = GL_RGB;
         }
 
-        OE_CORE_ASSERT(m_InternalFormat && m_DataFormat, "Texture format not supported")
+        OE_CORE_ASSERT(m_InternalFormat && m_DataFormat, "Texture format not supported");
 
         glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
         glTextureStorage2D(m_RendererID, 1, m_InternalFormat, width, height);
