@@ -27,12 +27,12 @@ namespace Orion
         s_CoreLogger = std::make_shared<spdlog::logger>("OrionEngine", begin(logSinks), end(logSinks));
         spdlog::register_logger(s_CoreLogger);
         s_CoreLogger->set_level(spdlog::level::trace);
-        s_CoreLogger->flush_on(spdlog::level::trace);
+        s_CoreLogger->flush_on(spdlog::level::warn);
 
         s_ClientLogger = std::make_shared<spdlog::logger>("App", begin(logSinks), end(logSinks));
         spdlog::register_logger(s_ClientLogger);
         s_ClientLogger->set_level(spdlog::level::trace);
-        s_ClientLogger->flush_on(spdlog::level::trace);
+        s_ClientLogger->flush_on(spdlog::level::warn);
 
 
         OE_CORE_LOG(Trace, "Initialized Core Log!");
