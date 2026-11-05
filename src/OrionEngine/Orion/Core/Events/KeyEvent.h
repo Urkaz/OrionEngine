@@ -1,5 +1,7 @@
 #pragma once
 
+#include <format>
+
 #include "Orion/Core/Events/Event.h"
 #include "Orion/Core/KeyCodes.h"
 
@@ -33,9 +35,7 @@ namespace Orion
 
         std::string ToString() const override
         {
-            std::stringstream ss;
-            ss << "KeyPressedEvent: " << m_KeyCode << " (" << m_RepeatCount << " repeats)";
-            return ss.str();
+            return std::format("KeyPressedEvent: {} ({} repeats)", m_KeyCode, m_RepeatCount);
         }
 
         EVENT_CLASS_TYPE(KeyPressed)
@@ -51,9 +51,7 @@ namespace Orion
 
         std::string ToString() const override
         {
-            std::stringstream ss;
-            ss << "KeyReleasedEvent: " << m_KeyCode;
-            return ss.str();
+            return std::format("KeyReleasedEvent: {}", m_KeyCode);
         }
 
         EVENT_CLASS_TYPE(KeyReleased)
@@ -66,9 +64,7 @@ namespace Orion
 
         std::string ToString() const override
         {
-            std::stringstream ss;
-            ss << "KeyTypedEvent: " << m_KeyCode;
-            return ss.str();
+            return std::format("KeyTypedEvent: {}", m_KeyCode);
         }
 
         EVENT_CLASS_TYPE(KeyTyped)

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <format>
+
 #include "Orion/Core/Events/Event.h"
 #include "Orion/Core/MouseCodes.h"
 
@@ -21,9 +23,7 @@ namespace Orion
 
         std::string ToString() const override
         {
-            std::stringstream ss;
-            ss << "MouseMovedEvent: " << m_MouseX << ", " << m_MouseY;
-            return ss.str();
+            return std::format("MouseMovedEvent: {}, {}", m_MouseX, m_MouseY);
         }
 
         EVENT_CLASS_TYPE(MouseMoved)
@@ -48,9 +48,7 @@ namespace Orion
 
         std::string ToString() const override
         {
-            std::stringstream ss;
-            ss << "MouseScrolledEvent: " << GetXOffset() << ", " << GetYOffset();
-            return ss.str();
+            return std::format("MouseScrolledEvent: {}, {}", GetXOffset(), GetYOffset());
         }
 
         EVENT_CLASS_TYPE(MouseScrolled)
@@ -80,9 +78,7 @@ namespace Orion
 
         std::string ToString() const override
         {
-            std::stringstream ss;
-            ss << "MouseButtonPressedEvent: " << m_Button;
-            return ss.str();
+            return std::format("MouseButtonPressedEvent: {}", m_Button);
         }
 
         EVENT_CLASS_TYPE(MouseButtonPressed)
@@ -95,9 +91,7 @@ namespace Orion
 
         std::string ToString() const override
         {
-            std::stringstream ss;
-            ss << "MouseButtonReleasedEvent: " << m_Button;
-            return ss.str();
+            return std::format("MouseButtonReleasedEvent: {}", m_Button);
         }
 
         EVENT_CLASS_TYPE(MouseButtonReleased)
