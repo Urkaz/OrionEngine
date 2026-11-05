@@ -14,7 +14,7 @@ namespace Orion
         void SetPerspective(float vericalFOVRadians, float aspectRatio, float nearClip, float farClip);
         void SetOrthographic(float size, float aspectRatio, float nearClip, float farClip);
 
-        const glm::mat4& GetProjectionMatrix() const
+        [[nodiscard]] const glm::mat4& GetProjectionMatrix() const
         {
             return m_ProjectionMatrix;
         }

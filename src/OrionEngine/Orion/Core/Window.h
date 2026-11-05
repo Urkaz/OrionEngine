@@ -111,9 +111,9 @@ namespace Orion
          * @brief Factory method to create platform-specific window implementation.
          *
          * @param props Configuration properties for the window.
-         * @return Window* Pointer to newly created Window instance.
+         * @return Scope<Window> Owning pointer to the newly created Window instance.
          */
-        static Scope<Window> Create(const WindowProps& props = WindowProps());
+        [[nodiscard]] static Scope<Window> Create(const WindowProps& props = WindowProps());
     };
 
 } // namespace Orion

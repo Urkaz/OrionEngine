@@ -25,15 +25,15 @@ namespace Orion
         // Commands allocated while executing are appended and run in this same pass.
         void Execute();
 
-        bool IsExecuting() const
+        [[nodiscard]] bool IsExecuting() const
         {
             return m_Executing;
         }
-        uint32_t GetCommandCount() const
+        [[nodiscard]] uint32_t GetCommandCount() const
         {
             return m_CommandCount;
         }
-        uint32_t GetUsedBytes() const
+        [[nodiscard]] uint32_t GetUsedBytes() const
         {
             return m_Offset;
         }

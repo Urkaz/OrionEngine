@@ -23,7 +23,7 @@ namespace Orion
 
         // Layout of the vertex buffer. Must describe EXACTLY the memory layout of this struct
         // (the attribute locations are 0 to 4 in the same order)
-        static BufferLayout GetLayout()
+        [[nodiscard]] static BufferLayout GetLayout()
         {
             // clang-format off
             return {{ShaderDataType::Float3, "a_Position"},

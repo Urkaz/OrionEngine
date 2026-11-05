@@ -50,7 +50,7 @@ namespace Orion
             s_Instance->SetCursorModeImpl(mode);
         }
 
-        static Scope<Input> Create();
+        [[nodiscard]] static Scope<Input> Create();
 
     protected:
         virtual bool IsKeyPressedImpl(KeyCode key)              = 0;

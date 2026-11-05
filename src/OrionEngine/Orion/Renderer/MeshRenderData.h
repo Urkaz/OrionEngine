@@ -10,11 +10,11 @@ namespace Orion
     public:
         explicit MeshRenderData(const Ref<MeshSource>& source);
 
-        const Ref<MeshSource>& GetSource() const
+        [[nodiscard]] const Ref<MeshSource>& GetSource() const
         {
             return m_Source;
         }
-        const Ref<VertexArray>& GetVertexArray() const
+        [[nodiscard]] const Ref<VertexArray>& GetVertexArray() const
         {
             return m_VertexArray;
         }

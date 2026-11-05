@@ -70,7 +70,7 @@ namespace Orion
             : Name(name), Type(type), Size(ShaderDataTypeSize(type)), Offset(0), Normalized(normalized)
         {}
 
-        uint32_t GetComponentCount() const
+        [[nodiscard]] uint32_t GetComponentCount() const
         {
             switch (Type)
             {
@@ -112,7 +112,7 @@ namespace Orion
             CalculateOffsetAndStride();
         }
 
-        inline const std::vector<BufferElement>& GetElements() const
+        [[nodiscard]] const std::vector<BufferElement>& GetElements() const
         {
             return m_Elements;
         }
@@ -134,7 +134,7 @@ namespace Orion
             return m_Elements.end();
         }
 
-        inline uint32_t GetStride() const
+        [[nodiscard]] uint32_t GetStride() const
         {
             return m_Stride;
         }
@@ -166,9 +166,9 @@ namespace Orion
         virtual void Unbind() const = 0;
 
         virtual void SetLayout(const BufferLayout& layout) = 0;
-        virtual const BufferLayout& GetLayout()            = 0;
+        [[nodiscard]] virtual const BufferLayout& GetLayout() = 0;
 
-        static Ref<VertexBuffer> Create(const void* vertices, uint32_t size);
+        [[nodiscard]] static Ref<VertexBuffer> Create(const void* vertices, uint32_t size);
     };
 
     class IndexBuffer
@@ -179,8 +179,8 @@ namespace Orion
         virtual void Bind() const   = 0;
         virtual void Unbind() const = 0;
 
-        virtual uint32_t GetCount() const = 0;
+        [[nodiscard]] virtual uint32_t GetCount() const = 0;
 
-        static Ref<IndexBuffer> Create(const uint32_t* indices, uint32_t count);
+        [[nodiscard]] static Ref<IndexBuffer> Create(const uint32_t* indices, uint32_t count);
     };
 } // namespace Orion

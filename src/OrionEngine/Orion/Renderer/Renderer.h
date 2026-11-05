@@ -30,7 +30,7 @@ namespace Orion
                                const Ref<MeshRenderData>& renderData,
                                const glm::mat4& transform = glm::mat4(1.0f));
 
-        inline static RendererAPI::API GetAPI()
+        [[nodiscard]] static RendererAPI::API GetAPI()
         {
             return RendererAPI::GetAPI();
         }
@@ -76,13 +76,13 @@ namespace Orion
         }
 
         // True while the queued commands are being executed: the only moment RT_ functions may be called
-        static bool IsExecutingCommands()
+        [[nodiscard]] static bool IsExecutingCommands()
         {
             return GetRenderCommandQueue().IsExecuting();
         }
 
     private:
-        static RenderCommandQueue& GetRenderCommandQueue();
+        [[nodiscard]] static RenderCommandQueue& GetRenderCommandQueue();
 
     private:
         struct SceneData

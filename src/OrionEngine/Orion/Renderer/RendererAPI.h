@@ -37,18 +37,18 @@ namespace Orion
                                  uint32_t firstIndex,
                                  uint32_t vertexOffset)               = 0;
 
-        inline static API GetAPI()
+        [[nodiscard]] static API GetAPI()
         {
             return s_API;
         }
 
-        static Capabilities& GetCapabilities()
+        [[nodiscard]] static Capabilities& GetCapabilities()
         {
             static Capabilities capabilities;
             return capabilities;
         }
 
-        static Scope<RendererAPI> Create();
+        [[nodiscard]] static Scope<RendererAPI> Create();
 
     private:
         static API s_API;
