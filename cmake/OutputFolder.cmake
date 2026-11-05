@@ -1,12 +1,8 @@
 function(setup_output_dirs target)
-    # One output folder per preset, so presets sharing config and compiler (e.g. linux-clang-debug and
-    # linux-clang-asan) never overwrite each other's binaries. Falls back to the build dir name when
-    # configuring without presets.
-    if(ORION_PRESET_NAME)
-        set(OUTPUT_NAME "${ORION_PRESET_NAME}")
-    else()
-        get_filename_component(OUTPUT_NAME "${CMAKE_BINARY_DIR}" NAME)
-    endif()
+    # One output folder per build dir, so presets sharing config and compiler (e.g. linux-clang-debug and
+    # linux-clang-asan) never overwrite each other's binaries. Presets use out/build/<preset>, so the
+    # folder is named after the preset; a custom build dir (-B) for the same preset gets its own folder.
+    get_filename_component(OUTPUT_NAME "${CMAKE_BINARY_DIR}" NAME)
     set(OUTPUT_DIR "${CMAKE_SOURCE_DIR}/bin/${OUTPUT_NAME}/$<CONFIG>/${CMAKE_PROJECT_NAME}")
 
     set_target_properties(
