@@ -8,6 +8,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/epsilon.hpp>
 
+#include <cmath>
+
 using Catch::Matchers::WithinAbs;
 
 namespace
@@ -44,12 +46,43 @@ TEST_CASE("Renderer/Camera/FlyCamera: forward, right and up follow yaw and pitch
         CHECK(approxEqual(camera.GetUpDirection(), {0.0f, 1.0f, 0.0f}));
     }
 
-    SECTION("pitch 90 looks straight up")
+    SECTION("pitch 45 looks up and forward")
     {
-        camera.SetRotation(0.0f, 90.0f);
-        CHECK(approxEqual(camera.GetForwardDirection(), {0.0f, 1.0f, 0.0f}));
+        // Not 90: SetRotation clamps the pitch just below the pole
+        const float s = std::sqrt(0.5f);
+        camera.SetRotation(0.0f, 45.0f);
+        CHECK(approxEqual(camera.GetForwardDirection(), {0.0f, s, -s}));
         CHECK(approxEqual(camera.GetRightDirection(), {1.0f, 0.0f, 0.0f}));
-        CHECK(approxEqual(camera.GetUpDirection(), {0.0f, 0.0f, 1.0f}));
+        CHECK(approxEqual(camera.GetUpDirection(), {0.0f, s, s}));
+    }
+}
+
+TEST_CASE("Renderer/Camera/FlyCamera: SetRotation clamps the pitch and wraps the yaw", "[Renderer][FlyCamera]")
+{
+    Orion::FlyCamera camera = MakeCamera();
+
+    SECTION("a pitch beyond the poles never flips the camera upside down")
+    {
+        // Unclamped, +-120 would look backwards (forward.z > 0) with up pointing down (up.y < 0)
+        for (const float pitch : {120.0f, -120.0f})
+        {
+            camera.SetRotation(0.0f, pitch);
+            CHECK(camera.GetForwardDirection().z < 0.0f);
+            CHECK(camera.GetUpDirection().y > 0.0f);
+        }
+    }
+
+    SECTION("the yaw is wrapped into [-180, 180] without changing the direction")
+    {
+        Orion::FlyCamera reference = MakeCamera();
+        reference.SetRotation(10.0f, 30.0f);
+
+        for (const float yaw : {370.0f, -350.0f, 730.0f})
+        {
+            camera.SetRotation(yaw, 30.0f);
+            CHECK(glm::all(glm::epsilonEqual(camera.GetForwardDirection(), reference.GetForwardDirection(), 1e-4f)));
+            CHECK_THAT(static_cast<double>(camera.GetYaw()), WithinAbs(10.0, Epsilon));
+        }
     }
 }
 
