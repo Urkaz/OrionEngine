@@ -73,7 +73,7 @@ namespace Orion
             {
                 const Submesh& submesh = source.Submeshes[submeshIndex];
                 if (submesh.IndexCount == 0)
-                    return;
+                    continue;
 
                 const uint32_t indexCount   = submesh.IndexCount;
                 const uint32_t firstIndex   = submesh.FirstIndex;
