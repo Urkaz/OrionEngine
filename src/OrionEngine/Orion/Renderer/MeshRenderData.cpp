@@ -2,6 +2,10 @@
 #include "Buffer.h"
 #include "MeshRenderData.h"
 #include "Orion/Renderer/VertexArray.h"
+#include "Texture.h"
+
+#include <filesystem>
+#include <unordered_map>
 
 namespace Orion
 {
@@ -21,5 +25,55 @@ namespace Orion
         Ref<IndexBuffer> indexBuffer =
             IndexBuffer::Create(source->Indices.data(), static_cast<uint32_t>(source->Indices.size()));
         m_VertexArray->SetIndexBuffer(indexBuffer);
+
+        Ref<Texture2D> whiteTexture       = Texture2D::Create(1, 1);
+        std::array<uint8_t, 4> whitePixel = {255, 255, 255, 255};
+        whiteTexture->SetData(&whitePixel, static_cast<uint32_t>(whitePixel.size()));
+
+        Ref<Texture2D> flatNormalTexture       = Texture2D::Create(1, 1);
+        std::array<uint8_t, 4> flatNormalPixel = {128, 128, 255, 255};
+        flatNormalTexture->SetData(&flatNormalPixel, static_cast<uint32_t>(flatNormalPixel.size()));
+
+        std::unordered_map<std::string, Ref<Texture2D>> textureCache;
+        auto loadTexture = [&source, &textureCache](const std::string& path,
+                                                    bool srgb,
+                                                    const Ref<Texture2D>& fallback) -> Ref<Texture2D> {
+            if (path.empty())
+                return fallback;
+
+            const std::string cacheKey = path + (srgb ? "|srgb" : "|linear");
+            if (const auto it = textureCache.find(cacheKey); it != textureCache.end())
+                return it->second;
+
+            Ref<Texture2D> texture = fallback;
+            if (const auto it = source->EmbeddedTextures.find(path); it != source->EmbeddedTextures.end())
+            {
+                texture = Texture2D::CreateFromMemory(it->second.data(), it->second.size(), srgb);
+            }
+            else
+            {
+                std::filesystem::path filePath = ResolveTexturePath(source->Directory, path);
+                if (std::filesystem::exists(filePath))
+                    texture = Texture2D::Create(filePath.string(), srgb);
+                else
+                    OE_CORE_LOG(Warn, "Texture file not found: {0}", filePath.string());
+            }
+            textureCache[cacheKey] = texture;
+            return texture;
+        };
+
+        m_Materials.reserve(source->Materials.size());
+        for (const auto& material : source->Materials)
+        {
+            MeshRenderMaterial& renderMaterial = m_Materials.emplace_back();
+            renderMaterial.Albedo              = loadTexture(material.AlbedoPath, true, whiteTexture);
+            renderMaterial.Normal              = loadTexture(material.NormalPath, false, flatNormalTexture);
+            renderMaterial.HasNormalMap        = renderMaterial.Normal != flatNormalTexture;
+        }
+
+        const auto withNormalMap = std::ranges::count_if(m_Materials, [](const MeshRenderMaterial& material) {
+            return material.HasNormalMap;
+        });
+        OE_CORE_LOG(Info, "Materials: {0}, with normal map: {1}", m_Materials.size(), withNormalMap);
     }
 } // namespace Orion

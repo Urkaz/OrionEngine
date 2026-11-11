@@ -11,6 +11,7 @@
 
 #include <cstddef>
 #include <cstring>
+#include <filesystem>
 
 namespace
 {
@@ -217,4 +218,27 @@ TEST_CASE("Renderer/Mesh/MeshSource: UpdateNodeTransforms handles roots, sibling
         CHECK(approxEqual(originOf(source.Nodes[1]), {11.0f, 0.0f, 0.0f}));
         CHECK(approxEqual(originOf(source.Nodes[2]), {10.0f, 5.0f, 0.0f}));
     }
+}
+
+TEST_CASE("Renderer/Mesh/ResolveTexturePath: joins the model folder and the texture path", "[Renderer][Mesh]")
+{
+    const std::filesystem::path resolved = Orion::ResolveTexturePath("assets/models", "Textures/colormap.png");
+
+    // generic_string() always uses '/', so the comparison does not depend on the platform separator
+    REQUIRE(resolved.generic_string() == "assets/models/Textures/colormap.png");
+}
+
+TEST_CASE("Renderer/Mesh/ResolveTexturePath: converts Windows separators", "[Renderer][Mesh]")
+{
+    // Models exported on Windows store paths with '\', which is not a separator on Linux
+    const std::filesystem::path resolved = Orion::ResolveTexturePath("assets/models", "Textures\\colormap.png");
+
+    REQUIRE(resolved.generic_string() == "assets/models/Textures/colormap.png");
+    REQUIRE(resolved.filename() == "colormap.png");
+}
+
+TEST_CASE("Renderer/Mesh/ResolveTexturePath: an empty texture path stays empty", "[Renderer][Mesh]")
+{
+    // An empty path means "no texture": joining it would return the model folder instead
+    REQUIRE(Orion::ResolveTexturePath("assets/models", "").empty());
 }

@@ -20,4 +20,12 @@ namespace Orion
             }
         }
     }
+
+    std::filesystem::path ResolveTexturePath(const std::filesystem::path& modelDirectory, std::string texturePath)
+    {
+        if (texturePath.empty())
+            return {};
+        std::ranges::replace(texturePath, '\\', '/'); // Normalize to forward slashes
+        return modelDirectory / texturePath;
+    }
 } // namespace Orion

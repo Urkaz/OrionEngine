@@ -6,6 +6,7 @@ set(TEST_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/Core/LayerStackTests.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Renderer/CameraTests.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Renderer/FlyCameraTests.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Renderer/LightingTests.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Renderer/MeshTests.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Renderer/RenderCommandQueueTests.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Renderer/ShaderSourceParserTests.cpp")

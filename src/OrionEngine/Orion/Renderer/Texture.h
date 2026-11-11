@@ -23,6 +23,8 @@ namespace Orion
     {
     public:
         [[nodiscard]] static Ref<Texture2D> Create(uint32_t width, uint32_t height);
-        [[nodiscard]] static Ref<Texture2D> Create(const std::string& path);
+        [[nodiscard]] static Ref<Texture2D> Create(const std::string& path, bool srgb = false);
+        // `data` is the contents of an image FILE (PNG, JPEG...), not raw pixels
+        [[nodiscard]] static Ref<Texture2D> CreateFromMemory(const void* data, size_t size, bool srgb = false);
     };
 } // namespace Orion

@@ -1,5 +1,6 @@
 #include "Orion/Renderer/AssimpMeshImporter.h"
 #include "Orion/Renderer/Buffer.h"
+#include "Orion/Renderer/LightingMath.h"
 #include "Orion/Renderer/MeshRenderData.h"
 #include "Orion/Renderer/RenderCommand.h"
 #include "Orion/Renderer/Renderer.h"
@@ -79,11 +80,13 @@ void Sandbox3D::OnAttach()
     m_CubeShader = Orion::Shader::Create("assets/shaders/Cube.glsl");
 
 
-    Orion::Ref<Orion::MeshSource> source = Orion::AssimpMeshImporter::Import("assets/models/ambulance.glb");
+    Orion::Ref<Orion::MeshSource> source = Orion::AssimpMeshImporter::Import("assets/models/Sponza/Sponza.gltf");
     if (!source)
         return;
     m_Model      = Orion::CreateRef<Orion::MeshRenderData>(source);
     m_MeshShader = Orion::Shader::Create("assets/shaders/MeshDebug.glsl");
+
+    m_LitShader = Orion::Shader::Create("assets/shaders/MeshLit.glsl");
 }
 
 void Sandbox3D::OnUpdate(Orion::Timestep ts)
@@ -101,32 +104,58 @@ void Sandbox3D::OnUpdate(Orion::Timestep ts)
 
     Orion::Renderer::BeginScene(m_Camera, m_Camera.GetViewMatrix());
 
-    const glm::mat4 cubeTransform = glm::translate(glm::mat4(1.0f), {0.0f, 0.5f, 0.0f}) *
-                                    glm::rotate(glm::mat4(1.0f), m_Time, glm::normalize(glm::vec3(1.0f, 1.0f, 0.0f))) *
-                                    glm::scale(glm::mat4(1.0f), glm::vec3(1.5f));
-    Orion::Renderer::Submit(m_CubeShader, m_CubeVA, cubeTransform);
+    // const glm::mat4 cubeTransform = glm::translate(glm::mat4(1.0f), {0.0f, 0.5f, 0.0f}) *
+    //                                 glm::rotate(glm::mat4(1.0f), m_Time, glm::normalize(glm::vec3(1.0f, 1.0f, 0.0f))) *
+    //                                 glm::scale(glm::mat4(1.0f), glm::vec3(1.5f));
+    // Orion::Renderer::Submit(m_CubeShader, m_CubeVA, cubeTransform);
 
-    for (int z = 10; z >= -10; --z)
-    {
-        for (int x = -10; x <= 10; ++x)
-        {
-            const glm::vec3 position = {static_cast<float>(x) * 2.0f, -1.0f, static_cast<float>(z) * 2.0f};
-            const glm::mat4 transform =
-                glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), {1.8f, 0.1f, 1.8f});
-            Orion::Renderer::Submit(m_CubeShader, m_CubeVA, transform);
-        }
-    }
+    // for (int z = 10; z >= -10; --z)
+    // {
+    //     for (int x = -10; x <= 10; ++x)
+    //     {
+    //         const glm::vec3 position = {static_cast<float>(x) * 2.0f, -1.0f, static_cast<float>(z) * 2.0f};
+    //         const glm::mat4 transform =
+    //             glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), {1.8f, 0.1f, 1.8f});
+    //         Orion::Renderer::Submit(m_CubeShader, m_CubeVA, transform);
+    //     }
+    // }
 
     if (m_Model)
     {
         const glm::mat4 modelTransform =
             glm::translate(glm::mat4(1.0f), {2.0f, 0.0f, 0.0f}) * glm::scale(glm::mat4(1.0f), glm::vec3(m_ModelScale));
 
-        Orion::Renderer::Submit([shader = m_MeshShader, mode = m_DebugMode]() {
-            shader->Bind();
-            shader->SetInt("u_DebugMode", mode);
-        });
-        Orion::Renderer::SubmitMesh(m_MeshShader, m_Model, modelTransform);
+        const glm::vec3 lightDirection = Orion::DirectionFromYawPitch(m_LightYaw, m_LightPitch);
+
+        if (m_ShadingMode == 0)
+        {
+            Orion::Renderer::Submit([shader = m_LitShader,
+                                     lightDirection,
+                                     lightColor       = m_LightColor * m_LightIntensity,
+                                     ambient          = m_Ambient,
+                                     cameraPos        = m_Camera.GetPosition(),
+                                     shininess        = m_Shininess,
+                                     specularStrength = m_SpecularStrength,
+                                     mode             = m_ViewMode]() {
+                shader->Bind();
+                shader->SetFloat3("u_LightDirection", lightDirection);
+                shader->SetFloat3("u_LightColor", lightColor);
+                shader->SetFloat3("u_Ambient", ambient);
+                shader->SetFloat3("u_CameraPosition", cameraPos);
+                shader->SetFloat("u_Shininess", shininess);
+                shader->SetFloat("u_SpecularStrength", specularStrength);
+                shader->SetInt("u_ViewMode", mode);
+            });
+            Orion::Renderer::SubmitMesh(m_LitShader, m_Model, modelTransform);
+        }
+        else if (m_ShadingMode == 1)
+        {
+            Orion::Renderer::Submit([shader = m_MeshShader, mode = m_DebugMode]() {
+                shader->Bind();
+                shader->SetInt("u_DebugMode", mode);
+            });
+            Orion::Renderer::SubmitMesh(m_MeshShader, m_Model, modelTransform);
+        }
     }
 
     Orion::Renderer::EndScene();
@@ -170,8 +199,25 @@ void Sandbox3D::OnImGuiRender()
 
     ImGui::Begin("Model");
 
-    ImGui::Combo("Debug view", &m_DebugMode, "Normal\0Tangent\0Bitangent\0UV\0Submesh\0");
+    ImGui::Combo("Shading", &m_ShadingMode, "Lit\0Debug\0");
+    if (m_ShadingMode == 0)
+        ImGui::Combo("View", &m_ViewMode, "Lit\0Albedo\0Diffuse\0Specular\0Geometric normal\0Shading normal\0");
+    else
+        ImGui::Combo("Debug view", &m_DebugMode, "Normal\0Tangent\0Bitangent\0UV\0Submesh\0");
     ImGui::DragFloat("Scale", &m_ModelScale, 0.01f, 0.0001f, 100.0f, "%.4f", ImGuiSliderFlags_Logarithmic);
+
+    ImGui::Separator();
+
+    if (m_ShadingMode == 0)
+    {
+        ImGui::DragFloat("Light yaw", &m_LightYaw, 0.1f, -180.0f, 180.0f);
+        ImGui::DragFloat("Light pitch", &m_LightPitch, 0.1f, -89.9f, 89.9f);
+        ImGui::ColorEdit3("Light color", &m_LightColor.x);
+        ImGui::DragFloat("Light intensity", &m_LightIntensity, 0.01f, 0.0f, 100.0f);
+        ImGui::ColorEdit3("Ambient color", &m_Ambient.x);
+        ImGui::DragFloat("Shininess", &m_Shininess, 0.1f, 1.0f, 256.0f);
+        ImGui::DragFloat("Specular strength", &m_SpecularStrength, 0.01f, 0.0f, 2.0f);
+    }
 
     ImGui::Separator();
 

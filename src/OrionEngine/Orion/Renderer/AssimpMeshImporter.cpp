@@ -111,7 +111,29 @@ namespace Orion
             return index;
         }
 
-        Ref<MeshSource> ConvertScene(const aiScene* scene, const std::string& name)
+        void ImportEmbeddedTexture(MeshSource& source, const aiScene* scene, const std::string& path)
+        {
+            if (path.empty())
+                return;
+
+            const aiTexture* texture = scene->GetEmbeddedTexture(path.c_str());
+            if (!texture)
+                return;
+
+            if (texture->mHeight != 0)
+            {
+                OE_CORE_LOG(Warn, "Embedded texture \"{0}\" is uncompressed: not supported", path);
+                return;
+            }
+
+            const auto* bytes = reinterpret_cast<const uint8_t*>(texture->pcData);
+            const auto data   = MakeSpan(bytes, texture->mWidth);
+            source.EmbeddedTextures[path].assign(data.begin(), data.end());
+        }
+
+        Ref<MeshSource> ConvertScene(const aiScene* scene,
+                                     const std::string& name,
+                                     const std::filesystem::path& directory)
         {
             if (!scene->mRootNode || (scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE))
             {
@@ -121,6 +143,7 @@ namespace Orion
 
             Ref<MeshSource> source = CreateRef<MeshSource>();
             source->Name           = name;
+            source->Directory      = directory;
 
             // Submeshes keep the SAME order as aiScene::mMeshes: nodes reference them by that index
             source->Submeshes.reserve(scene->mNumMeshes);
@@ -136,10 +159,16 @@ namespace Orion
 
                 aiString path;
                 if (material->GetTexture(aiTextureType_BASE_COLOR, 0, &path) == AI_SUCCESS ||
-                    material->GetTexture(aiTextureType_DIFFUSE, 0, &path))
+                    material->GetTexture(aiTextureType_DIFFUSE, 0, &path) == AI_SUCCESS)
+                {
                     meshMaterial.AlbedoPath = path.C_Str();
-                if (material->GetTexture(aiTextureType_NORMALS, 0, &path))
+                    ImportEmbeddedTexture(*source, scene, meshMaterial.AlbedoPath);
+                }
+                if (material->GetTexture(aiTextureType_NORMALS, 0, &path) == AI_SUCCESS)
+                {
                     meshMaterial.NormalPath = path.C_Str();
+                    ImportEmbeddedTexture(*source, scene, meshMaterial.NormalPath);
+                }
             }
 
             ImportNode(*source, scene->mRootNode, MeshNode::NoParent);
@@ -152,6 +181,17 @@ namespace Orion
                         source->Indices.size(),
                         source->Submeshes.size(),
                         source->Nodes.size());
+
+            for (const MeshMaterial& material : source->Materials)
+                OE_CORE_LOG(Info,
+                            "Material \"{0}\": albedo=\"{1}\" normal=\"{2}\"",
+                            material.Name,
+                            material.AlbedoPath,
+                            material.NormalPath);
+            OE_CORE_LOG(Info,
+                        "Directory=\"{0}\", embedded textures: {1}",
+                        source->Directory.string(),
+                        source->EmbeddedTextures.size());
 
             return source;
         }
@@ -168,7 +208,7 @@ namespace Orion
             OE_CORE_LOG(Error, "Failed to import \"{0}\": {1}", path.string(), importer.GetErrorString());
             return nullptr;
         }
-        return ConvertScene(scene, path.filename().string());
+        return ConvertScene(scene, path.filename().string(), path.parent_path());
     }
 
     Ref<MeshSource> AssimpMeshImporter::ImportFromMemory(const void* data, size_t size, const char* formatHint)
@@ -182,6 +222,6 @@ namespace Orion
             OE_CORE_LOG(Error, "Failed to import from memory ({0}): {1}", formatHint, importer.GetErrorString());
             return nullptr;
         }
-        return ConvertScene(scene, "memory");
+        return ConvertScene(scene, "memory", {});
     }
 } // namespace Orion

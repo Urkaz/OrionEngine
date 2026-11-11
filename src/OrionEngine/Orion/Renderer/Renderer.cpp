@@ -1,9 +1,13 @@
 #include "oepch.h"
-#include "Orion/Renderer/MeshSource.h"
+
 #include "Orion/Renderer/Renderer.h"
 
+#include "Orion/Renderer/LightingMath.h"
+#include "Orion/Renderer/MeshRenderData.h"
+#include "Orion/Renderer/MeshSource.h"
 #include "Orion/Renderer/RenderCommand.h"
 #include "Orion/Renderer/Renderer2D.h"
+
 #include "Renderer.h"
 #include <cstdint>
 
@@ -75,20 +79,35 @@ namespace Orion
                 if (submesh.IndexCount == 0)
                     continue;
 
-                const uint32_t indexCount   = submesh.IndexCount;
-                const uint32_t firstIndex   = submesh.FirstIndex;
-                const uint32_t vertexOffset = submesh.VertexOffset;
+                const MeshRenderMaterial& material = renderData->GetMaterial(submesh.MaterialIndex);
 
-                Renderer::Submit(
-                    [shader, vertexArray, viewProjection, world, submeshIndex, indexCount, firstIndex, vertexOffset]() {
-                        shader->Bind();
-                        shader->SetMat4("u_ViewProjection", viewProjection);
-                        shader->SetMat4("u_Transform", world);
-                        shader->SetInt("u_SubmeshIndex", static_cast<int>(submeshIndex));
+                Renderer::Submit([shader,
+                                  vertexArray,
+                                  viewProjection,
+                                  world,
+                                  normalMatrix = NormalMatrix(world),
+                                  albedoTex    = material.Albedo,
+                                  normalTex    = material.Normal,
+                                  hasNormalMap = material.HasNormalMap,
+                                  submeshIndex,
+                                  indexCount   = submesh.IndexCount,
+                                  firstIndex   = submesh.FirstIndex,
+                                  vertexOffset = submesh.VertexOffset]() {
+                    shader->Bind();
+                    shader->SetMat4("u_ViewProjection", viewProjection);
+                    shader->SetMat4("u_Transform", world);
+                    shader->SetMat3("u_NormalMatrix", normalMatrix);
+                    shader->SetInt("u_SubmeshIndex", static_cast<int>(submeshIndex));
 
-                        vertexArray->Bind();
-                        RenderCommand::RT_DrawIndexed(vertexArray, indexCount, firstIndex, vertexOffset);
-                    });
+                    albedoTex->Bind(0);
+                    normalTex->Bind(1);
+                    shader->SetInt("u_Albedo", 0);
+                    shader->SetInt("u_NormalMap", 1);
+                    shader->SetInt("u_HasNormalMap", hasNormalMap ? 1 : 0);
+
+                    vertexArray->Bind();
+                    RenderCommand::RT_DrawIndexed(vertexArray, indexCount, firstIndex, vertexOffset);
+                });
             }
         }
     }

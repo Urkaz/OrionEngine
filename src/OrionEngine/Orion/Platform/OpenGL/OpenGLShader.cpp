@@ -226,6 +226,13 @@ namespace Orion
         UploadUniformMat4(name, value);
     }
 
+    void OpenGLShader::SetMat3(const std::string& name, const glm::mat3& value)
+    {
+        OE_PROFILE_FUNCTION();
+
+        UploadUniformMat3(name, value);
+    }
+
     void OpenGLShader::UploadUniformInt(const std::string& name, int value)
     {
         const GLint location = glGetUniformLocation(m_RendererID, name.c_str());

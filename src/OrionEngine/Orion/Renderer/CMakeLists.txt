@@ -25,6 +25,7 @@ target_sources(
            Camera.h
            FlyCamera.h
            GraphicsContext.h
+           LightingMath.h
            MeshRenderData.h
            MeshSource.h
            RenderCommand.h

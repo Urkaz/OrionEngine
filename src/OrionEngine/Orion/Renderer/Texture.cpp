@@ -14,7 +14,7 @@ namespace Orion
             OE_ASSERT(false, "RendererAPI::None is not supported!");
             return nullptr;
         case RendererAPI::API::OpenGL:
-            return std::make_shared<OpenGLTexture2D>(width, height);
+            return CreateRef<OpenGLTexture2D>(width, height);
         default:
             break;
         }
@@ -23,7 +23,7 @@ namespace Orion
         return nullptr;
     }
 
-    Ref<Texture2D> Texture2D::Create(const std::string& path)
+    Ref<Texture2D> Texture2D::Create(const std::string& path, bool srgb)
     {
         switch (Renderer::GetAPI())
         {
@@ -31,7 +31,24 @@ namespace Orion
             OE_ASSERT(false, "RendererAPI::None is not supported!");
             return nullptr;
         case RendererAPI::API::OpenGL:
-            return std::make_shared<OpenGLTexture2D>(path);
+            return CreateRef<OpenGLTexture2D>(path, srgb);
+        default:
+            break;
+        }
+
+        OE_ASSERT(false, "Unknown RendererAPI!");
+        return nullptr;
+    }
+
+    Ref<Texture2D> Texture2D::CreateFromMemory(const void* data, size_t size, bool srgb)
+    {
+        switch (Renderer::GetAPI())
+        {
+        case RendererAPI::API::None:
+            OE_ASSERT(false, "RendererAPI::None is not supported!");
+            return nullptr;
+        case RendererAPI::API::OpenGL:
+            return CreateRef<OpenGLTexture2D>(data, size, srgb);
         default:
             break;
         }
