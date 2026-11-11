@@ -37,8 +37,7 @@ namespace Orion
 
             // The mouse delta is already "distance moved this frame", so it is NOT scaled by the timestep
             const glm::vec2 mouseDelta = mousePosition - m_LastMousePosition;
-            m_Yaw -= mouseDelta.x * m_MouseSensitivity;
-            m_Pitch -= mouseDelta.y * m_MouseSensitivity;
+            SetRotation(m_Yaw - (mouseDelta.x * m_MouseSensitivity), m_Pitch - (mouseDelta.y * m_MouseSensitivity));
         }
         else if (m_Looking)
         {
@@ -95,8 +94,10 @@ namespace Orion
 
     void FlyCamera::SetRotation(float yawDegrees, float pitchDegrees)
     {
-        m_Yaw   = yawDegrees;
-        m_Pitch = pitchDegrees;
+        constexpr float kMaxPitch = 89.9f;
+
+        m_Yaw   = std::remainder(yawDegrees, 360.0f);
+        m_Pitch = std::clamp(pitchDegrees, -kMaxPitch, kMaxPitch);
         UpdateView();
     }
 
