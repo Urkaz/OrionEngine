@@ -1,4 +1,5 @@
 #include "oepch.h"
+#include "Orion/Core/FileSystem/FileSystem.h"
 #include "Orion/ImGui/ImGuiLayer.h"
 
 #include "Orion/Core/Application.h"
@@ -13,6 +14,18 @@
 
 namespace Orion
 {
+    namespace
+    {
+        constexpr std::string_view IniPath = "user://imgui.ini";
+
+        void SaveIniSettings()
+        {
+            size_t size      = 0;
+            const char* data = ImGui::SaveIniSettingsToMemory(&size);
+            FileSystem::WriteText(IniPath, std::string_view(data, size));
+        }
+    } // namespace
+
     ImGuiLayer::ImGuiLayer() : Layer("ImGuiLayer") {}
 
     ImGuiLayer::~ImGuiLayer() = default;
@@ -25,7 +38,11 @@ namespace Orion
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
         ImGuiIO& io = ImGui::GetIO();
-        (void)io;
+
+        io.IniFilename = nullptr;
+        if (const std::optional<std::string> ini = FileSystem::ReadText(IniPath))
+            ImGui::LoadIniSettingsFromMemory(ini->data(), ini->size());
+
         io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
         // io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;   // Enable Docking
@@ -58,8 +75,8 @@ namespace Orion
             style.Colors[ImGuiCol_WindowBg].w = 1.0f;
         }
 
-        Application& app   = Application::Get();
-        GLFWwindow* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
+        Application& app = Application::Get();
+        auto* window     = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
 
         // Setup Platform/Renderer backends
         ImGui_ImplGlfw_InitForOpenGL(window, true);
@@ -75,6 +92,7 @@ namespace Orion
 
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplGlfw_Shutdown();
+        SaveIniSettings();
         ImGui::DestroyContext();
     }
 
@@ -99,6 +117,12 @@ namespace Orion
         // Rendering
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+        if (io.WantSaveIniSettings)
+        {
+            SaveIniSettings();
+            io.WantSaveIniSettings = false;
+        }
 
         if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
         {

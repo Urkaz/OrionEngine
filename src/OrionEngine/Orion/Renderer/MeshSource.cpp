@@ -1,5 +1,6 @@
 #include "oepch.h"
 
+#include "Orion/Core/FileSystem/VirtualPath.h"
 #include "Orion/Renderer/MeshSource.h"
 
 namespace Orion
@@ -21,11 +22,18 @@ namespace Orion
         }
     }
 
-    std::filesystem::path ResolveTexturePath(const std::filesystem::path& modelDirectory, std::string texturePath)
+    std::string ResolveTexturePath(std::string_view modelDirectory, std::string_view texturePath)
     {
         if (texturePath.empty())
             return {};
-        std::ranges::replace(texturePath, '\\', '/'); // Normalize to forward slashes
-        return modelDirectory / texturePath;
+
+        std::string relative(texturePath);
+        std::ranges::replace(relative, '\\', '/'); // Normalize to forward slashes
+
+        if (std::optional<std::string> path = VirtualPath::Normalize(VirtualPath::Join(modelDirectory, relative)))
+            return *path;
+
+        // Normalize failed, look next to the model using the filename
+        return VirtualPath::Normalize(VirtualPath::Join(modelDirectory, VirtualPath::Filename(relative))).value_or("");
     }
 } // namespace Orion

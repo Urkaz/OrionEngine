@@ -1,6 +1,8 @@
 target_sources(
     ${ENGINE_NAME}
-    PRIVATE AssimpMeshImporter.cpp
+    PRIVATE AssimpIOSystem.cpp
+            AssimpIOSystem.h
+            AssimpMeshImporter.cpp
             Buffer.cpp
             Camera.cpp
             FlyCamera.cpp

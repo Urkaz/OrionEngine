@@ -1,12 +1,14 @@
 #include "oepch.h"
 #include "Orion/Renderer/Shader.h"
 
+#include "Orion/Core/FileSystem/FileSystem.h"
+#include "Orion/Core/FileSystem/VirtualPath.h"
 #include "Orion/Platform/OpenGL/OpenGLShader.h"
 #include "Orion/Renderer/Renderer.h"
 
 namespace Orion
 {
-    Ref<Shader> Shader::Create(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc)
+    Ref<Shader> Shader::Create(std::string name, std::string vertexSrc, std::string fragmentSrc)
     {
         switch (Renderer::GetAPI())
         {
@@ -14,7 +16,7 @@ namespace Orion
             OE_ASSERT(false, "RendererAPI::None is not supported!");
             return nullptr;
         case RendererAPI::API::OpenGL:
-            return CreateRef<OpenGLShader>(name, vertexSrc, fragmentSrc);
+            return CreateRef<OpenGLShader>(std::move(name), std::move(vertexSrc), std::move(fragmentSrc));
         default:
             break;
         }
@@ -25,13 +27,21 @@ namespace Orion
 
     Ref<Shader> Shader::Create(const std::string& filepath)
     {
+        const std::optional<std::string> source = FileSystem::ReadText(filepath);
+        if (!source)
+        {
+            OE_CORE_LOG(Error, "Could not read shader \"{0}\"", filepath);
+            return nullptr;
+        }
+        std::string name(VirtualPath::Stem(filepath));
+
         switch (Renderer::GetAPI())
         {
         case RendererAPI::API::None:
             OE_ASSERT(false, "RendererAPI::None is not supported!");
             return nullptr;
         case RendererAPI::API::OpenGL:
-            return CreateRef<OpenGLShader>(filepath);
+            return CreateRef<OpenGLShader>(std::move(name), *source);
         default:
             break;
         }

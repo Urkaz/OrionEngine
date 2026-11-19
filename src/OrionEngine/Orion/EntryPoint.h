@@ -20,6 +20,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 
     app->Run();
 
+    app.reset(); // Force app destruction before starting uninitializing engine things
+
     Orion::ShutdownCore();
 
     return 0;

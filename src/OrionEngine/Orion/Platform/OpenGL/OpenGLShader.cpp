@@ -1,9 +1,9 @@
 #include "oepch.h"
-#include "Orion/Core/Core.h"
 #include "Orion/Platform/OpenGL/OpenGLShader.h"
+
+#include "Orion/Core/Core.h"
 #include "Orion/Renderer/ShaderSourceParser.h"
 
-#include <fstream>
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
 
@@ -20,20 +20,12 @@ namespace Orion
         Compile(shaderSources);
     }
 
-    OpenGLShader::OpenGLShader(const std::string& filepath) : m_RendererID(0)
+    OpenGLShader::OpenGLShader(std::string name, const std::string& source) : m_RendererID(0), m_Name(std::move(name))
     {
         OE_PROFILE_FUNCTION();
 
-        const std::string source = ReadFile(filepath);
-        auto shaderSources       = PreProcess(source);
+        auto shaderSources = PreProcess(source);
         Compile(shaderSources);
-
-        // Extract name from filepath
-        auto lastSlash = filepath.find_last_of("/\\");
-        lastSlash      = lastSlash == std::string::npos ? 0 : lastSlash + 1;
-        auto lastDot   = filepath.rfind('.');
-        auto count     = lastDot == std::string::npos ? filepath.size() - lastSlash : lastDot - lastSlash;
-        m_Name         = filepath.substr(lastSlash, count);
     }
 
     OpenGLShader::~OpenGLShader()
@@ -41,34 +33,6 @@ namespace Orion
         OE_PROFILE_FUNCTION();
 
         glDeleteProgram(m_RendererID);
-    }
-
-    std::string OpenGLShader::ReadFile(const std::string& filepath)
-    {
-        OE_PROFILE_FUNCTION();
-
-        std::ifstream in(filepath, std::ios::in | std::ios::binary);
-        if (!in)
-        {
-            OE_CORE_LOG(Error, "Could not read shader file: '{0}'", filepath);
-            return {};
-        }
-
-        in.seekg(0, std::ios::end);
-        const std::streampos endPos = in.tellg();
-        if (endPos <= 0)
-        {
-            OE_CORE_LOG(Error, "Could not read from file '{0}'", filepath);
-            return {};
-        }
-
-        const std::size_t size = static_cast<std::size_t>(endPos);
-
-        std::string result(size, '\0');
-        in.seekg(0, std::ios::beg);
-        in.read(result.data(), static_cast<std::streamsize>(size));
-
-        return result;
     }
 
     std::unordered_map<GLenum, std::string> OpenGLShader::PreProcess(const std::string& source)

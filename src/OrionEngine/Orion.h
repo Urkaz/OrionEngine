@@ -16,6 +16,10 @@
 
 #include "Orion/ImGui/ImGuiLayer.h"
 
+// --- File System ------------
+#include "Orion/Core/FileSystem/DiskMountSource.h"
+#include "Orion/Core/FileSystem/FileSystem.h"
+
 // --- Renderer ------------
 #include "Orion/Renderer/RenderCommand.h"
 #include "Orion/Renderer/Renderer.h"

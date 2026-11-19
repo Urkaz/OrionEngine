@@ -12,7 +12,7 @@ namespace Orion
     {
     public:
         OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc);
-        OpenGLShader(const std::string& filepath);
+        OpenGLShader(std::string name, const std::string& source);
         virtual ~OpenGLShader();
 
         virtual void Bind() const override;
@@ -36,7 +36,6 @@ namespace Orion
         void UploadUniformMat4(const std::string& name, const glm::mat4& matrix);
 
     private:
-        std::string ReadFile(const std::string& filepath);
         std::unordered_map<GLenum, std::string> PreProcess(const std::string& source);
         void Compile(const std::unordered_map<GLenum, std::string>& shaderSources);
 

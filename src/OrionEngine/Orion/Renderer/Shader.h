@@ -24,10 +24,8 @@ namespace Orion
 
         [[nodiscard]] virtual std::string GetName() = 0;
 
+        [[nodiscard]] static Ref<Shader> Create(std::string name, std::string vertexSrc, std::string fragmentSrc);
         [[nodiscard]] static Ref<Shader> Create(const std::string& filepath);
-        [[nodiscard]] static Ref<Shader> Create(const std::string& name,
-                                  const std::string& vertexSrc,
-                                  const std::string& fragmentSrc);
     };
 
     class ShaderLibrary

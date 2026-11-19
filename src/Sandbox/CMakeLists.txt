@@ -45,3 +45,8 @@ add_custom_command(
     POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/assets
             $<TARGET_FILE_DIR:${SANDBOX_NAME}>/assets)
+
+# Debug reads assets straight from the source tree: editing a shader only needs a restart
+target_compile_definitions(
+    ${SANDBOX_NAME}
+    PRIVATE "$<$<CONFIG:Debug>:SANDBOX_SOURCE_ASSETS_DIR=\"${CMAKE_CURRENT_SOURCE_DIR}/assets\">")

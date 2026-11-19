@@ -12,7 +12,6 @@ namespace Orion
     {
     public:
         OpenGLTexture2D(uint32_t width, uint32_t height);
-        OpenGLTexture2D(const std::string& path, bool srgb = false);
         OpenGLTexture2D(const void* data, size_t size, bool srgb = false);
         virtual ~OpenGLTexture2D();
 

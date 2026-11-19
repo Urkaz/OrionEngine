@@ -12,6 +12,7 @@ namespace Orion
     {
     public:
         static void Init(bool logToFile = true);
+        static void Shutdown();
         static Ref<spdlog::logger>& GetCoreLogger()
         {
             return s_CoreLogger;
@@ -29,7 +30,6 @@ namespace Orion
 
 namespace Orion
 {
-
     enum class LogLevel
     {
         Trace,

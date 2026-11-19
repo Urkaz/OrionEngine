@@ -26,24 +26,6 @@ namespace Orion
         glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
     }
 
-    OpenGLTexture2D::OpenGLTexture2D(const std::string& path, bool srgb)
-    {
-        OE_PROFILE_FUNCTION();
-
-        int width = 0, height = 0, channels = 0;
-        stbi_set_flip_vertically_on_load(1);
-        stbi_uc* data = nullptr;
-        {
-            OE_PROFILE_SCOPE("stbi_load - OpenGLTexture2D::OpenGLTexture2D(const std::string&)");
-            data = stbi_load(path.c_str(), &width, &height, &channels, 0);
-        }
-        OE_CORE_ASSERT(data, "Failed to load image!");
-
-        Upload(data, width, height, channels, srgb);
-
-        stbi_image_free(data);
-    }
-
     OpenGLTexture2D::OpenGLTexture2D(const void* data, size_t size, bool srgb)
     {
         OE_PROFILE_FUNCTION();

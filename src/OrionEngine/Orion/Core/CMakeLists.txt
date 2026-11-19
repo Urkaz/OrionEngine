@@ -1,4 +1,5 @@
 add_subdirectory(Events)
+add_subdirectory(FileSystem)
 
 target_sources(
     ${ENGINE_NAME}

@@ -1,14 +1,10 @@
 #pragma once
 
-#include "Orion/Core/Core.h"
 #include "Orion/Renderer/Buffer.h"
-#include "Orion/Renderer/VertexArray.h"
 
 #include <cstdint>
 #include <glm/fwd.hpp>
 #include <glm/glm.hpp>
-
-#include <filesystem>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -82,14 +78,12 @@ namespace Orion
         std::vector<MeshNode> Nodes; // Nodes[0] is the root; a parent always comes before its children
         std::vector<MeshMaterial> Materials;
 
-        std::filesystem::path Directory;
+        std::string Directory;
         std::unordered_map<std::string, std::vector<uint8_t>> EmbeddedTextures;
 
         // Recomputes every node's WorldTransform from the local transforms -> world = parent.world * local
         void UpdateNodeTransforms();
-
-        // Joins the model folder and a texture path written in the model file.
     };
 
-    std::filesystem::path ResolveTexturePath(const std::filesystem::path& modelDirectory, std::string texturePath);
+    std::string ResolveTexturePath(std::string_view modelDirectory, std::string_view texturePath);
 } // namespace Orion

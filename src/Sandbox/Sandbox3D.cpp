@@ -77,16 +77,16 @@ void Sandbox3D::OnAttach()
     Orion::Ref<Orion::IndexBuffer> ib = Orion::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
     m_CubeVA->SetIndexBuffer(ib);
 
-    m_CubeShader = Orion::Shader::Create("assets/shaders/Cube.glsl");
+    m_CubeShader = Orion::Shader::Create("assets://shaders/Cube.glsl");
 
 
-    Orion::Ref<Orion::MeshSource> source = Orion::AssimpMeshImporter::Import("assets/models/Sponza/Sponza.gltf");
+    Orion::Ref<Orion::MeshSource> source = Orion::AssimpMeshImporter::Import("assets://models/Sponza/Sponza.gltf");
     if (!source)
         return;
     m_Model      = Orion::CreateRef<Orion::MeshRenderData>(source);
-    m_MeshShader = Orion::Shader::Create("assets/shaders/MeshDebug.glsl");
+    m_MeshShader = Orion::Shader::Create("assets://shaders/MeshDebug.glsl");
 
-    m_LitShader = Orion::Shader::Create("assets/shaders/MeshLit.glsl");
+    m_LitShader = Orion::Shader::Create("assets://shaders/MeshLit.glsl");
 }
 
 void Sandbox3D::OnUpdate(Orion::Timestep ts)

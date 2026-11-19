@@ -1,10 +1,11 @@
 #include "oepch.h"
-#include "Buffer.h"
 #include "MeshRenderData.h"
+
+#include "Buffer.h"
+#include "Orion/Core/FileSystem/FileSystem.h"
 #include "Orion/Renderer/VertexArray.h"
 #include "Texture.h"
 
-#include <filesystem>
 #include <unordered_map>
 
 namespace Orion
@@ -52,11 +53,14 @@ namespace Orion
             }
             else
             {
-                std::filesystem::path filePath = ResolveTexturePath(source->Directory, path);
-                if (std::filesystem::exists(filePath))
-                    texture = Texture2D::Create(filePath.string(), srgb);
+                std::string filePath = ResolveTexturePath(source->Directory, path);
+                if (FileSystem::Exists(filePath))
+                {
+                    if (Ref<Texture2D> loaded = Texture2D::Create(filePath, srgb))
+                        texture = loaded;
+                }
                 else
-                    OE_CORE_LOG(Warn, "Texture file not found: {0}", filePath.string());
+                    OE_CORE_LOG(Warn, "Texture file not found: {0}", filePath);
             }
             textureCache[cacheKey] = texture;
             return texture;

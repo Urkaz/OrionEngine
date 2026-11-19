@@ -11,7 +11,7 @@
 
 #include <cstddef>
 #include <cstring>
-#include <filesystem>
+#include <string>
 
 namespace
 {
@@ -222,23 +222,26 @@ TEST_CASE("Renderer/Mesh/MeshSource: UpdateNodeTransforms handles roots, sibling
 
 TEST_CASE("Renderer/Mesh/ResolveTexturePath: joins the model folder and the texture path", "[Renderer][Mesh]")
 {
-    const std::filesystem::path resolved = Orion::ResolveTexturePath("assets/models", "Textures/colormap.png");
-
-    // generic_string() always uses '/', so the comparison does not depend on the platform separator
-    REQUIRE(resolved.generic_string() == "assets/models/Textures/colormap.png");
-}
-
-TEST_CASE("Renderer/Mesh/ResolveTexturePath: converts Windows separators", "[Renderer][Mesh]")
-{
-    // Models exported on Windows store paths with '\', which is not a separator on Linux
-    const std::filesystem::path resolved = Orion::ResolveTexturePath("assets/models", "Textures\\colormap.png");
-
-    REQUIRE(resolved.generic_string() == "assets/models/Textures/colormap.png");
-    REQUIRE(resolved.filename() == "colormap.png");
+    const std::string resolved = Orion::ResolveTexturePath("assets://models", "Textures/colormap.png");
+    CHECK(resolved == "assets://models/Textures/colormap.png");
 }
 
 TEST_CASE("Renderer/Mesh/ResolveTexturePath: an empty texture path stays empty", "[Renderer][Mesh]")
 {
     // An empty path means "no texture": joining it would return the model folder instead
-    REQUIRE(Orion::ResolveTexturePath("assets/models", "").empty());
+    CHECK(Orion::ResolveTexturePath("assets://models", "").empty());
+}
+
+TEST_CASE("Renderer/Mesh/ResolveTexturePath: resolves parent segments inside the mount", "[Renderer][Mesh]")
+{
+    CHECK(Orion::ResolveTexturePath("assets://models/Textures", "../shared/colormap.png") ==
+          "assets://models/shared/colormap.png");
+}
+
+TEST_CASE("Renderer/Mesh/ResolveTexturePath: an absolute path from another machine falls back to the file name",
+          "[Renderer][Mesh]")
+{
+    // Uses '\' on purpose: without converting separators first, Filename would return the whole path
+    CHECK(Orion::ResolveTexturePath("assets://models/Ship", "C:\\Users\\artist\\Desktop\\hull.png") ==
+          "assets://models/Ship/hull.png");
 }

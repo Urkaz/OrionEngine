@@ -1,6 +1,8 @@
 #include "oepch.h"
 #include "Orion/Renderer/AssimpMeshImporter.h"
 
+#include "AssimpIOSystem.h"
+#include "Orion/Core/FileSystem/VirtualPath.h"
 #include "Orion/Renderer/AssimpUtils.h"
 #include "Orion/Renderer/MeshSource.h"
 
@@ -131,9 +133,7 @@ namespace Orion
             source.EmbeddedTextures[path].assign(data.begin(), data.end());
         }
 
-        Ref<MeshSource> ConvertScene(const aiScene* scene,
-                                     const std::string& name,
-                                     const std::filesystem::path& directory)
+        Ref<MeshSource> ConvertScene(const aiScene* scene, const std::string& name, const std::string& directory)
         {
             if (!scene->mRootNode || (scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE))
             {
@@ -190,25 +190,29 @@ namespace Orion
                             material.NormalPath);
             OE_CORE_LOG(Info,
                         "Directory=\"{0}\", embedded textures: {1}",
-                        source->Directory.string(),
+                        source->Directory,
                         source->EmbeddedTextures.size());
 
             return source;
         }
     } // namespace
 
-    Ref<MeshSource> AssimpMeshImporter::Import(const std::filesystem::path& path)
+    Ref<MeshSource> AssimpMeshImporter::Import(const std::string& virtualPath)
     {
         OE_PROFILE_FUNCTION();
 
         Assimp::Importer importer;
-        const aiScene* scene = importer.ReadFile(path.string(), ImportFlags);
+        // NOLINTNEXTLINE(cppcoreguidelines-owning-memory): the Importer takes ownership
+        importer.SetIOHandler(new AssimpIOSystem());
+        const aiScene* scene = importer.ReadFile(virtualPath, ImportFlags);
         if (!scene)
         {
-            OE_CORE_LOG(Error, "Failed to import \"{0}\": {1}", path.string(), importer.GetErrorString());
+            OE_CORE_LOG(Error, "Failed to import \"{0}\": {1}", virtualPath, importer.GetErrorString());
             return nullptr;
         }
-        return ConvertScene(scene, path.filename().string(), path.parent_path());
+        return ConvertScene(scene,
+                            std::string(VirtualPath::Filename(virtualPath)),
+                            std::string(VirtualPath::Parent(virtualPath)));
     }
 
     Ref<MeshSource> AssimpMeshImporter::ImportFromMemory(const void* data, size_t size, const char* formatHint)
