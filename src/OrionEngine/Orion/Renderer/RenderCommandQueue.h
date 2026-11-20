@@ -11,7 +11,9 @@ namespace Orion
         using RenderCommandFn = void (*)(void* payload);
 
         static constexpr uint32_t DefaultCapacity = 10 * 1024 * 1024; // 10 MB
-        static constexpr size_t PayloadAlignment  = alignof(std::max_align_t);
+        // Fixed 16 instead of alignof(std::max_align_t), which is 16 on GCC/Clang but 8 on MSVC: same layout on every platform
+        static constexpr size_t PayloadAlignment = 16;
+        static_assert(PayloadAlignment >= alignof(std::max_align_t), "Payloads must fit any fundamental type");
 
         explicit RenderCommandQueue(uint32_t capacity = DefaultCapacity);
         ~RenderCommandQueue();
