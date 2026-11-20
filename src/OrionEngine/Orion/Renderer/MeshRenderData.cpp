@@ -27,13 +27,13 @@ namespace Orion
             IndexBuffer::Create(source->Indices.data(), static_cast<uint32_t>(source->Indices.size()));
         m_VertexArray->SetIndexBuffer(indexBuffer);
 
-        Ref<Texture2D> whiteTexture       = Texture2D::Create(1, 1);
-        std::array<uint8_t, 4> whitePixel = {255, 255, 255, 255};
-        whiteTexture->SetData(&whitePixel, static_cast<uint32_t>(whitePixel.size()));
+        Ref<Texture2D> whiteTexture                 = Texture2D::Create(1, 1);
+        constexpr std::array<uint8_t, 4> whitePixel = {255, 255, 255, 255};
+        whiteTexture->SetData(whitePixel.data(), static_cast<uint32_t>(whitePixel.size()));
 
-        Ref<Texture2D> flatNormalTexture       = Texture2D::Create(1, 1);
-        std::array<uint8_t, 4> flatNormalPixel = {128, 128, 255, 255};
-        flatNormalTexture->SetData(&flatNormalPixel, static_cast<uint32_t>(flatNormalPixel.size()));
+        Ref<Texture2D> flatNormalTexture                 = Texture2D::Create(1, 1);
+        constexpr std::array<uint8_t, 4> flatNormalPixel = {128, 128, 255, 255};
+        flatNormalTexture->SetData(flatNormalPixel.data(), static_cast<uint32_t>(flatNormalPixel.size()));
 
         std::unordered_map<std::string, Ref<Texture2D>> textureCache;
         auto loadTexture = [&source, &textureCache](const std::string& path,

@@ -101,7 +101,7 @@ namespace Orion
         glGenerateTextureMipmap(m_RendererID);
     }
 
-    void OpenGLTexture2D::SetData(void* data, [[maybe_unused]] uint32_t size)
+    void OpenGLTexture2D::SetData(const void* data, [[maybe_unused]] uint32_t size)
     {
         OE_PROFILE_FUNCTION();
 
