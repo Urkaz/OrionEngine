@@ -6,8 +6,8 @@
 #include "Orion/Renderer/MeshRenderData.h"
 #include "Orion/Renderer/MeshSource.h"
 #include "Orion/Renderer/RenderCommand.h"
+#include "Orion/Renderer/Renderer.h"
 #include "Orion/Renderer/Renderer2D.h"
-#include "Renderer.h"
 
 #include <cstdint>
 

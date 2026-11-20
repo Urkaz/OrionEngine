@@ -3,9 +3,9 @@
 #include "Orion/Renderer/Renderer2D.h"
 
 #include "Orion/Renderer/RenderCommand.h"
+#include "Orion/Renderer/Renderer2D.h"
 #include "Orion/Renderer/Shader.h"
 #include "Orion/Renderer/VertexArray.h"
-#include "Renderer2D.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 

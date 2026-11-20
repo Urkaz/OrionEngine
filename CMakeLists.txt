@@ -166,3 +166,5 @@ if(ENABLE_TESTING)
     enable_testing()
     add_subdirectory(tests)
 endif()
+
+add_include_check_target(${ENGINE_NAME} ${SANDBOX_NAME} OrionTests)

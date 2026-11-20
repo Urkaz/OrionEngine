@@ -133,3 +133,46 @@ function(add_clang_tidy_to_target target)
         message(WARNING "CLANGTIDY NOT FOUND")
     endif()
 endfunction()
+
+# check_includes: fails the build before compiling if a quoted #include is not written from an include root
+# (e.g. "Buffer.h" instead of "Orion/Renderer/Buffer.h"). Every target passed in waits for it.
+# fix_includes: rewrites those includes in place. Run on demand, nothing depends on it.
+function(add_include_check_target)
+    find_package(Python3 COMPONENTS Interpreter)
+    if(NOT Python3_FOUND)
+        message(WARNING "Python3 needed for the include check, skipped")
+        return()
+    endif()
+
+    set(CHECK_INCLUDES_ARGS
+        ${CMAKE_SOURCE_DIR}/tools/check-includes.py
+        --root
+        src/OrionEngine
+        --root
+        src/Sandbox
+        --root
+        tests
+        src/OrionEngine
+        src/Sandbox
+        tests)
+
+    add_custom_target(
+        check_includes
+        COMMAND ${Python3_EXECUTABLE} ${CHECK_INCLUDES_ARGS}
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        COMMENT "Checking include paths"
+        VERBATIM)
+    add_custom_target(
+        fix_includes
+        COMMAND ${Python3_EXECUTABLE} ${CHECK_INCLUDES_ARGS} --fix
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        COMMENT "Fixing include paths"
+        USES_TERMINAL VERBATIM)
+    set_target_properties(check_includes fix_includes PROPERTIES FOLDER "Tools")
+
+    foreach(target IN LISTS ARGN)
+        if(TARGET ${target})
+            add_dependencies(${target} check_includes)
+        endif()
+    endforeach()
+endfunction()

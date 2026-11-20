@@ -1,6 +1,6 @@
 #include "oepch.h"
 
-#include "ShaderSourceParser.h"
+#include "Orion/Renderer/ShaderSourceParser.h"
 
 #include <optional>
 #include <string_view>

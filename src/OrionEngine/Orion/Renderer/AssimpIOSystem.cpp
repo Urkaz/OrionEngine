@@ -1,6 +1,6 @@
 #include "oepch.h"
 
-#include "AssimpIOSystem.h"
+#include "Orion/Renderer/AssimpIOSystem.h"
 
 #include "Orion/Core/FileSystem/File.h"
 #include "Orion/Core/FileSystem/FileSystem.h"
