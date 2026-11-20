@@ -103,12 +103,35 @@ TEST_CASE("Core/FileSystem/DiskMountSource: writes a file and reads it back", "[
 
     // UTF-8 explicitly: generic_string() would go through the Windows ANSI code page
     const std::u8string rootUtf8 = root.generic_u8string();
-    FileSystem::Mount("temp",
-                      CreateScope<DiskMountSource>(std::string(rootUtf8.begin(), rootUtf8.end()), false));
+    FileSystem::Mount("temp", CreateScope<DiskMountSource>(std::string(rootUtf8.begin(), rootUtf8.end()), false));
 
     REQUIRE(FileSystem::WriteText("temp://logs/test.txt", "hello")); // also creates the missing folder
     CHECK(FileSystem::ReadText("temp://logs/test.txt") == "hello");
     CHECK(std::filesystem::is_regular_file(root / "logs" / "test.txt")); // the mount maps to the expected folder
+
+    std::filesystem::remove_all(root);
+}
+
+TEST_CASE("Core/FileSystem/DiskMountSource: consecutive writes grow the size to the end position", "[Core][FileSystem]")
+{
+    FileSystemGuard guard;
+    const std::filesystem::path root = std::filesystem::temp_directory_path() / "OrionTests-FileSystem-Size";
+    std::filesystem::remove_all(root);
+
+    const std::u8string rootUtf8 = root.generic_u8string();
+    FileSystem::Mount("temp", CreateScope<DiskMountSource>(std::string(rootUtf8.begin(), rootUtf8.end()), false));
+
+    {
+        Scope<IFile> file = FileSystem::Open("temp://size.bin", FileMode::Write);
+        REQUIRE(file);
+
+        const std::array<uint8_t, 3> data{1, 2, 3};
+        file->Write(data.data(), 3);
+        CHECK(file->Size() == 3);
+
+        file->Write("abcde", 5);
+        CHECK(file->Size() == 8);
+    }
 
     std::filesystem::remove_all(root);
 }
