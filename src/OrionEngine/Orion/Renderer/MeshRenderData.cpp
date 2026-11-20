@@ -35,10 +35,35 @@ namespace Orion
         constexpr std::array<uint8_t, 4> flatNormalPixel = {128, 128, 255, 255};
         flatNormalTexture->SetData(flatNormalPixel.data(), static_cast<uint32_t>(flatNormalPixel.size()));
 
+        constexpr size_t CheckerSize  = 8;
+        Ref<Texture2D> magentaTexture = Texture2D::Create(CheckerSize, CheckerSize);
+        constexpr auto magentaPixels  = [] {
+            constexpr size_t CheckerCell = 4;
+            std::array<uint8_t, CheckerSize * CheckerSize * 4> pixels{};
+            constexpr std::array<uint8_t, 4> Magenta = {255, 0, 255, 255};
+            constexpr std::array<uint8_t, 4> Black   = {0, 0, 0, 255};
+
+            for (size_t x = 0; x < CheckerSize; ++x)
+            {
+                for (size_t y = 0; y < CheckerSize; ++y)
+                {
+                    const auto& color  = ((x / CheckerCell) + (y / CheckerCell)) % 2 ? Magenta : Black;
+                    const size_t index = (x + y * CheckerSize) * 4;
+                    pixels[index + 0]  = color[0];
+                    pixels[index + 1]  = color[1];
+                    pixels[index + 2]  = color[2];
+                    pixels[index + 3]  = color[3];
+                }
+            }
+            return pixels;
+        }(); // the () at the end calls the lambda immediately, keeps it constexpr
+        magentaTexture->SetData(magentaPixels.data(), static_cast<uint32_t>(magentaPixels.size()));
+
         std::unordered_map<std::string, Ref<Texture2D>> textureCache;
         auto loadTexture = [&source, &textureCache](const std::string& path,
                                                     bool srgb,
-                                                    const Ref<Texture2D>& fallback) -> Ref<Texture2D> {
+                                                    const Ref<Texture2D>& fallback,
+                                                    const Ref<Texture2D>& missing) -> Ref<Texture2D> {
             if (path.empty())
                 return fallback;
 
@@ -46,7 +71,7 @@ namespace Orion
             if (const auto it = textureCache.find(cacheKey); it != textureCache.end())
                 return it->second;
 
-            Ref<Texture2D> texture = fallback;
+            Ref<Texture2D> texture = missing;
             if (const auto it = source->EmbeddedTextures.find(path); it != source->EmbeddedTextures.end())
             {
                 texture = Texture2D::CreateFromMemory(it->second.data(), it->second.size(), srgb);
@@ -60,7 +85,9 @@ namespace Orion
                         texture = loaded;
                 }
                 else
+                {
                     OE_CORE_LOG(Warn, "Texture file not found: {0}", filePath);
+                }
             }
             textureCache[cacheKey] = texture;
             return texture;
@@ -70,9 +97,9 @@ namespace Orion
         for (const auto& material : source->Materials)
         {
             MeshRenderMaterial& renderMaterial = m_Materials.emplace_back();
-            renderMaterial.Albedo              = loadTexture(material.AlbedoPath, true, whiteTexture);
-            renderMaterial.Normal              = loadTexture(material.NormalPath, false, flatNormalTexture);
-            renderMaterial.HasNormalMap        = renderMaterial.Normal != flatNormalTexture;
+            renderMaterial.Albedo              = loadTexture(material.AlbedoPath, true, whiteTexture, magentaTexture);
+            renderMaterial.Normal       = loadTexture(material.NormalPath, false, flatNormalTexture, flatNormalTexture);
+            renderMaterial.HasNormalMap = renderMaterial.Normal != flatNormalTexture;
         }
 
         const auto withNormalMap = std::ranges::count_if(m_Materials, [](const MeshRenderMaterial& material) {
