@@ -1,4 +1,4 @@
-#include "Orion/Renderer/ShaderSourceParser.h"
+#include "Orion/Renderer/Internal/ShaderSourceParser.h"
 
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_string.hpp>
@@ -22,13 +22,13 @@ namespace
 
 TEST_CASE("Renderer/Shader/ParseShaderSource: splits a vertex and a fragment section", "[Renderer][Shader]")
 {
-    const Orion::ShaderParseResult result = Orion::ParseShaderSource(TwoStages);
+    const Orion::Internal::ShaderParseResult result = Orion::Internal::ParseShaderSource(TwoStages);
 
     REQUIRE(result.Ok());
     REQUIRE(result.Stages.size() == 2);
 
-    const std::string& vertex   = result.Stages.at(Orion::ShaderStage::Vertex);
-    const std::string& fragment = result.Stages.at(Orion::ShaderStage::Fragment);
+    const std::string& vertex   = result.Stages.at(Orion::Internal::ShaderStage::Vertex);
+    const std::string& fragment = result.Stages.at(Orion::Internal::ShaderStage::Fragment);
 
     CHECK(Contains(vertex, "VERTEX BODY"));
     CHECK_FALSE(Contains(vertex, "FRAGMENT BODY"));
@@ -46,8 +46,9 @@ TEST_CASE("Renderer/Shader/ParseShaderSource: accepts CRLF line endings and extr
 {
     SECTION("CRLF")
     {
-        const Orion::ShaderParseResult result = Orion::ParseShaderSource("#type vertex\r\nvoid main() {}\r\n"
-                                                                         "#type fragment\r\nvoid main() {}\r\n");
+        const Orion::Internal::ShaderParseResult result =
+            Orion::Internal::ParseShaderSource("#type vertex\r\nvoid main() {}\r\n"
+                                               "#type fragment\r\nvoid main() {}\r\n");
 
         CHECK(result.Ok());
         CHECK(result.Stages.size() == 2);
@@ -55,34 +56,37 @@ TEST_CASE("Renderer/Shader/ParseShaderSource: accepts CRLF line endings and extr
 
     SECTION("two spaces after #type")
     {
-        const Orion::ShaderParseResult result = Orion::ParseShaderSource("#type  vertex\nvoid main() {}\n");
+        const Orion::Internal::ShaderParseResult result =
+            Orion::Internal::ParseShaderSource("#type  vertex\nvoid main() {}\n");
 
         CHECK(result.Ok());
-        CHECK(result.Stages.contains(Orion::ShaderStage::Vertex));
+        CHECK(result.Stages.contains(Orion::Internal::ShaderStage::Vertex));
     }
 
     SECTION("trailing spaces and tabs")
     {
-        const Orion::ShaderParseResult result = Orion::ParseShaderSource("#type vertex \t\nvoid main() {}\n");
+        const Orion::Internal::ShaderParseResult result =
+            Orion::Internal::ParseShaderSource("#type vertex \t\nvoid main() {}\n");
 
         CHECK(result.Ok());
-        CHECK(result.Stages.contains(Orion::ShaderStage::Vertex));
+        CHECK(result.Stages.contains(Orion::Internal::ShaderStage::Vertex));
     }
 }
 
 TEST_CASE("Renderer/Shader/ParseShaderSource: a '#type' that is not at the start of a line is plain code",
           "[Renderer][Shader]")
 {
-    const Orion::ShaderParseResult result =
-        Orion::ParseShaderSource("#type vertex\n"
-                                 "// this #type shouldn't split the vertex shader in 2\n"
-                                 "void main() {}\n"
-                                 "#type fragment\n"
-                                 "void main() {}\n");
+    const Orion::Internal::ShaderParseResult result =
+        Orion::Internal::ParseShaderSource("#type vertex\n"
+                                           "// this #type shouldn't split the vertex shader in 2\n"
+                                           "void main() {}\n"
+                                           "#type fragment\n"
+                                           "void main() {}\n");
 
     REQUIRE(result.Ok());
     CHECK(result.Stages.size() == 2);
-    CHECK(Contains(result.Stages.at(Orion::ShaderStage::Vertex), "this #type shouldn't split the vertex shader in 2"));
+    CHECK(Contains(result.Stages.at(Orion::Internal::ShaderStage::Vertex),
+                   "this #type shouldn't split the vertex shader in 2"));
 }
 
 TEST_CASE("Renderer/Shader/ParseShaderSource: malformed files return an error instead of asserting",
@@ -90,14 +94,15 @@ TEST_CASE("Renderer/Shader/ParseShaderSource: malformed files return an error in
 {
     SECTION("unknown stage")
     {
-        const auto result = Orion::ParseShaderSource("#type geometry\nvoid main() {}\n");
+        const auto result = Orion::Internal::ParseShaderSource("#type geometry\nvoid main() {}\n");
         CHECK_FALSE(result.Ok());
         CHECK_THAT(result.Error, ContainsSubstring("geometry"));
     }
 
     SECTION("duplicated stage")
     {
-        const auto result = Orion::ParseShaderSource("#type vertex\nvoid main() {}\n#type vertex\nvoid main() {}\n");
+        const auto result =
+            Orion::Internal::ParseShaderSource("#type vertex\nvoid main() {}\n#type vertex\nvoid main() {}\n");
         CHECK_FALSE(result.Ok());
         CHECK_THAT(result.Error, ContainsSubstring("Duplicate"));
         CHECK_THAT(result.Error, ContainsSubstring("vertex"));
@@ -105,20 +110,20 @@ TEST_CASE("Renderer/Shader/ParseShaderSource: malformed files return an error in
 
     SECTION("empty body")
     {
-        const auto result = Orion::ParseShaderSource("#type vertex\n#type fragment\nvoid main() {}\n");
+        const auto result = Orion::Internal::ParseShaderSource("#type vertex\n#type fragment\nvoid main() {}\n");
         CHECK_FALSE(result.Ok());
         CHECK_THAT(result.Error, ContainsSubstring("empty"));
     }
 
     SECTION("no directive at all")
     {
-        const auto result = Orion::ParseShaderSource("void main() {}\n");
+        const auto result = Orion::Internal::ParseShaderSource("void main() {}\n");
         CHECK_FALSE(result.Ok());
         CHECK_THAT(result.Error, ContainsSubstring("#type"));
     }
 
     SECTION("empty input")
     {
-        CHECK_FALSE(Orion::ParseShaderSource("").Ok());
+        CHECK_FALSE(Orion::Internal::ParseShaderSource("").Ok());
     }
 }

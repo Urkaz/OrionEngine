@@ -1,46 +1,14 @@
 #include "Orion/Core/Log.h"
 
-#include "Orion/Core/FileSystem/File.h"
-#include "Orion/Core/FileSystem/FileSystem.h"
+#include "Orion/Core/Internal/FileSystemSink.h"
 #include "Orion/Profiling/Profiling.h"
 
 #include <spdlog/common.h>
-#include <spdlog/sinks/base_sink.h>
-#include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
 #ifdef OE_ENABLE_LOGS
 namespace Orion
 {
-    namespace
-    {
-        class FileSystemSink final : public spdlog::sinks::base_sink<std::mutex>
-        {
-        public:
-            explicit FileSystemSink(std::string_view virtualPath)
-                : m_File(FileSystem::Open(virtualPath, FileMode::Write))
-            {}
-
-            virtual void sink_it_(const spdlog::details::log_msg& msg) override
-            {
-                if (!m_File)
-                    return;
-
-                spdlog::memory_buf_t formatted;
-                formatter_->format(msg, formatted);
-                m_File->Write(formatted.data(), formatted.size());
-            }
-            virtual void flush_() override
-            {
-                if (m_File)
-                    m_File->Flush();
-            }
-
-        private:
-            Scope<IFile> m_File;
-        };
-    } // namespace
-
     Ref<spdlog::logger> Log::s_CoreLogger;
     Ref<spdlog::logger> Log::s_ClientLogger;
 
@@ -52,7 +20,7 @@ namespace Orion
 
         if (logToFile)
         {
-            logSinks.emplace_back(std::make_shared<FileSystemSink>("user://Orion.log"));
+            logSinks.emplace_back(std::make_shared<Internal::FileSystemSink>("user://Orion.log"));
             logSinks[1]->set_pattern("[%T] [%l] %n: %v");
         }
 

@@ -5,6 +5,7 @@ set(TEST_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/Core/EventTests.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Core/FileSystemTests.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Core/LayerStackTests.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Core/OpenFileRegistryTests.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Core/VirtualPathTests.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Renderer/CameraTests.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/Renderer/FlyCameraTests.cpp"

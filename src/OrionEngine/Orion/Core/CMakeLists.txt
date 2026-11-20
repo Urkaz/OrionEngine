@@ -9,7 +9,9 @@ target_sources(
             Layer.cpp
             LayerStack.cpp
             Log.cpp
-            Window.cpp)
+            Window.cpp
+            Internal/FileSystemSink.cpp
+            Internal/FileSystemSink.h)
 
 target_sources(
     ${ENGINE_NAME}

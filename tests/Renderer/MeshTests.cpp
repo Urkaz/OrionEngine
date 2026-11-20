@@ -1,5 +1,5 @@
 #include "Orion/Renderer/AssimpMeshImporter.h"
-#include "Orion/Renderer/AssimpUtils.h"
+#include "Orion/Renderer/Internal/AssimpUtils.h"
 #include "Orion/Renderer/MeshSource.h"
 
 #include <catch2/catch_test_macros.hpp>
@@ -75,7 +75,7 @@ TEST_CASE("Renderer/Mesh/AssimpUtils: a row-major aiMatrix4x4 becomes a column-m
     m.c4 = 7.0f;
     m.a2 = 3.0f; // row 0, column 1
 
-    const glm::mat4 result = Orion::Mat4FromAssimp(m);
+    const glm::mat4 result = Orion::Internal::Mat4FromAssimp(m);
 
     CHECK(result[3] == glm::vec4(5.0f, 6.0f, 7.0f, 1.0f)); // translation = fourth COLUMN in glm
     CHECK(result[1][0] == 3.0f);                           // m[column][row]

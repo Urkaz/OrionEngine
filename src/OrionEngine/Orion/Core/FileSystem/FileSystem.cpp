@@ -2,12 +2,11 @@
 
 #include "Orion/Core/Base.h"
 #include "Orion/Core/FileSystem/File.h"
+#include "Orion/Core/FileSystem/Internal/OpenFileRegistry.h"
 #include "Orion/Core/FileSystem/MemoryMountSource.h"
 #include "Orion/Core/FileSystem/VirtualPath.h"
 
-#include <algorithm>
 #include <functional>
-#include <mutex>
 #include <optional>
 #include <string>
 #include <string_view>
@@ -19,94 +18,10 @@ namespace Orion
 {
     namespace
     {
-        class OpenFileRegistry
-        {
-        public:
-            void Add(const IFile* file, std::string virtualPath)
-            {
-                std::lock_guard lock(m_Mutex);
-                m_Files.emplace_back(file, std::move(virtualPath));
-            }
-            void Remove(const IFile* file)
-            {
-                std::lock_guard lock(m_Mutex);
-                auto it = std::ranges::find_if(m_Files, [file](const auto& entry) { return entry.first == file; });
-                OE_CORE_ASSERT(it != m_Files.end(), "Removing a file that was never registered");
-                if (it == m_Files.end())
-                    return;
-
-                *it = std::move(m_Files.back()); // move the last element over this one
-                m_Files.pop_back();              // then drop the last slot
-            }
-            [[nodiscard]] std::vector<std::string> GetOpenPaths() const
-            {
-                std::lock_guard lock(m_Mutex);
-                std::vector<std::string> paths;
-                paths.reserve(m_Files.size());
-                for (const auto& [file, path] : m_Files)
-                    paths.push_back(path);
-                return paths;
-            }
-
-        private:
-            // Files of the same mount can be opened/closed from different threads
-            // mutable because GetOpenPaths is const but we need to block it
-            mutable std::mutex m_Mutex;
-            std::vector<std::pair<const IFile*, std::string>> m_Files;
-        };
-
-        // Decorator: registers itself while alive and forwards everything else to the real file
-        class TrackedFile final : public IFile
-        {
-        public:
-            TrackedFile(Scope<IFile> file, Ref<OpenFileRegistry> registry, std::string virtualPath)
-                : m_File(std::move(file)), m_Registry(std::move(registry))
-            {
-                m_Registry->Add(this, std::move(virtualPath));
-            }
-            ~TrackedFile() override
-            {
-                m_Registry->Remove(this); // runs before m_File is destroyed
-            }
-            TrackedFile(const TrackedFile&)            = delete;
-            TrackedFile& operator=(const TrackedFile&) = delete;
-            TrackedFile(TrackedFile&&)                 = delete;
-            TrackedFile& operator=(TrackedFile&&)      = delete;
-
-            [[nodiscard]] virtual size_t Size() const override
-            {
-                return m_File->Size();
-            }
-            [[nodiscard]] virtual size_t Tell() const override
-            {
-                return m_File->Tell();
-            }
-            virtual bool Seek(size_t offset) override
-            {
-                return m_File->Seek(offset);
-            }
-            virtual size_t Read(void* buffer, size_t size) override
-            {
-                return m_File->Read(buffer, size);
-            }
-            virtual size_t Write(const void* data, size_t size) override
-            {
-                return m_File->Write(data, size);
-            }
-            virtual void Flush() override
-            {
-                m_File->Flush();
-            }
-
-        private:
-            Scope<IFile> m_File;
-            Ref<OpenFileRegistry> m_Registry; // shared: the file may outlive its mount in Release
-        };
-
         struct MountEntry
         {
             Scope<IMountSource> Source;
-            Ref<OpenFileRegistry> OpenFiles = CreateRef<OpenFileRegistry>();
+            Ref<Internal::OpenFileRegistry> OpenFiles = CreateRef<Internal::OpenFileRegistry>();
         };
         using MountTable = std::unordered_map<std::string, MountEntry, StringHash, std::equal_to<>>;
 
@@ -119,7 +34,7 @@ namespace Orion
         struct ResolvedPath
         {
             IMountSource* Source = nullptr;
-            Ref<OpenFileRegistry> OpenFiles;
+            Ref<Internal::OpenFileRegistry> OpenFiles;
             std::string Relative;
         };
 
@@ -197,7 +112,7 @@ namespace Orion
         Scope<IFile> file = resolved->Source->Open(resolved->Relative, mode);
         if (!file)
             return nullptr;
-        return CreateScope<TrackedFile>(std::move(file), resolved->OpenFiles, std::string(virtualPath));
+        return CreateScope<Internal::TrackedFile>(std::move(file), resolved->OpenFiles, std::string(virtualPath));
     }
 
     bool FileSystem::Exists(std::string_view virtualPath)

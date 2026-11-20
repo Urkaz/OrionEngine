@@ -1,7 +1,7 @@
 #include "Orion/Platform/OpenGL/OpenGLShader.h"
 
 #include "Orion/Core/Base.h"
-#include "Orion/Renderer/ShaderSourceParser.h"
+#include "Orion/Renderer/Internal/ShaderSourceParser.h"
 
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
@@ -38,12 +38,12 @@ namespace Orion
     {
         OE_PROFILE_FUNCTION();
 
-        const ShaderParseResult parsed = ParseShaderSource(source);
+        const Internal::ShaderParseResult parsed = Internal::ParseShaderSource(source);
         OE_CORE_ASSERT(parsed.Ok(), "{}", parsed.Error);
 
         std::unordered_map<GLenum, std::string> shaderSources;
         for (const auto& [stage, code] : parsed.Stages)
-            shaderSources[stage == ShaderStage::Vertex ? GL_VERTEX_SHADER : GL_FRAGMENT_SHADER] = code;
+            shaderSources[stage == Internal::ShaderStage::Vertex ? GL_VERTEX_SHADER : GL_FRAGMENT_SHADER] = code;
 
         return shaderSources;
     }

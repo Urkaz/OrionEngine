@@ -1,9 +1,9 @@
-#include "Orion/Renderer/ShaderSourceParser.h"
+#include "Orion/Renderer/Internal/ShaderSourceParser.h"
 
 #include <optional>
 #include <string_view>
 
-namespace Orion
+namespace Orion::Internal
 {
     namespace
     {
@@ -101,4 +101,4 @@ namespace Orion
             result.Error = "No '#type' section found";
         return result;
     }
-} // namespace Orion
+} // namespace Orion::Internal

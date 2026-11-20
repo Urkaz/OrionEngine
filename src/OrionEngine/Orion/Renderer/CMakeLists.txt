@@ -1,8 +1,6 @@
 target_sources(
     ${ENGINE_NAME}
-    PRIVATE AssimpIOSystem.cpp
-            AssimpIOSystem.h
-            AssimpMeshImporter.cpp
+    PRIVATE AssimpMeshImporter.cpp
             Buffer.cpp
             Camera.cpp
             FlyCamera.cpp
@@ -15,14 +13,17 @@ target_sources(
             Renderer2D.cpp
             RendererAPI.cpp
             Shader.cpp
-            ShaderSourceParser.cpp
             Texture.cpp
-            VertexArray.cpp)
+            VertexArray.cpp
+            Internal/AssimpIOSystem.cpp
+            Internal/AssimpIOSystem.h
+            Internal/AssimpUtils.h
+            Internal/ShaderSourceParser.cpp
+            Internal/ShaderSourceParser.h)
 
 target_sources(
     ${ENGINE_NAME}
     PUBLIC AssimpMeshImporter.h
-           AssimpUtils.h
            Buffer.h
            Camera.h
            FlyCamera.h
@@ -36,6 +37,5 @@ target_sources(
            Renderer2D.h
            RendererAPI.h
            Shader.h
-           ShaderSourceParser.h
            Texture.h
            VertexArray.h)

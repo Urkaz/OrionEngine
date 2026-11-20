@@ -3,7 +3,9 @@ target_sources(
     PRIVATE VirtualPath.cpp
             MemoryMountSource.cpp
             FileSystem.cpp
-            DiskMountSource.cpp)
+            DiskMountSource.cpp
+            Internal/OpenFileRegistry.cpp
+            Internal/OpenFileRegistry.h)
 
 target_sources(
     ${ENGINE_NAME}

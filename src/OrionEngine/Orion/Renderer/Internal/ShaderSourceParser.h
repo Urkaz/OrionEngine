@@ -4,7 +4,7 @@
 #include <string_view>
 #include <unordered_map>
 
-namespace Orion
+namespace Orion::Internal
 {
     enum class ShaderStage : uint8_t
     {
@@ -26,4 +26,4 @@ namespace Orion
     };
 
     ShaderParseResult ParseShaderSource(std::string_view source);
-} // namespace Orion
+} // namespace Orion::Internal

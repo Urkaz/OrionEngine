@@ -9,10 +9,11 @@
 
 namespace Orion
 {
-    static uint8_t s_GLFWWindowCount = 0;
-
     namespace
     {
+        // NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables): GLFW itself is global
+        uint8_t s_GLFWWindowCount = 0;
+
         void GLFWErrorCallback([[maybe_unused]] int errorCode, [[maybe_unused]] const char* description)
         {
             OE_CORE_LOG(Error, "GLFW Error ({0}): {1}", errorCode, description);

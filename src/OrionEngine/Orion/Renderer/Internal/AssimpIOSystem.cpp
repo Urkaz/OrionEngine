@@ -1,4 +1,4 @@
-#include "Orion/Renderer/AssimpIOSystem.h"
+#include "Orion/Renderer/Internal/AssimpIOSystem.h"
 
 #include "Orion/Core/FileSystem/File.h"
 #include "Orion/Core/FileSystem/FileSystem.h"
@@ -6,7 +6,7 @@
 #include <assimp/types.h>
 #include <cstddef>
 
-namespace Orion
+namespace Orion::Internal
 {
     size_t AssimpIOStream::Read(void* buffer, size_t size, size_t count)
     {
@@ -63,4 +63,4 @@ namespace Orion
         // NOLINTNEXTLINE(cppcoreguidelines-owning-memory): created by Open
         delete stream;
     }
-} // namespace Orion
+} // namespace Orion::Internal

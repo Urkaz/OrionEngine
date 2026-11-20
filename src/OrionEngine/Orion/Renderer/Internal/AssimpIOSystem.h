@@ -6,7 +6,7 @@
 #include <assimp/IOStream.hpp>
 #include <assimp/IOSystem.hpp>
 
-namespace Orion
+namespace Orion::Internal
 {
     // An Orion IFile seen as an Assimp IOStream
     class AssimpIOStream final : public Assimp::IOStream
@@ -51,4 +51,4 @@ namespace Orion
         Assimp::IOStream* Open(const char* path, const char* mode = "rb") override;
         void Close(Assimp::IOStream* stream) override;
     };
-} // namespace Orion
+} // namespace Orion::Internal

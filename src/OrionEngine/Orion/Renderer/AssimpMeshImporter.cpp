@@ -2,8 +2,8 @@
 
 #include "Orion/Core/Base.h"
 #include "Orion/Core/FileSystem/VirtualPath.h"
-#include "Orion/Renderer/AssimpIOSystem.h"
-#include "Orion/Renderer/AssimpUtils.h"
+#include "Orion/Renderer/Internal/AssimpIOSystem.h"
+#include "Orion/Renderer/Internal/AssimpUtils.h"
 #include "Orion/Renderer/MeshSource.h"
 
 #include <assimp/Importer.hpp>
@@ -23,18 +23,6 @@ namespace Orion
                                              aiProcess_CalcTangentSpace | aiProcess_GenUVCoords |
                                              aiProcess_ImproveCacheLocality | aiProcess_ValidateDataStructure;
 
-        glm::vec3 ToVec3(const aiVector3D& v)
-        {
-            return {v.x, v.y, v.z};
-        }
-
-        // Wraps an Assimp raw array + count
-        template <typename T>
-        std::span<T> MakeSpan(T* data, unsigned int count)
-        {
-            return data ? std::span<T>(data, count) : std::span<T>();
-        }
-
         void ImportSubmesh(MeshSource& source, const aiMesh* mesh)
         {
             Submesh& submesh      = source.Submeshes.emplace_back();
@@ -46,37 +34,37 @@ namespace Orion
             if (!(mesh->mPrimitiveTypes & aiPrimitiveType_TRIANGLE))
                 return;
 
-            const auto positions  = MakeSpan(mesh->mVertices, mesh->mNumVertices);
-            const auto normals    = MakeSpan(mesh->mNormals, mesh->mNumVertices);
-            const auto tangents   = MakeSpan(mesh->mTangents, mesh->mNumVertices);
-            const auto bitangents = MakeSpan(mesh->mBitangents, mesh->mNumVertices);
-            const auto uvs        = MakeSpan(mesh->mTextureCoords[0], mesh->mNumVertices);
+            const auto positions  = Internal::MakeSpan(mesh->mVertices, mesh->mNumVertices);
+            const auto normals    = Internal::MakeSpan(mesh->mNormals, mesh->mNumVertices);
+            const auto tangents   = Internal::MakeSpan(mesh->mTangents, mesh->mNumVertices);
+            const auto bitangents = Internal::MakeSpan(mesh->mBitangents, mesh->mNumVertices);
+            const auto uvs        = Internal::MakeSpan(mesh->mTextureCoords[0], mesh->mNumVertices);
 
             source.Vertices.reserve(source.Vertices.size() + positions.size());
             for (unsigned int i = 0; i < positions.size(); ++i)
             {
                 Vertex vertex{};
-                vertex.Position = ToVec3(positions[i]);
+                vertex.Position = Internal::ToVec3(positions[i]);
                 if (!normals.empty())
-                    vertex.Normal = ToVec3(normals[i]);
+                    vertex.Normal = Internal::ToVec3(normals[i]);
                 if (!tangents.empty() && !bitangents.empty())
                 {
-                    vertex.Tangent   = ToVec3(tangents[i]);
-                    vertex.Bitangent = ToVec3(bitangents[i]);
+                    vertex.Tangent   = Internal::ToVec3(tangents[i]);
+                    vertex.Bitangent = Internal::ToVec3(bitangents[i]);
                 }
                 if (!uvs.empty())
                     vertex.TexCoord = {uvs[i].x, uvs[i].y};
                 source.Vertices.push_back(vertex);
             }
 
-            const auto faces = MakeSpan(mesh->mFaces, mesh->mNumFaces);
+            const auto faces = Internal::MakeSpan(mesh->mFaces, mesh->mNumFaces);
 
             source.Indices.reserve(source.Indices.size() + static_cast<size_t>(mesh->mNumFaces * 3));
             for (const aiFace& face : faces)
             {
                 OE_CORE_ASSERT(face.mNumIndices == 3, "We expect a triangle. A face should have 3 faces.");
 
-                const auto indices = MakeSpan(face.mIndices, 3);
+                const auto indices = Internal::MakeSpan(face.mIndices, 3);
                 source.Indices.push_back(indices[0]);
                 source.Indices.push_back(indices[1]);
                 source.Indices.push_back(indices[2]);
@@ -97,14 +85,14 @@ namespace Orion
                 MeshNode& meshNode      = source.Nodes[index];
                 meshNode.Name           = assimpNode->mName.C_Str();
                 meshNode.Parent         = parent;
-                meshNode.LocalTransform = Mat4FromAssimp(assimpNode->mTransformation);
-                for (const unsigned int meshIndex : MakeSpan(assimpNode->mMeshes, assimpNode->mNumMeshes))
+                meshNode.LocalTransform = Internal::Mat4FromAssimp(assimpNode->mTransformation);
+                for (const unsigned int meshIndex : Internal::MakeSpan(assimpNode->mMeshes, assimpNode->mNumMeshes))
                     meshNode.Submeshes.push_back(meshIndex);
             }
             // After this point, we let the recursion do its thing
             // and only access the meshNode safely using the index (source.Nodes[index])
 
-            for (const aiNode* assimpChild : MakeSpan(assimpNode->mChildren, assimpNode->mNumChildren))
+            for (const aiNode* assimpChild : Internal::MakeSpan(assimpNode->mChildren, assimpNode->mNumChildren))
             {
                 const uint32_t child = ImportNode(source, assimpChild, index);
                 source.Nodes[index].Children.push_back(child);
@@ -129,7 +117,7 @@ namespace Orion
             }
 
             const auto* bytes = reinterpret_cast<const uint8_t*>(texture->pcData);
-            const auto data   = MakeSpan(bytes, texture->mWidth);
+            const auto data   = Internal::MakeSpan(bytes, texture->mWidth);
             source.EmbeddedTextures[path].assign(data.begin(), data.end());
         }
 
@@ -147,12 +135,12 @@ namespace Orion
 
             // Submeshes keep the SAME order as aiScene::mMeshes: nodes reference them by that index
             source->Submeshes.reserve(scene->mNumMeshes);
-            for (const aiMesh* meshes : MakeSpan(scene->mMeshes, scene->mNumMeshes))
+            for (const aiMesh* meshes : Internal::MakeSpan(scene->mMeshes, scene->mNumMeshes))
                 ImportSubmesh(*source, meshes);
 
             // Materials: only names and texture paths for now
             source->Materials.reserve(scene->mNumMaterials);
-            for (const aiMaterial* material : MakeSpan(scene->mMaterials, scene->mNumMaterials))
+            for (const aiMaterial* material : Internal::MakeSpan(scene->mMaterials, scene->mNumMaterials))
             {
                 MeshMaterial& meshMaterial = source->Materials.emplace_back();
                 meshMaterial.Name          = material->GetName().C_Str();
@@ -203,7 +191,7 @@ namespace Orion
 
         Assimp::Importer importer;
         // NOLINTNEXTLINE(cppcoreguidelines-owning-memory): the Importer takes ownership
-        importer.SetIOHandler(new AssimpIOSystem());
+        importer.SetIOHandler(new Internal::AssimpIOSystem());
         const aiScene* scene = importer.ReadFile(virtualPath, ImportFlags);
         if (!scene)
         {
