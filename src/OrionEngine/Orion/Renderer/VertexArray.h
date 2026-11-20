@@ -2,6 +2,7 @@
 
 #include "Orion/Core/Core.h"
 #include "Orion/Renderer/Buffer.h"
+
 #include <memory>
 
 namespace Orion

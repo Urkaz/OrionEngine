@@ -1,7 +1,7 @@
+#include "Sandbox3D.h"
+
 #include <Orion.h>
 #include <Orion/EntryPoint.h>
-
-#include "Sandbox3D.h"
 
 class Sandbox : public Orion::Application
 {

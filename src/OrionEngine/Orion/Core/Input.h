@@ -1,9 +1,8 @@
 #pragma once
 
+#include "Orion/Core/Core.h"
 #include "Orion/Core/KeyCodes.h"
 #include "Orion/Core/MouseCodes.h"
-
-#include "Orion/Core/Core.h"
 
 namespace Orion
 {

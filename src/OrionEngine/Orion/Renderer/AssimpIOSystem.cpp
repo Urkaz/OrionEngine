@@ -1,7 +1,10 @@
 #include "oepch.h"
+
 #include "AssimpIOSystem.h"
+
 #include "Orion/Core/FileSystem/File.h"
 #include "Orion/Core/FileSystem/FileSystem.h"
+
 #include <assimp/types.h>
 #include <cstddef>
 

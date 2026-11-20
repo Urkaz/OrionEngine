@@ -1,8 +1,9 @@
 #include "oepch.h"
 
+#include "Orion/Renderer/FlyCamera.h"
+
 #include "Orion/Core/Input.h"
 #include "Orion/Core/KeyCodes.h"
-#include "Orion/Renderer/FlyCamera.h"
 
 #include <glm/fwd.hpp>
 #include <glm/gtc/matrix_transform.hpp>

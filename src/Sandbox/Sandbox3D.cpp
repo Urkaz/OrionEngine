@@ -1,3 +1,5 @@
+#include "Sandbox3D.h"
+
 #include "Orion/Renderer/AssimpMeshImporter.h"
 #include "Orion/Renderer/Buffer.h"
 #include "Orion/Renderer/LightingMath.h"
@@ -6,7 +8,6 @@
 #include "Orion/Renderer/Renderer.h"
 #include "Orion/Renderer/Shader.h"
 #include "Orion/Renderer/VertexArray.h"
-#include "Sandbox3D.h"
 
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/fwd.hpp>

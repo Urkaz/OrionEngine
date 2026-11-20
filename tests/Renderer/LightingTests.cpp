@@ -1,9 +1,9 @@
+#include "Orion/Renderer/LightingMath.h"
+#include "Orion/Renderer/MeshSource.h"
+
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-
-#include "Orion/Renderer/LightingMath.h"
-#include "Orion/Renderer/MeshSource.h"
 
 using Catch::Approx;
 

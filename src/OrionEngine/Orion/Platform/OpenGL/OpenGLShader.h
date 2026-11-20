@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Orion/Renderer/Shader.h"
+
 #include <glm/glm.hpp>
 
 // TODO: Remove!

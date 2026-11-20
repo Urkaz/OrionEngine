@@ -1,4 +1,5 @@
 #include "oepch.h"
+
 #include "Orion/Platform/OpenGL/OpenGLVertexArray.h"
 
 #include <cstdint>

@@ -1,8 +1,8 @@
 #pragma once
 
-#include <string>
-
 #include "Orion/Core/Core.h"
+
+#include <string>
 
 namespace Orion
 {

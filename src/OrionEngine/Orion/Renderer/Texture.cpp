@@ -1,9 +1,11 @@
 #include "oepch.h"
+
 #include "Orion/Renderer/Texture.h"
 
 #include "Orion/Core/FileSystem/FileSystem.h"
 #include "Orion/Platform/OpenGL/OpenGLTexture.h"
 #include "Orion/Renderer/Renderer.h"
+
 #include <cstdint>
 
 namespace Orion

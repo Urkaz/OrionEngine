@@ -1,9 +1,9 @@
 #include "oepch.h"
+
 #include "Orion/Core/FileSystem/File.h"
 #include "Orion/Core/FileSystem/PlatformFile.h"
 
 #include <algorithm>
-
 #include <filesystem>
 #include <fstream>
 #include <ios>

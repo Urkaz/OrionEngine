@@ -1,9 +1,9 @@
 #pragma once
 
-#include <functional>
-
 #include "Orion/Core/Core.h"
 #include "Orion/Core/Events/Event.h"
+
+#include <functional>
 
 namespace Orion
 {

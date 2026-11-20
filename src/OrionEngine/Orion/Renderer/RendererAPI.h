@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Orion/Renderer/VertexArray.h"
+
 #include <glm/glm.hpp>
 
 namespace Orion

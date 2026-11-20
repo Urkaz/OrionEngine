@@ -1,4 +1,5 @@
 #include "oepch.h"
+
 #include "Orion/Core/Input.h"
 
 #if defined(OE_PLATFORM_WINDOWS) || defined(OE_PLATFORM_LINUX)

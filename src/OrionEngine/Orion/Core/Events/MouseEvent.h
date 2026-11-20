@@ -1,9 +1,9 @@
 #pragma once
 
-#include <format>
-
 #include "Orion/Core/Events/Event.h"
 #include "Orion/Core/MouseCodes.h"
+
+#include <format>
 
 namespace Orion
 {

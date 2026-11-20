@@ -7,8 +7,8 @@
 #include "Orion/Renderer/MeshSource.h"
 #include "Orion/Renderer/RenderCommand.h"
 #include "Orion/Renderer/Renderer2D.h"
-
 #include "Renderer.h"
+
 #include <cstdint>
 
 namespace Orion

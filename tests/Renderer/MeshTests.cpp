@@ -4,13 +4,11 @@
 
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
-
+#include <cstddef>
+#include <cstring>
 #include <glm/glm.hpp>
 #include <glm/gtc/epsilon.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-
-#include <cstddef>
-#include <cstring>
 #include <string>
 
 namespace

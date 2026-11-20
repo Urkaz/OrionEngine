@@ -1,9 +1,8 @@
 #pragma once
 
-#include <glad/glad.h>
-
 #include "Orion/Renderer/Texture.h"
 
+#include <glad/glad.h>
 #include <stb_image.h>
 
 namespace Orion

@@ -1,8 +1,9 @@
 #include "oepch.h"
 
+#include "Orion/Core/Log.h"
+
 #include "Orion/Core/FileSystem/File.h"
 #include "Orion/Core/FileSystem/FileSystem.h"
-#include "Orion/Core/Log.h"
 #include "Orion/Profiling/Profiling.h"
 
 #include <spdlog/common.h>
