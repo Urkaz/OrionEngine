@@ -166,7 +166,7 @@ namespace Orion
         virtual void Unbind() const = 0;
 
         virtual void SetLayout(const BufferLayout& layout)    = 0;
-        [[nodiscard]] virtual const BufferLayout& GetLayout() = 0;
+        [[nodiscard]] virtual const BufferLayout& GetLayout() const = 0;
 
         [[nodiscard]] static Ref<VertexBuffer> Create(const void* vertices, uint32_t size);
     };

@@ -74,7 +74,8 @@ namespace Orion
             Ref<Texture2D> texture = missing;
             if (const auto it = source->EmbeddedTextures.find(path); it != source->EmbeddedTextures.end())
             {
-                texture = Texture2D::CreateFromMemory(it->second.data(), it->second.size(), srgb);
+                if (Ref<Texture2D> loaded = Texture2D::CreateFromMemory(it->second.data(), it->second.size(), srgb))
+                    texture = loaded;
             }
             else
             {
@@ -101,10 +102,5 @@ namespace Orion
             renderMaterial.Normal       = loadTexture(material.NormalPath, false, flatNormalTexture, flatNormalTexture);
             renderMaterial.HasNormalMap = renderMaterial.Normal != flatNormalTexture;
         }
-
-        const auto withNormalMap = std::ranges::count_if(m_Materials, [](const MeshRenderMaterial& material) {
-            return material.HasNormalMap;
-        });
-        OE_CORE_LOG(Info, "Materials: {0}, with normal map: {1}", m_Materials.size(), withNormalMap);
     }
 } // namespace Orion

@@ -8,14 +8,14 @@
 
 namespace Orion
 {
-    OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc)
-        : m_RendererID(0), m_Name(name)
+    OpenGLShader::OpenGLShader(std::string name, std::string vertexSrc, std::string fragmentSrc)
+        : m_RendererID(0), m_Name(std::move(name))
     {
         OE_PROFILE_FUNCTION();
 
         std::unordered_map<GLenum, std::string> shaderSources;
-        shaderSources[GL_VERTEX_SHADER]   = vertexSrc;
-        shaderSources[GL_FRAGMENT_SHADER] = fragmentSrc;
+        shaderSources[GL_VERTEX_SHADER]   = std::move(vertexSrc);
+        shaderSources[GL_FRAGMENT_SHADER] = std::move(fragmentSrc);
         Compile(shaderSources);
     }
 
@@ -149,7 +149,7 @@ namespace Orion
         glUseProgram(0);
     }
 
-    std::string OpenGLShader::GetName()
+    const std::string& OpenGLShader::GetName() const
     {
         return m_Name;
     }

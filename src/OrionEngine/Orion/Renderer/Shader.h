@@ -23,7 +23,7 @@ namespace Orion
         virtual void SetMat4(const std::string& name, const glm::mat4& value)   = 0;
         virtual void SetMat3(const std::string& name, const glm::mat3& value)   = 0;
 
-        [[nodiscard]] virtual std::string GetName() = 0;
+        [[nodiscard]] virtual const std::string& GetName() const = 0;
 
         [[nodiscard]] static Ref<Shader> Create(std::string name, std::string vertexSrc, std::string fragmentSrc);
         [[nodiscard]] static Ref<Shader> Create(const std::string& filepath);

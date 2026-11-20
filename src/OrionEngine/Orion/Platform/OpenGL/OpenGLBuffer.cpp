@@ -43,7 +43,7 @@ namespace Orion
         m_Layout = layout;
     }
 
-    const BufferLayout& OpenGLVertexBuffer::GetLayout()
+    const BufferLayout& OpenGLVertexBuffer::GetLayout() const
     {
         return m_Layout;
     }

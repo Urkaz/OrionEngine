@@ -12,7 +12,7 @@ namespace Orion
     class OpenGLShader : public Shader
     {
     public:
-        OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc);
+        OpenGLShader(std::string name, std::string vertexSrc, std::string fragmentSrc);
         OpenGLShader(std::string name, const std::string& source);
         virtual ~OpenGLShader();
 
@@ -26,7 +26,7 @@ namespace Orion
         virtual void SetMat4(const std::string& name, const glm::mat4& value) override;
         virtual void SetMat3(const std::string& name, const glm::mat3& value) override;
 
-        virtual std::string GetName() override;
+        virtual const std::string& GetName() const override;
 
         void UploadUniformInt(const std::string& name, int value);
         void UploadUniformFloat(const std::string& name, float value);
