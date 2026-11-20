@@ -5,6 +5,8 @@ Rule: '#include "X"' is valid only if <root>/X exists for one of the --root fold
 (e.g. "Orion/Renderer/Buffer.h" or "oepch.h" from src/OrionEngine). Paths relative to
 the including file's folder ("Buffer.h" from Orion/Renderer/) are rejected, including
 the .cpp's own header. Angle-bracket includes (<...>) are not checked.
+Also rejected: a root-valid include shadowed by a different file with the same relative path next to
+the including file (the compiler would pick the local one).
 
 Exit code: 0 if everything is valid, 1 if any include is wrong (the build stops).
 With --fix, includes that can be resolved are rewritten in place.
@@ -40,11 +42,19 @@ def check_file(file, roots, fix, repo):
         if not match:
             continue
         include = match.group(2)
-        if any((root / include).is_file() for root in roots):
-            continue
-
         location = f"{file.relative_to(repo).as_posix()}:{number}"
         local = (file.parent / include).resolve()
+        from_root = next(((root / include).resolve() for root in roots if (root / include).is_file()), None)
+
+        if from_root is not None:
+            # The compiler looks next to the including file first: a different file there shadows the root one
+            if local.is_file() and local != from_root:
+                errors.append(
+                    f'{location}: "{include}" resolves to {local.relative_to(repo).as_posix()} next to this file, '
+                    f"not to {from_root.relative_to(repo).as_posix()}: rename one of them"
+                )
+            continue
+
         suggestion = find_root_relative(local, roots) if local.is_file() else None
 
         if suggestion is None:
@@ -82,7 +92,7 @@ def main():
     for error in errors:
         print(error, file=sys.stderr)
     if errors:
-        print(f"{len(errors)} include(s) not written from an include root. Build stopped.", file=sys.stderr)
+        print(f"{len(errors)} include problem(s) found. Build stopped.", file=sys.stderr)
         if not args.fix:
             print("Run tools/check-includes.py with --fix to rewrite the fixable ones.", file=sys.stderr)
         return 1

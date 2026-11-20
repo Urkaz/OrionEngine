@@ -1,8 +1,6 @@
-#include "oepch.h"
-
 #include "Orion/Platform/OpenGL/OpenGLShader.h"
 
-#include "Orion/Core/Core.h"
+#include "Orion/Core/Base.h"
 #include "Orion/Renderer/ShaderSourceParser.h"
 
 #include <glad/glad.h>

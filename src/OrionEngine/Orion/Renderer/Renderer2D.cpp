@@ -1,5 +1,3 @@
-#include "oepch.h"
-
 #include "Orion/Renderer/Renderer2D.h"
 
 #include "Orion/Renderer/RenderCommand.h"

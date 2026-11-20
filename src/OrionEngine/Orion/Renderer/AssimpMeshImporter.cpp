@@ -1,7 +1,6 @@
-#include "oepch.h"
-
 #include "Orion/Renderer/AssimpMeshImporter.h"
 
+#include "Orion/Core/Base.h"
 #include "Orion/Core/FileSystem/VirtualPath.h"
 #include "Orion/Renderer/AssimpIOSystem.h"
 #include "Orion/Renderer/AssimpUtils.h"

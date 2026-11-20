@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Orion/Core/Core.h"
+
 #include <glm/glm.hpp>
 #include <string>
 #include <unordered_map>

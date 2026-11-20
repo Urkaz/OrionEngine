@@ -3,4 +3,8 @@ Checks: 'clang-analyzer-*,cppcoreguidelines-*,modernize-*,bugprone-*,performance
 WarningsAsErrors: ''
 HeaderFilterRegex: 'src/(OrionEngine|Sandbox)/.*\.(h|hpp)$'
 FormatStyle:     none
+CheckOptions:
+  # do { } while (false) is the idiomatic way to make a macro behave as a single statement (asserts, logs)
+  - key:   cppcoreguidelines-avoid-do-while.IgnoreMacros
+    value: true
 ...

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 namespace Orion
 {
     using KeyCode = std::uint16_t;

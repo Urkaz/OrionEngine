@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 namespace Orion
 {
     using MouseCode = std::uint16_t;

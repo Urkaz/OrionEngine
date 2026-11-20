@@ -15,6 +15,7 @@ target_sources(
     ${ENGINE_NAME}
     PUBLIC Application.h
            Assert.h
+           Base.h
            Core.h
            Input.h
            KeyCodes.h

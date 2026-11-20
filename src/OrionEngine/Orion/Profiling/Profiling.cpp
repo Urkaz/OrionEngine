@@ -1,6 +1,6 @@
-#include "oepch.h"
-
 #include "Orion/Profiling/Profiling.h"
+
+#include "Orion/Core/Warnings.h"
 
 #if defined(OE_ENABLE_PROFILING)
 

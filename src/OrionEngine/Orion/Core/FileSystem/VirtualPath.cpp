@@ -1,9 +1,7 @@
-#include "oepch.h"
-
 #include "Orion/Core/FileSystem/VirtualPath.h"
 
 #include <algorithm>
-#include <ranges>
+#include <vector>
 
 namespace Orion::VirtualPath
 {

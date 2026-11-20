@@ -1,6 +1,6 @@
-#include "oepch.h"
-
 #include "Orion/Platform/OpenGL/OpenGLVertexArray.h"
+
+#include "Orion/Core/Base.h"
 
 #include <cstdint>
 #include <glad/glad.h>

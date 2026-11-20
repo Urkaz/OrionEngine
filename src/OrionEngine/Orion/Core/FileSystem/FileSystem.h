@@ -4,8 +4,11 @@
 #include "Orion/Core/FileSystem/File.h"
 #include "Orion/Core/FileSystem/MountSource.h"
 
+#include <optional>
 #include <span>
+#include <string>
 #include <string_view>
+#include <vector>
 
 namespace Orion
 {

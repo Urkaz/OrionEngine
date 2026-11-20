@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Orion/Core/Core.h"
 #include "Orion/Core/Events/Event.h"
 #include "Orion/Core/Timestep.h"
 
@@ -18,7 +17,7 @@ namespace Orion
         virtual void OnImGuiRender() {}
         virtual void OnEvent([[maybe_unused]] Event& event) {}
 
-        inline const std::string& GetName() const
+        [[nodiscard]] inline const std::string& GetName() const
         {
             return m_DebugName;
         }

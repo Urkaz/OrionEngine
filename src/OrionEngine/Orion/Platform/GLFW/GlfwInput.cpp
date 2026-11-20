@@ -1,5 +1,3 @@
-#include "oepch.h"
-
 #include "Orion/Platform/GLFW/GlfwInput.h"
 
 #include "Orion/Core/Application.h"

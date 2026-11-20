@@ -1,9 +1,7 @@
-#include "Orion/Profiling/Profiling.h"
-
 #if defined(OE_ENABLE_PROFILING)
-
     #include <cstdlib>
     #include <new>
+    #include <tracy/Tracy.hpp>
 
     #if defined(_WIN32)
         #include <malloc.h>

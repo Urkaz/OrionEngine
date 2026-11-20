@@ -1,8 +1,5 @@
 #pragma once
 
-#include "Orion/Core/Events/ApplicationEvent.h"
-#include "Orion/Core/Events/KeyEvent.h"
-#include "Orion/Core/Events/MouseEvent.h"
 #include "Orion/Core/Layer.h"
 
 namespace Orion

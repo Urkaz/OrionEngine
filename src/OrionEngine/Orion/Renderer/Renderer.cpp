@@ -1,5 +1,3 @@
-#include "oepch.h"
-
 #include "Orion/Renderer/Renderer.h"
 
 #include "Orion/Renderer/LightingMath.h"

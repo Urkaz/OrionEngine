@@ -161,7 +161,8 @@ cpmaddpackage("gh:assimp/assimp#v6.0.5")
 set_target_properties(assimp PROPERTIES FOLDER "Dependencies/assimp")
 # Assimp only creates these in some configurations (internal zlib, MSVC toolset): set the folder if they exist
 if(TARGET UpdateAssimpLibsDebugSymbolsAndDLLs)
-    set_target_properties(UpdateAssimpLibsDebugSymbolsAndDLLs PROPERTIES FOLDER "Dependencies/assimp")
+    set_target_properties(UpdateAssimpLibsDebugSymbolsAndDLLs PROPERTIES FOLDER
+                                                                         "Dependencies/assimp")
 endif()
 if(TARGET zlibstatic)
     set_target_properties(zlibstatic PROPERTIES FOLDER "Dependencies")

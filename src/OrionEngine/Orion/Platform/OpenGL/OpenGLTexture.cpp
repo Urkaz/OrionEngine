@@ -1,6 +1,6 @@
-#include "oepch.h"
-
 #include "Orion/Platform/OpenGL/OpenGLTexture.h"
+
+#include "Orion/Core/Base.h"
 
 #include <glad/glad.h>
 #include <stb_image.h>

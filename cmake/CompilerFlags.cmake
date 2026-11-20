@@ -9,9 +9,8 @@ function(target_set_compiler_flags)
 
     # RTTI is disabled engine-wide: no dynamic_cast/typeid, type identification is
     # done with explicit enums or EnTT. Any third-party library linked in must match this setting.
-    set(MSVC_FLAGS
-        /Gy # Enable function-level linking
-        /GR- # Disable RTTI
+    set(MSVC_FLAGS /Gy # Enable function-level linking
+                   /GR- # Disable RTTI
     )
 
     set(CLANG_FLAGS -fno-rtti)

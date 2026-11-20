@@ -55,6 +55,15 @@
       }
     },
     {
+      "name": "windows-msvc-nopch",
+      "displayName": "Windows MSVC-Debug (no PCH)",
+      "description": "Debug without precompiled headers: checks that every file includes what it uses",
+      "inherits": "windows-msvc-debug",
+      "cacheVariables": {
+        "CMAKE_DISABLE_PRECOMPILE_HEADERS": "ON"
+      }
+    },
+    {
       "name": "windows-msvc-release",
       "displayName": "Windows MSVC-Release",
       "inherits": "windows-msvc",
@@ -107,6 +116,15 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
         "ENABLE_TESTING": "ON"
+      }
+    },
+    {
+      "name": "linux-clang-nopch",
+      "displayName": "Linux Clang-Debug (no PCH)",
+      "description": "Debug without precompiled headers: checks that every file includes what it uses",
+      "inherits": "linux-clang-debug",
+      "cacheVariables": {
+        "CMAKE_DISABLE_PRECOMPILE_HEADERS": "ON"
       }
     },
     {
@@ -167,6 +185,11 @@
       "configurePreset": "windows-msvc-debug"
     },
     {
+      "name": "windows-msvc-nopch",
+      "displayName": "Windows MSVC Debug (no PCH)",
+      "configurePreset": "windows-msvc-nopch"
+    },
+    {
       "name": "windows-msvc-release",
       "displayName": "Windows MSVC Release",
       "configurePreset": "windows-msvc-release"
@@ -175,6 +198,11 @@
       "name": "linux-clang-debug",
       "displayName": "Linux Clang Debug",
       "configurePreset": "linux-clang-debug"
+    },
+    {
+      "name": "linux-clang-nopch",
+      "displayName": "Linux Clang Debug (no PCH)",
+      "configurePreset": "linux-clang-nopch"
     },
     {
       "name": "linux-clang-asan",

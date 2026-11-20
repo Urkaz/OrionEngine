@@ -1,13 +1,14 @@
 #pragma once
 
-// For use by Orion applications
+// For use by Orion applications.
+// Umbrella header: every include is re-exported to the client (IWYU tools must not flag them as unused).
+// IWYU pragma: begin_exports
 
 #include "Orion/Core/Application.h"
-#include "Orion/Core/Core.h"
+#include "Orion/Core/Base.h"
 #include "Orion/Core/Input.h"
 #include "Orion/Core/KeyCodes.h"
 #include "Orion/Core/Layer.h"
-#include "Orion/Core/Log.h"
 #include "Orion/Core/MouseCodes.h"
 #include "Orion/Core/Timestep.h"
 #include "Orion/ImGui/ImGuiLayer.h"
@@ -30,3 +31,5 @@
 #include "Orion/Renderer/Texture.h"
 #include "Orion/Renderer/VertexArray.h"
 // -------------------------
+
+// IWYU pragma: end_exports

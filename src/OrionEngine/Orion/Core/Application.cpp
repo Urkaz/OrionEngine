@@ -1,16 +1,12 @@
-#include "oepch.h"
-
 #include "Orion/Core/Application.h"
 
+#include "Orion/Core/Base.h"
 #include "Orion/Core/Events/ApplicationEvent.h"
 #include "Orion/Core/Events/Event.h"
-#include "Orion/Core/Input.h"
-#include "Orion/Core/Log.h"
 #include "Orion/Core/Window.h"
 #include "Orion/Renderer/Renderer.h"
 
 #include <GLFW/glfw3.h>
-#include <cstdint>
 #include <ranges>
 
 namespace Orion

@@ -1,5 +1,3 @@
-#include "oepch.h"
-
 #include "Orion/Core/Layer.h"
 
 namespace Orion

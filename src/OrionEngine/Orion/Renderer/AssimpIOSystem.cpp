@@ -1,5 +1,3 @@
-#include "oepch.h"
-
 #include "Orion/Renderer/AssimpIOSystem.h"
 
 #include "Orion/Core/FileSystem/File.h"

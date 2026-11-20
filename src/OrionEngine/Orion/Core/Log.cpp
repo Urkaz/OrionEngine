@@ -1,5 +1,3 @@
-#include "oepch.h"
-
 #include "Orion/Core/Log.h"
 
 #include "Orion/Core/FileSystem/File.h"

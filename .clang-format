@@ -71,11 +71,10 @@ ForEachMacros:
   - Q_FOREACH
   - BOOST_FOREACH
 # Include order, one group each (blank line between groups):
-#   1) oepch.h  2) the .cpp's own header  3) engine headers ("...")  4) external libraries and std (<...>)
+#   1) the .cpp's own header  2) engine headers ("...")  3) external libraries and std (<...>)
+# The PCH (oepch.h) is force-included by CMake and never written explicitly.
 IncludeBlocks: Regroup
 IncludeCategories:
-  - Regex: '^"oepch\.h"$'
-    Priority: -1
   - Regex: '^"'
     Priority: 2
   - Regex: '^<'

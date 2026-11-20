@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Orion/Core/Core.h"
+
 namespace Orion
 {
     class GraphicsContext

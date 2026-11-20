@@ -1,5 +1,3 @@
-#include "oepch.h"
-
 #include "Orion/Renderer/ShaderSourceParser.h"
 
 #include <optional>

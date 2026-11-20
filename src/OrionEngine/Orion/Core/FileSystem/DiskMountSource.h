@@ -2,6 +2,8 @@
 
 #include "Orion/Core/FileSystem/MountSource.h"
 
+#include <string>
+
 namespace Orion
 {
     class DiskMountSource final : public IMountSource

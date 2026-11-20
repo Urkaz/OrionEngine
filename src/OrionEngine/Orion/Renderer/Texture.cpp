@@ -1,5 +1,3 @@
-#include "oepch.h"
-
 #include "Orion/Renderer/Texture.h"
 
 #include "Orion/Core/FileSystem/FileSystem.h"

@@ -1,8 +1,8 @@
-#include "oepch.h"
-
 #include "Orion/Renderer/MeshSource.h"
 
 #include "Orion/Core/FileSystem/VirtualPath.h"
+
+#include <algorithm>
 
 namespace Orion
 {

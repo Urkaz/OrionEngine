@@ -1,11 +1,8 @@
-#include "oepch.h"
-
 #include "Orion/Platform/GLFW/GlfwWindow.h"
 
 #include "Orion/Core/Events/ApplicationEvent.h"
 #include "Orion/Core/Events/KeyEvent.h"
 #include "Orion/Core/Events/MouseEvent.h"
-#include "Orion/Platform/OpenGL/OpenGLContext.h"
 #include "Orion/Renderer/Renderer.h"
 
 #include <GLFW/glfw3.h>
