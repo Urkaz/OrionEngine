@@ -97,14 +97,18 @@ TEST_CASE("Core/FileSystem/FileSystem: writing to a read-only mount fails", "[Co
 TEST_CASE("Core/FileSystem/DiskMountSource: writes a file and reads it back", "[Core][FileSystem]")
 {
     FileSystemGuard guard;
-    const std::string root = "OrionTests-FileSystem";
+    // System temp folder so leftovers never end up in the repo
+    const std::filesystem::path root = std::filesystem::temp_directory_path() / "OrionTests-FileSystem";
     std::filesystem::remove_all(root); // Remove all files from a previous failed test
 
-    FileSystem::Mount("temp", CreateScope<DiskMountSource>(root, false));
+    // UTF-8 explicitly: generic_string() would go through the Windows ANSI code page
+    const std::u8string rootUtf8 = root.generic_u8string();
+    FileSystem::Mount("temp",
+                      CreateScope<DiskMountSource>(std::string(rootUtf8.begin(), rootUtf8.end()), false));
 
     REQUIRE(FileSystem::WriteText("temp://logs/test.txt", "hello")); // also creates the missing folder
     CHECK(FileSystem::ReadText("temp://logs/test.txt") == "hello");
-    CHECK(std::filesystem::is_regular_file(root + "/logs/test.txt")); // the mount maps to the expected folder
+    CHECK(std::filesystem::is_regular_file(root / "logs" / "test.txt")); // the mount maps to the expected folder
 
     std::filesystem::remove_all(root);
 }
