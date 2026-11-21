@@ -27,7 +27,7 @@ namespace
 
     void MountTestAssets()
     {
-        auto source = Orion::CreateScope<Orion::MemoryMountSource>();
+        auto source = Orion::MakeUnique<Orion::MemoryMountSource>();
         source->AddFile("shaders/Test.glsl", std::string_view("#type vertex"));
         source->AddFile("models/a.bin", std::vector<uint8_t>{1, 2, 3, 4});
         Orion::FileSystem::Mount("assets", std::move(source));
@@ -39,7 +39,7 @@ TEST_CASE("Core/FileSystem/MemoryMountSource: Read stops at the end and Seek che
     MemoryMountSource source;
     source.AddFile("a.bin", std::vector<uint8_t>{10, 20, 30});
 
-    Scope<IFile> file = source.Open("a.bin", FileMode::Read);
+    UniquePtr<IFile> file = source.Open("a.bin", FileMode::Read);
     REQUIRE(file);
 
     std::array<uint8_t, 8> buffer{};
@@ -102,7 +102,7 @@ TEST_CASE("Core/FileSystem/DiskMountSource: writes a file and reads it back", "[
 
     // UTF-8 explicitly: generic_string() would go through the Windows ANSI code page
     const std::u8string rootUtf8 = root.generic_u8string();
-    FileSystem::Mount("temp", CreateScope<DiskMountSource>(std::string(rootUtf8.begin(), rootUtf8.end()), false));
+    FileSystem::Mount("temp", MakeUnique<DiskMountSource>(std::string(rootUtf8.begin(), rootUtf8.end()), false));
 
     REQUIRE(FileSystem::WriteText("temp://logs/test.txt", "hello")); // also creates the missing folder
     CHECK(FileSystem::ReadText("temp://logs/test.txt") == "hello");
@@ -118,10 +118,10 @@ TEST_CASE("Core/FileSystem/DiskMountSource: consecutive writes grow the size to 
     std::filesystem::remove_all(root);
 
     const std::u8string rootUtf8 = root.generic_u8string();
-    FileSystem::Mount("temp", CreateScope<DiskMountSource>(std::string(rootUtf8.begin(), rootUtf8.end()), false));
+    FileSystem::Mount("temp", MakeUnique<DiskMountSource>(std::string(rootUtf8.begin(), rootUtf8.end()), false));
 
     {
-        Scope<IFile> file = FileSystem::Open("temp://size.bin", FileMode::Write);
+        UniquePtr<IFile> file = FileSystem::Open("temp://size.bin", FileMode::Write);
         REQUIRE(file);
 
         const std::array<uint8_t, 3> data{1, 2, 3};

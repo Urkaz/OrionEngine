@@ -51,7 +51,7 @@ namespace Orion::Internal
         if (std::string_view(mode).find('w') != std::string_view::npos)
             return nullptr;
 
-        Scope<IFile> file = FileSystem::Open(path, FileMode::Read);
+        UniquePtr<IFile> file = FileSystem::Open(path, FileMode::Read);
         if (!file)
             return nullptr;
         // NOLINTNEXTLINE(cppcoreguidelines-owning-memory): Assimp owns it

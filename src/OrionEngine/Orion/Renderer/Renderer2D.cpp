@@ -16,13 +16,13 @@ namespace Orion
         Ref<Texture2D> WhiteTexture;
     };
 
-    static Scope<Renderer2DStorage> s_Data;
+    static UniquePtr<Renderer2DStorage> s_Data;
 
     void Renderer2D::Init()
     {
         OE_PROFILE_FUNCTION();
 
-        s_Data                  = CreateScope<Renderer2DStorage>();
+        s_Data                  = MakeUnique<Renderer2DStorage>();
         s_Data->QuadVertexArray = VertexArray::Create();
 
         float squareVertices[5 * 4] = {-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.5f,  -0.5f, 0.0f, 1.0f, 0.0f,

@@ -13,7 +13,7 @@ namespace Orion
             OE_ASSERT(false, "RendererAPI::None is not supported!");
             return nullptr;
         case RendererAPI::API::OpenGL:
-            return CreateRef<OpenGLVertexArray>();
+            return MakeRef<OpenGLVertexArray>();
         default:
             break;
         }

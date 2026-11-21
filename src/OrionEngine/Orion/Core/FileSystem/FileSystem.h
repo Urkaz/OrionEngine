@@ -18,12 +18,12 @@ namespace Orion
     {
     public:
         // Replaces the source if the name is already mounted
-        static void Mount(std::string_view name, Scope<IMountSource> source);
+        static void Mount(std::string_view name, UniquePtr<IMountSource> source);
         static void Unmount(std::string_view name);
         static void UnmountAll();
 
         // nullptr / nullopt / false when the path is invalid, the mount does not exist or the file is missing
-        [[nodiscard]] static Scope<IFile> Open(std::string_view virtualPath, FileMode mode = FileMode::Read);
+        [[nodiscard]] static UniquePtr<IFile> Open(std::string_view virtualPath, FileMode mode = FileMode::Read);
         [[nodiscard]] static bool Exists(std::string_view virtualPath);
 
         [[nodiscard]] static std::optional<std::vector<uint8_t>> ReadBinary(std::string_view virtualPath);

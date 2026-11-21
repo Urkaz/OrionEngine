@@ -20,8 +20,8 @@ namespace Orion
     {
         struct MountEntry
         {
-            Scope<IMountSource> Source;
-            Ref<Internal::OpenFileRegistry> OpenFiles = CreateRef<Internal::OpenFileRegistry>();
+            UniquePtr<IMountSource> Source;
+            Ref<Internal::OpenFileRegistry> OpenFiles = MakeRef<Internal::OpenFileRegistry>();
         };
         using MountTable = std::unordered_map<std::string, MountEntry, StringHash, std::equal_to<>>;
 
@@ -67,7 +67,7 @@ namespace Orion
         }
     } // namespace
 
-    void FileSystem::Mount(std::string_view name, Scope<IMountSource> source)
+    void FileSystem::Mount(std::string_view name, UniquePtr<IMountSource> source)
     {
         auto& mounts = GetMounts();
         if (const auto it = mounts.find(name); it != mounts.end())
@@ -97,7 +97,7 @@ namespace Orion
         GetMounts().clear();
     }
 
-    Scope<IFile> FileSystem::Open(std::string_view virtualPath, FileMode mode)
+    UniquePtr<IFile> FileSystem::Open(std::string_view virtualPath, FileMode mode)
     {
         const std::optional<ResolvedPath> resolved = Resolve(virtualPath);
         if (!resolved)
@@ -109,10 +109,10 @@ namespace Orion
             return nullptr;
         }
 
-        Scope<IFile> file = resolved->Source->Open(resolved->Relative, mode);
+        UniquePtr<IFile> file = resolved->Source->Open(resolved->Relative, mode);
         if (!file)
             return nullptr;
-        return CreateScope<Internal::TrackedFile>(std::move(file), resolved->OpenFiles, std::string(virtualPath));
+        return MakeUnique<Internal::TrackedFile>(std::move(file), resolved->OpenFiles, std::string(virtualPath));
     }
 
     bool FileSystem::Exists(std::string_view virtualPath)
@@ -123,7 +123,7 @@ namespace Orion
 
     std::optional<std::vector<uint8_t>> FileSystem::ReadBinary(std::string_view virtualPath)
     {
-        const Scope<IFile> file = Open(virtualPath, FileMode::Read);
+        const UniquePtr<IFile> file = Open(virtualPath, FileMode::Read);
         if (!file)
             return std::nullopt;
 
@@ -135,7 +135,7 @@ namespace Orion
 
     std::optional<std::string> FileSystem::ReadText(std::string_view virtualPath)
     {
-        const Scope<IFile> file = Open(virtualPath, FileMode::Read);
+        const UniquePtr<IFile> file = Open(virtualPath, FileMode::Read);
         if (!file)
             return std::nullopt;
 
@@ -147,13 +147,13 @@ namespace Orion
 
     bool FileSystem::WriteBinary(std::string_view virtualPath, std::span<const uint8_t> data)
     {
-        const Scope<IFile> file = Open(virtualPath, FileMode::Write);
+        const UniquePtr<IFile> file = Open(virtualPath, FileMode::Write);
         return file && file->Write(data.data(), data.size()) == data.size();
     }
 
     bool FileSystem::WriteText(std::string_view virtualPath, std::string_view text)
     {
-        const Scope<IFile> file = Open(virtualPath, FileMode::Write);
+        const UniquePtr<IFile> file = Open(virtualPath, FileMode::Write);
         return file && file->Write(text.data(), text.size()) == text.size();
     }
 

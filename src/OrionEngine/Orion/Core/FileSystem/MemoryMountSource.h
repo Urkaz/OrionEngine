@@ -27,7 +27,7 @@ namespace Orion
         void AddFile(std::string relativePath, std::vector<uint8_t> data);
         void AddFile(std::string relativePath, std::string_view text);
 
-        [[nodiscard]] Scope<IFile> Open(std::string_view relativePath, FileMode mode) override;
+        [[nodiscard]] UniquePtr<IFile> Open(std::string_view relativePath, FileMode mode) override;
         [[nodiscard]] bool Exists(std::string_view relativePath) const override;
         [[nodiscard]] bool IsReadOnly() const override
         {

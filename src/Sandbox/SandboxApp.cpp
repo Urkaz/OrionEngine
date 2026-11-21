@@ -10,14 +10,14 @@ public:
     {
 #ifdef SANDBOX_SOURCE_ASSETS_DIR
         // Remount assets directory to use assets from the source tree instead of the copied ones
-        Orion::FileSystem::Mount("assets", Orion::CreateScope<Orion::DiskMountSource>(SANDBOX_SOURCE_ASSETS_DIR, true));
+        Orion::FileSystem::Mount("assets", Orion::MakeUnique<Orion::DiskMountSource>(SANDBOX_SOURCE_ASSETS_DIR, true));
 #endif
         PushLayer(new Sandbox3D());
     };
     ~Sandbox() override = default;
 };
 
-Orion::Scope<Orion::Application> Orion::CreateApplication()
+Orion::UniquePtr<Orion::Application> Orion::CreateApplication()
 {
-    return Orion::CreateScope<Sandbox>();
+    return Orion::MakeUnique<Sandbox>();
 }

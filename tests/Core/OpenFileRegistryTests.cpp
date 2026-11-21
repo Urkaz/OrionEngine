@@ -19,8 +19,8 @@ TEST_CASE("Core/FileSystem/OpenFileRegistry: removing the first of two open file
     source.AddFile("a.bin", std::vector<uint8_t>{10, 20, 30});
     source.AddFile("b.bin", std::vector<uint8_t>{40, 50, 60});
 
-    Scope<IFile> file1 = source.Open("a.bin", FileMode::Read);
-    Scope<IFile> file2 = source.Open("b.bin", FileMode::Read);
+    UniquePtr<IFile> file1 = source.Open("a.bin", FileMode::Read);
+    UniquePtr<IFile> file2 = source.Open("b.bin", FileMode::Read);
     REQUIRE(file1);
     REQUIRE(file2);
 

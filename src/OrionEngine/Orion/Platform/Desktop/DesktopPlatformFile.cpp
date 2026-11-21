@@ -152,7 +152,7 @@ namespace Orion::PlatformFile
 
     } // namespace
 
-    Scope<IFile> Open(const std::string& nativePath, FileMode mode)
+    UniquePtr<IFile> Open(const std::string& nativePath, FileMode mode)
     {
         const std::filesystem::path path = ToFsPath(nativePath);
 
@@ -179,7 +179,7 @@ namespace Orion::PlatformFile
 
         if (!stream.is_open())
             return nullptr;
-        return CreateScope<DesktopFile>(std::move(stream), size, mode);
+        return MakeUnique<DesktopFile>(std::move(stream), size, mode);
     }
 
     bool Exists(const std::string& nativePath)

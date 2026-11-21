@@ -34,7 +34,7 @@ namespace Orion::Internal
         return paths;
     }
 
-    TrackedFile::TrackedFile(Scope<IFile> file, Ref<OpenFileRegistry> registry, std::string virtualPath)
+    TrackedFile::TrackedFile(UniquePtr<IFile> file, Ref<OpenFileRegistry> registry, std::string virtualPath)
         : m_File(std::move(file)), m_Registry(std::move(registry))
     {
         m_Registry->Add(this, std::move(virtualPath));

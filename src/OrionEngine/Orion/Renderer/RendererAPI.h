@@ -49,7 +49,7 @@ namespace Orion
             return capabilities;
         }
 
-        [[nodiscard]] static Scope<RendererAPI> Create();
+        [[nodiscard]] static UniquePtr<RendererAPI> Create();
 
     private:
         static API s_API;

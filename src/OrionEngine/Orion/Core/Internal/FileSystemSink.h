@@ -21,6 +21,6 @@ namespace Orion::Internal
         void flush_() override;
 
     private:
-        Scope<IFile> m_File;
+        UniquePtr<IFile> m_File;
     };
 } // namespace Orion::Internal

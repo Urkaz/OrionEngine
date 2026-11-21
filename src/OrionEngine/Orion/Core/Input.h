@@ -49,7 +49,7 @@ namespace Orion
             s_Instance->SetCursorModeImpl(mode);
         }
 
-        [[nodiscard]] static Scope<Input> Create();
+        [[nodiscard]] static UniquePtr<Input> Create();
 
     protected:
         virtual bool IsKeyPressedImpl(KeyCode key)              = 0;
@@ -60,6 +60,6 @@ namespace Orion
         virtual void SetCursorModeImpl(CursorMode mode)         = 0;
 
     private:
-        static Scope<Input> s_Instance;
+        static UniquePtr<Input> s_Instance;
     };
 } // namespace Orion

@@ -6,7 +6,7 @@
 
 #if defined(OE_PLATFORM_WINDOWS) || defined(OE_PLATFORM_LINUX)
 
-extern Orion::Scope<Orion::Application> Orion::CreateApplication();
+extern Orion::UniquePtr<Orion::Application> Orion::CreateApplication();
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 {
@@ -14,7 +14,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 
     Orion::InitializeCore();
 
-    Orion::Scope<Orion::Application> app = Orion::CreateApplication();
+    Orion::UniquePtr<Orion::Application> app = Orion::CreateApplication();
     OE_CORE_ASSERT(app, "Client Application is null!");
 
     app->Run();

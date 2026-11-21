@@ -14,7 +14,7 @@ namespace Orion
             : m_NativeRoot(std::move(nativeRoot)), m_ReadOnly(readOnly)
         {}
 
-        [[nodiscard]] Scope<IFile> Open(std::string_view relativePath, FileMode mode) override;
+        [[nodiscard]] UniquePtr<IFile> Open(std::string_view relativePath, FileMode mode) override;
         [[nodiscard]] bool Exists(std::string_view relativePath) const override;
         [[nodiscard]] bool IsReadOnly() const override
         {

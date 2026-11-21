@@ -66,7 +66,7 @@ namespace Orion
         AddFile(std::move(relativePath), std::vector<uint8_t>(text.begin(), text.end()));
     }
 
-    Scope<IFile> MemoryMountSource::Open(std::string_view relativePath, FileMode mode)
+    UniquePtr<IFile> MemoryMountSource::Open(std::string_view relativePath, FileMode mode)
     {
         if (mode != FileMode::Read)
             return nullptr;
@@ -74,7 +74,7 @@ namespace Orion
         const auto it = m_Files.find(relativePath);
         if (it == m_Files.end())
             return nullptr;
-        return CreateScope<MemoryFile>(it->second);
+        return MakeUnique<MemoryFile>(it->second);
     }
 
     bool MemoryMountSource::Exists(std::string_view relativePath) const

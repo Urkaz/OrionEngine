@@ -15,7 +15,7 @@ namespace Orion
             OE_ASSERT(false, "RendererAPI::None is not supported!");
             return nullptr;
         case RendererAPI::API::OpenGL:
-            return CreateRef<OpenGLShader>(std::move(name), std::move(vertexSrc), std::move(fragmentSrc));
+            return MakeRef<OpenGLShader>(std::move(name), std::move(vertexSrc), std::move(fragmentSrc));
         default:
             break;
         }
@@ -40,7 +40,7 @@ namespace Orion
             OE_ASSERT(false, "RendererAPI::None is not supported!");
             return nullptr;
         case RendererAPI::API::OpenGL:
-            return CreateRef<OpenGLShader>(std::move(name), *source);
+            return MakeRef<OpenGLShader>(std::move(name), *source);
         default:
             break;
         }

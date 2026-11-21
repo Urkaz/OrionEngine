@@ -16,7 +16,7 @@ namespace Orion
             OE_ASSERT(false, "RendererAPI::None is not supported!");
             return nullptr;
         case RendererAPI::API::OpenGL:
-            return CreateRef<OpenGLTexture2D>(width, height);
+            return MakeRef<OpenGLTexture2D>(width, height);
         default:
             break;
         }
@@ -44,7 +44,7 @@ namespace Orion
             OE_ASSERT(false, "RendererAPI::None is not supported!");
             return nullptr;
         case RendererAPI::API::OpenGL:
-            return CreateRef<OpenGLTexture2D>(data, size, srgb);
+            return MakeRef<OpenGLTexture2D>(data, size, srgb);
         default:
             break;
         }

@@ -104,7 +104,7 @@ namespace Orion
         static Application* s_Instance; ///< Singleton instance pointer
         friend int ::main(int argc, char** argv);
 
-        Scope<Window> m_Window;   ///< Main application window
+        UniquePtr<Window> m_Window;   ///< Main application window
         ImGuiLayer* m_ImGuiLayer; ///< ImGui overlay layer
         LayerStack m_LayerStack;  ///< Stack of application layers
         bool m_Running   = true;  ///< Application running state
@@ -122,5 +122,5 @@ namespace Orion
      *
      * @return Application* Pointer to a dynamically allocated Application instance.
      */
-    Orion::Scope<Orion::Application> CreateApplication();
+    Orion::UniquePtr<Orion::Application> CreateApplication();
 } // namespace Orion

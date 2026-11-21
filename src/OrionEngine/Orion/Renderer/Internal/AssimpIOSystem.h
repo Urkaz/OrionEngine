@@ -12,7 +12,7 @@ namespace Orion::Internal
     class AssimpIOStream final : public Assimp::IOStream
     {
     public:
-        explicit AssimpIOStream(Scope<IFile> file) : m_File(std::move(file)) {}
+        explicit AssimpIOStream(UniquePtr<IFile> file) : m_File(std::move(file)) {}
 
         size_t Read(void* buffer, size_t size, size_t count) override;
         size_t Write(const void* /*buffer*/, size_t /*size*/, size_t /*count*/) override
@@ -33,7 +33,7 @@ namespace Orion::Internal
         void Flush() override {}
 
     private:
-        Scope<IFile> m_File;
+        UniquePtr<IFile> m_File;
     };
 
     // Makes Assimp open every file through FileSystem (model, textures, etc)

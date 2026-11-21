@@ -11,9 +11,9 @@
 
 namespace Orion
 {
-    Scope<Renderer::SceneData> Renderer::s_SceneData = CreateScope<Renderer::SceneData>();
+    UniquePtr<Renderer::SceneData> Renderer::s_SceneData = MakeUnique<Renderer::SceneData>();
 
-    static Scope<RenderCommandQueue> s_CommandQueue = CreateScope<RenderCommandQueue>();
+    static UniquePtr<RenderCommandQueue> s_CommandQueue = MakeUnique<RenderCommandQueue>();
 
     void Renderer::Init()
     {

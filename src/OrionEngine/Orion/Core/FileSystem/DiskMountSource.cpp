@@ -6,7 +6,7 @@
 
 namespace Orion
 {
-    Scope<IFile> DiskMountSource::Open(std::string_view relativePath, FileMode mode)
+    UniquePtr<IFile> DiskMountSource::Open(std::string_view relativePath, FileMode mode)
     {
         if (mode == FileMode::Write && m_ReadOnly)
             return nullptr;

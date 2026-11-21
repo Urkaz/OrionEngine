@@ -10,7 +10,7 @@
 namespace Orion::PlatformFile
 {
     // Write mode creates the missing parent folders
-    [[nodiscard]] Scope<IFile> Open(const std::string& nativePath, FileMode mode);
+    [[nodiscard]] UniquePtr<IFile> Open(const std::string& nativePath, FileMode mode);
     [[nodiscard]] bool Exists(const std::string& nativePath);
 
     // UTF-8, "/" separators, and no trailing "/"

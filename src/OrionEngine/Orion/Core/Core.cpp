@@ -10,8 +10,8 @@ namespace Orion
     void InitializeCore()
     {
         const std::string executableDirectory = PlatformFile::GetExecutableDirectory();
-        FileSystem::Mount("assets", CreateScope<DiskMountSource>(executableDirectory + "/assets", true));
-        FileSystem::Mount("user", CreateScope<DiskMountSource>(executableDirectory + "/user", false));
+        FileSystem::Mount("assets", MakeUnique<DiskMountSource>(executableDirectory + "/assets", true));
+        FileSystem::Mount("user", MakeUnique<DiskMountSource>(executableDirectory + "/user", false));
 
 #ifdef OE_ENABLE_LOGS
         Log::Init(); // The log goes to user://Orion.log. It needs the mounts first

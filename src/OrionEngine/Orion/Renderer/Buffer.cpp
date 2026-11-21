@@ -13,7 +13,7 @@ namespace Orion
             OE_ASSERT(false, "RendererAPI::None is not supported!");
             return nullptr;
         case RendererAPI::API::OpenGL:
-            return CreateRef<OpenGLVertexBuffer>(vertices, size);
+            return MakeRef<OpenGLVertexBuffer>(vertices, size);
         default:
             break;
         }
@@ -30,7 +30,7 @@ namespace Orion
             OE_ASSERT(false, "RendererAPI::None is not supported!");
             return nullptr;
         case RendererAPI::API::OpenGL:
-            return CreateRef<OpenGLIndexBuffer>(indices, size);
+            return MakeRef<OpenGLIndexBuffer>(indices, size);
         default:
             break;
         }

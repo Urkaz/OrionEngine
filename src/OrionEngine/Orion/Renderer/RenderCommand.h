@@ -55,6 +55,6 @@ namespace Orion
         }
 
     private:
-        static Scope<RendererAPI> s_RendererAPI;
+        static UniquePtr<RendererAPI> s_RendererAPI;
     };
 } // namespace Orion

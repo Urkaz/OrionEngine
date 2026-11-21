@@ -129,7 +129,7 @@ namespace Orion
                 return nullptr;
             }
 
-            Ref<MeshSource> source = CreateRef<MeshSource>();
+            Ref<MeshSource> source = MakeRef<MeshSource>();
             source->Name           = name;
             source->Directory      = directory;
 

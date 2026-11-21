@@ -6,12 +6,12 @@
 
 namespace Orion
 {
-    Scope<Input> Input::s_Instance = Input::Create();
+    UniquePtr<Input> Input::s_Instance = Input::Create();
 
-    Scope<Input> Input::Create()
+    UniquePtr<Input> Input::Create()
     {
 #if defined(OE_PLATFORM_WINDOWS) || defined(OE_PLATFORM_LINUX)
-        return CreateScope<GlfwInput>();
+        return MakeUnique<GlfwInput>();
 #else
         OE_CORE_ASSERT(false, "Unknown platform!");
         return nullptr;

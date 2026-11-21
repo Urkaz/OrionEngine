@@ -30,7 +30,7 @@ namespace Orion::Internal
     class TrackedFile final : public IFile
     {
     public:
-        TrackedFile(Scope<IFile> file, Ref<OpenFileRegistry> registry, std::string virtualPath);
+        TrackedFile(UniquePtr<IFile> file, Ref<OpenFileRegistry> registry, std::string virtualPath);
         ~TrackedFile() override;
         TrackedFile(const TrackedFile&)            = delete;
         TrackedFile& operator=(const TrackedFile&) = delete;
@@ -45,7 +45,7 @@ namespace Orion::Internal
         void Flush() override;
 
     private:
-        Scope<IFile> m_File;
+        UniquePtr<IFile> m_File;
         Ref<OpenFileRegistry> m_Registry; // shared: the file may outlive its mount in Release
     };
 } // namespace Orion::Internal
