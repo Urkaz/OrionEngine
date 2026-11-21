@@ -116,6 +116,7 @@
     },
     "cmake.useCMakePresets": "always",
     "cmake.ctest.testSuiteDelimiter": "/",
+    "cmake.ctest.allowParallelJobs": true,
     "cmake.copyCompileCommands": "${workspaceFolder}/compile_commands.json",
     "git.detectSubmodules": false,
     "C_Cpp.intelliSenseEngine": "disabled"
