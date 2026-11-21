@@ -36,7 +36,7 @@ if(ENABLE_WARNINGS)
         AS_ERRORS
         ${ENABLE_WARNINGS_AS_ERRORS})
 endif()
-target_set_compiler_flags(TARGET ${TEST_NAME})
+target_set_compiler_flags(TARGET ${TEST_NAME} ENABLE_EXCEPTIONS)
 
 if(ENABLE_CLANG_TIDY)
     add_clang_tidy_to_target(${TEST_NAME})
