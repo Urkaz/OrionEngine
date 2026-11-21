@@ -86,11 +86,22 @@ endif()
 
 # External libraries
 
+# Exceptions are off by default (see cmake/CompilerFlags.cmake). CMake adds /EHsc to every MSVC
+# target, so remove it here, before the dependencies, and add it back only where it is needed.
+if(MSVC)
+    string(REPLACE "/EHsc" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+endif()
+
 include(CPM)
 
 # SPDLog
 cpmaddpackage("gh:gabime/spdlog#v1.16.0")
 set_target_properties(spdlog PROPERTIES FOLDER "Dependencies")
+# spdlog and its bundled fmt call abort() instead of throwing
+target_compile_definitions(spdlog PUBLIC SPDLOG_NO_EXCEPTIONS FMT_USE_EXCEPTIONS=0)
+if(MSVC)
+    target_compile_options(spdlog PRIVATE /EHs-c- /wd4530)
+endif()
 
 # GLFW
 set(GLFW_BUILD_DOCS
@@ -115,6 +126,9 @@ set_target_properties(glm PROPERTIES FOLDER "Dependencies")
 
 # Catch2
 if(ENABLE_TESTING)
+    set(CATCH_CONFIG_DISABLE_EXCEPTIONS
+        ON
+        CACHE BOOL "" FORCE) # a failed REQUIRE terminates the process (ctest runs each TEST_CASE on its own)
     cpmaddpackage("gh:catchorg/Catch2#v3.11.0")
     set_target_properties(Catch2 PROPERTIES FOLDER "Dependencies")
     list(APPEND CMAKE_MODULE_PATH ${Catch2_SOURCE_DIR}/extras)
@@ -159,6 +173,10 @@ set(ASSIMP_BUILD_OBJ_IMPORTER
     CACHE BOOL "" FORCE)
 cpmaddpackage("gh:assimp/assimp#v6.0.5")
 set_target_properties(assimp PROPERTIES FOLDER "Dependencies/assimp")
+# Assimp throws internally, but catches everything inside its API (Importer::ReadFile returns nullptr)
+if(MSVC)
+    target_compile_options(assimp PRIVATE /EHsc)
+endif()
 # Assimp only creates these in some configurations (internal zlib, MSVC toolset): set the folder if they exist
 if(TARGET UpdateAssimpLibsDebugSymbolsAndDLLs)
     set_target_properties(UpdateAssimpLibsDebugSymbolsAndDLLs PROPERTIES FOLDER

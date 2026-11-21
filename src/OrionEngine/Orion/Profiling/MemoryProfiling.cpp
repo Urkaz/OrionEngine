@@ -24,7 +24,7 @@ void* operator new(std::size_t count)
     // new must return a unique non-null pointer even for zero bytes; malloc(0) may return null.
     void* ptr = std::malloc(count != 0 ? count : 1);
     if (!ptr)
-        throw std::bad_alloc();
+        std::abort();
 
     TracySecureAllocS(ptr, count, AllocCallstackDepth);
     return ptr;
@@ -43,7 +43,7 @@ void* operator new(std::size_t count, std::align_val_t alignment)
     void* ptr = std::aligned_alloc(align, (size + align - 1) / align * align);
     #endif
     if (!ptr)
-        throw std::bad_alloc();
+        std::abort();
 
     TracySecureAllocS(ptr, count, AllocCallstackDepth);
     return ptr;
