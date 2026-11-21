@@ -58,28 +58,28 @@ TEST_CASE("Core/Events/EventDispatcher: Handled follows the return value of the 
 
 TEST_CASE("Core/Events/Event: categories are a bitmask, and each event reports the right ones", "[Core][Events]")
 {
-    Orion::WindowResizeEvent resize(1280, 720);
+    const Orion::WindowResizeEvent resize(1280, 720);
     CHECK(resize.IsInCategory(Orion::EventCategoryApplication));
     CHECK_FALSE(resize.IsInCategory(Orion::EventCategoryInput));
     CHECK_FALSE(resize.IsInCategory(Orion::EventCategoryMouse));
     CHECK_FALSE(resize.IsInCategory(Orion::EventCategoryKeyboard));
     CHECK_FALSE(resize.IsInCategory(Orion::EventCategoryMouseButton));
 
-    Orion::MouseMovedEvent moved(0.0f, 0.0f);
+    const Orion::MouseMovedEvent moved(0.0f, 0.0f);
     CHECK_FALSE(moved.IsInCategory(Orion::EventCategoryApplication));
     CHECK(moved.IsInCategory(Orion::EventCategoryInput));
     CHECK(moved.IsInCategory(Orion::EventCategoryMouse));
     CHECK_FALSE(moved.IsInCategory(Orion::EventCategoryKeyboard));
     CHECK_FALSE(moved.IsInCategory(Orion::EventCategoryMouseButton));
 
-    Orion::MouseButtonPressedEvent pressed(0);
+    const Orion::MouseButtonPressedEvent pressed(0);
     CHECK_FALSE(pressed.IsInCategory(Orion::EventCategoryApplication));
     CHECK(pressed.IsInCategory(Orion::EventCategoryInput));
     CHECK(pressed.IsInCategory(Orion::EventCategoryMouse));
     CHECK_FALSE(pressed.IsInCategory(Orion::EventCategoryKeyboard));
     CHECK(pressed.IsInCategory(Orion::EventCategoryMouseButton));
 
-    Orion::KeyPressedEvent key(Orion::Key::A, 0);
+    const Orion::KeyPressedEvent key(Orion::Key::A, 0);
     CHECK_FALSE(key.IsInCategory(Orion::EventCategoryApplication));
     CHECK(key.IsInCategory(Orion::EventCategoryInput));
     CHECK_FALSE(key.IsInCategory(Orion::EventCategoryMouse));
@@ -89,25 +89,24 @@ TEST_CASE("Core/Events/Event: categories are a bitmask, and each event reports t
 
 TEST_CASE("Core/Events/Event: names and ToString are what the logs show", "[Core][Events]")
 {
-    Orion::WindowResizeEvent resize(1280, 720);
+    const Orion::WindowResizeEvent resize(1280, 720);
     CHECK(std::string(resize.GetName()) == "WindowResize");
     CHECK(resize.ToString() == "WindowResizeEvent: 1280, 720");
     CHECK(resize.GetEventType() == Orion::EventType::WindowResize);
     CHECK(resize.GetEventType() == Orion::WindowResizeEvent::GetStaticType());
 
-    Orion::MouseScrolledEvent scrolled(1.5f, -2.0f);
+    const Orion::MouseScrolledEvent scrolled(1.5f, -2.0f);
     CHECK(scrolled.ToString() == "MouseScrolledEvent: 1.5, -2");
 
-    Orion::WindowCloseEvent close;
+    const Orion::WindowCloseEvent close;
     CHECK(close.ToString() == std::string(close.GetName()));
 }
 
-TEST_CASE("Core/Timestep/Timestep: seconds, milliseconds and the implicit conversion", "[Core][Timestep]")
+TEST_CASE("Core/Timestep/Timestep: seconds and milliseconds", "[Core][Timestep]")
 {
     const Orion::Timestep ts(0.016f);
     CHECK_THAT(static_cast<double>(ts.GetSeconds()), Catch::Matchers::WithinRel(0.016, Epsilon));
     CHECK_THAT(static_cast<double>(ts.GetMilliseconds()), Catch::Matchers::WithinRel(16.0, Epsilon));
-    CHECK_THAT(static_cast<double>(static_cast<float>(ts)), Catch::Matchers::WithinRel(0.016, Epsilon));
 
     const Orion::Timestep zero;
     CHECK(zero.GetSeconds() == 0.0f);

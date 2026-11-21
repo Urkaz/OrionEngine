@@ -25,6 +25,7 @@ namespace Orion::Internal
     inline glm::mat4 Mat4FromAssimp(const aiMatrix4x4& m)
     {
         // clang-format off
+        // NOLINTNEXTLINE(modernize-return-braced-init-list): keep the type visible in the transpose
         return glm::mat4(m.a1, m.b1, m.c1, m.d1,
                          m.a2, m.b2, m.c2, m.d2,
                          m.a3, m.b3, m.c3, m.d3,

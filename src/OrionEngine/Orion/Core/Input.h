@@ -21,8 +21,7 @@ namespace Orion
     public:
         virtual ~Input() = default;
 
-        Input(const Input&)            = delete;
-        Input& operator=(const Input&) = delete;
+        OE_NON_COPYABLE(Input);
 
         inline static bool IsKeyPressed(KeyCode key)
         {

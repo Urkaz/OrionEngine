@@ -26,7 +26,7 @@ namespace Orion
          * @brief Get the new window width.
          * @return unsigned int Width in pixels.
          */
-        inline unsigned int GetWidth() const
+        [[nodiscard]] inline unsigned int GetWidth() const
         {
             return m_Width;
         }
@@ -35,7 +35,7 @@ namespace Orion
          * @brief Get the new window height.
          * @return unsigned int Height in pixels.
          */
-        inline unsigned int GetHeight() const
+        [[nodiscard]] inline unsigned int GetHeight() const
         {
             return m_Height;
         }
@@ -44,7 +44,7 @@ namespace Orion
          * @brief String representation of the event for logging/debugging.
          * @return std::string "WindowResizeEvent: <width>, <height>"
          */
-        std::string ToString() const override
+        [[nodiscard]] std::string ToString() const override
         {
             return std::format("WindowResizeEvent: {}, {}", m_Width, m_Height);
         }

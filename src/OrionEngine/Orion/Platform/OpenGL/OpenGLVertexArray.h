@@ -1,32 +1,34 @@
 #pragma once
 
+#include "Orion/Core/Core.h"
 #include "Orion/Renderer/VertexArray.h"
 
 namespace Orion
 {
-    class OpenGLVertexArray : public VertexArray
+    class OpenGLVertexArray final : public VertexArray
     {
     public:
         OpenGLVertexArray();
-        virtual ~OpenGLVertexArray();
+        ~OpenGLVertexArray() override;
+        OE_NON_COPYABLE(OpenGLVertexArray);
 
-        virtual void Bind() const override;
-        virtual void Unbind() const override;
+        void Bind() const override;
+        void Unbind() const override;
 
-        virtual void AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer) override;
-        virtual void SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer) override;
+        void AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer) override;
+        void SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer) override;
 
-        virtual const std::vector<Ref<VertexBuffer>>& GetVertexBuffers() const override
+        [[nodiscard]] const std::vector<Ref<VertexBuffer>>& GetVertexBuffers() const override
         {
             return m_VertexBuffers;
         };
-        virtual const Ref<IndexBuffer>& GetIndexBuffer() const override
+        [[nodiscard]] const Ref<IndexBuffer>& GetIndexBuffer() const override
         {
             return m_IndexBuffer;
         }
 
     private:
-        uint32_t m_RendererID;
+        uint32_t m_RendererID{0};
         std::vector<Ref<VertexBuffer>> m_VertexBuffers;
         Ref<IndexBuffer> m_IndexBuffer;
     };

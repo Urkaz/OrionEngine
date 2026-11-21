@@ -11,7 +11,9 @@ namespace Orion
     class Shader
     {
     public:
+        Shader()          = default;
         virtual ~Shader() = default;
+        OE_NON_COPYABLE(Shader);
 
         virtual void Bind() const   = 0;
         virtual void Unbind() const = 0;

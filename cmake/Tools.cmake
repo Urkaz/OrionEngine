@@ -123,8 +123,8 @@ function(add_clang_tidy_to_target target)
                 ${target}_clangtidy
                 COMMAND
                     ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tools/run-clang-tidy.py
-                    ${TARGET_SOURCES} -config-file=${CMAKE_SOURCE_DIR}/.clang-tidy
-                    ${CLANGTIDY_COMPILER_ARGS} -extra-arg=-Wno-error
+                    # No -config-file: each file uses its nearest .clang-tidy
+                    ${TARGET_SOURCES} ${CLANGTIDY_COMPILER_ARGS} -extra-arg=-Wno-error
                     -extra-arg=-Wno-unknown-warning-option -p=${CMAKE_BINARY_DIR}
                 WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
                 USES_TERMINAL VERBATIM)

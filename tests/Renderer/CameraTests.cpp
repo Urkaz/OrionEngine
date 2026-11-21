@@ -17,7 +17,8 @@ namespace
     // Catch2 float matchers work in double, so return double to avoid implicit float -> double promotion.
     glm::dvec3 ToNDC(const glm::mat4& viewProjection, const glm::vec3& worldPoint)
     {
-        glm::vec4 clip = viewProjection * glm::vec4(worldPoint, 1.0f);
+        const glm::vec4 clip = viewProjection * glm::vec4(worldPoint, 1.0f);
+        // NOLINTNEXTLINE(modernize-return-braced-init-list): vec3 -> dvec3 is explicit, {} would not compile
         return glm::dvec3(glm::vec3(clip) / clip.w);
     }
 } // namespace

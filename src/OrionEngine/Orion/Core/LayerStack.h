@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Orion/Core/Core.h"
 #include "Orion/Core/Layer.h"
 
 #include <vector>
@@ -11,6 +12,7 @@ namespace Orion
     public:
         LayerStack() = default;
         ~LayerStack();
+        OE_NON_COPYABLE(LayerStack); // owns raw Layer pointers
 
         void PushLayer(Layer* layer);
         void PushOverlay(Layer* overlay);

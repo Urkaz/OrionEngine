@@ -106,6 +106,8 @@ PenaltyBreakTemplateDeclaration: 10
 PenaltyExcessCharacter: 1000000
 PenaltyReturnTypeOnItsOwnLine: 1000
 PointerAlignment: Left
+# "const T", never "T const" (clang-tidy fixes like misc-const-correctness insert it on the right)
+QualifierAlignment: Left
 ReflowComments: false
 SortIncludes: true
 SortUsingDeclarations: true

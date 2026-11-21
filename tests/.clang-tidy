@@ -1,0 +1,5 @@
+---
+# Same checks as the root .clang-tidy, with test-only exceptions
+InheritParentConfig: true
+# Tests guard optionals with REQUIRE, which the dataflow analysis cannot see through
+Checks: '-bugprone-unchecked-optional-access'

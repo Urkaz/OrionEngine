@@ -1,5 +1,7 @@
+#include "Orion/Core/Core.h"
 #include "Orion/Renderer/RenderCommandQueue.h"
 
+#include <array>
 #include <catch2/catch_test_macros.hpp>
 #include <cstdint>
 #include <cstring>
@@ -40,11 +42,14 @@ namespace
     // the queue is destroyed with pending commands and its OE_CORE_ASSERT kills the test process.
     struct DrainOnExit
     {
-        Orion::RenderCommandQueue& Queue;
+        explicit DrainOnExit(Orion::RenderCommandQueue& queue) : Queue(queue) {}
         ~DrainOnExit()
         {
             Queue.Execute();
         }
+        OE_NON_COPYABLE(DrainOnExit);
+
+        Orion::RenderCommandQueue& Queue;
     };
 } // namespace
 
@@ -52,7 +57,7 @@ TEST_CASE("Renderer/CommandQueue/RenderCommandQueue: commands run in the order t
           "[Renderer][CommandQueue]")
 {
     Orion::RenderCommandQueue queue(1024);
-    DrainOnExit drain{queue};
+    const DrainOnExit drain{queue};
     std::vector<int> order;
 
     REQUIRE(Push(queue, order, 1));
@@ -73,7 +78,7 @@ TEST_CASE("Renderer/CommandQueue/RenderCommandQueue: an empty queue is a no-op a
           "[Renderer][CommandQueue]")
 {
     Orion::RenderCommandQueue queue(1024);
-    DrainOnExit drain{queue};
+    const DrainOnExit drain{queue};
     std::vector<int> order;
 
     queue.Execute(); // Nothing queued
@@ -96,15 +101,16 @@ TEST_CASE("Renderer/CommandQueue/RenderCommandQueue: every payload is aligned an
           "[Renderer][CommandQueue]")
 {
     Orion::RenderCommandQueue queue(1024);
-    DrainOnExit drain{queue};
+    const DrainOnExit drain{queue};
 
-    const uint32_t sizes[] = {1, 3, 17, 64, 5};
+    const std::array<uint32_t, 5> sizes = {1, 3, 17, 64, 5};
     std::vector<std::pair<unsigned char*, uint32_t>> payloads;
 
     for (uint32_t i = 0; i < std::size(sizes); ++i)
     {
         void* payload = queue.Allocate(&DoNothing, sizes[i]);
         REQUIRE(payload != nullptr);
+        // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast): pointer to integer to check the address alignment
         CHECK(reinterpret_cast<std::uintptr_t>(payload) % Orion::RenderCommandQueue::PayloadAlignment == 0);
 
         memset(payload, static_cast<int>(i + 1), sizes[i]);
@@ -128,7 +134,7 @@ TEST_CASE("Renderer/CommandQueue/RenderCommandQueue: a full queue refuses new co
     SECTION("fills up, refuses, then recovers")
     {
         Orion::RenderCommandQueue queue(256);
-        DrainOnExit drain{queue};
+        const DrainOnExit drain{queue};
         std::vector<int> order;
 
         uint32_t accepted = 0;
@@ -182,7 +188,7 @@ TEST_CASE("Renderer/CommandQueue/RenderCommandQueue: commands queued while execu
           "[Renderer][CommandQueue]")
 {
     Orion::RenderCommandQueue queue(1024);
-    DrainOnExit drain{queue};
+    const DrainOnExit drain{queue};
     std::vector<int> order;
 
     void* spawnerPayload = queue.Allocate(&SpawnChild, sizeof(Spawner));
@@ -217,7 +223,7 @@ TEST_CASE("Renderer/CommandQueue/RenderCommandQueue: IsExecuting is true only wh
           "[Renderer][CommandQueue]")
 {
     Orion::RenderCommandQueue queue(1024);
-    DrainOnExit drain{queue};
+    const DrainOnExit drain{queue};
 
     void* payload = queue.Allocate(ObseveExecuting, sizeof(ExecutingObserver));
     REQUIRE(payload != nullptr);

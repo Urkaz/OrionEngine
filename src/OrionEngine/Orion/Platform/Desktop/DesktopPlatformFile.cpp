@@ -62,7 +62,7 @@ namespace Orion::PlatformFile
                 return static_cast<bool>(m_Stream);
             }
 
-            virtual size_t Read(void* buffer, size_t size) override
+            size_t Read(void* buffer, size_t size) override
             {
                 if (m_Mode != FileMode::Read)
                     return 0;
@@ -73,7 +73,7 @@ namespace Orion::PlatformFile
                 return count;
             }
 
-            virtual size_t Write(const void* data, size_t size) override
+            size_t Write(const void* data, size_t size) override
             {
                 if (m_Mode != FileMode::Write)
                     return 0;
@@ -87,7 +87,7 @@ namespace Orion::PlatformFile
                 return size;
             }
 
-            virtual void Flush() override
+            void Flush() override
             {
                 m_Stream.flush();
             }

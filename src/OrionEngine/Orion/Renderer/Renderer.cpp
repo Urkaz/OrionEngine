@@ -13,7 +13,7 @@ namespace Orion
 {
     UniquePtr<Renderer::SceneData> Renderer::s_SceneData = MakeUnique<Renderer::SceneData>();
 
-    static UniquePtr<RenderCommandQueue> s_CommandQueue = MakeUnique<RenderCommandQueue>();
+    UniquePtr<RenderCommandQueue> Renderer::s_CommandQueue = MakeUnique<RenderCommandQueue>();
 
     void Renderer::Init()
     {

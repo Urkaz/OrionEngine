@@ -1,42 +1,45 @@
 #pragma once
 
+#include "Orion/Core/Core.h"
 #include "Orion/Renderer/Buffer.h"
 
 namespace Orion
 {
-    class OpenGLVertexBuffer : public VertexBuffer
+    class OpenGLVertexBuffer final : public VertexBuffer
     {
     public:
         OpenGLVertexBuffer(const void* vertices, uint32_t size);
-        virtual ~OpenGLVertexBuffer();
+        ~OpenGLVertexBuffer() override;
+        OE_NON_COPYABLE(OpenGLVertexBuffer);
 
-        virtual void Bind() const override;
-        virtual void Unbind() const override;
+        void Bind() const override;
+        void Unbind() const override;
 
-        virtual void SetLayout(const BufferLayout& layout) override;
-        virtual const BufferLayout& GetLayout() const override;
+        void SetLayout(const BufferLayout& layout) override;
+        [[nodiscard]] const BufferLayout& GetLayout() const override;
 
     private:
-        uint32_t m_RendererID;
+        uint32_t m_RendererID{0};
         BufferLayout m_Layout;
     };
 
-    class OpenGLIndexBuffer : public IndexBuffer
+    class OpenGLIndexBuffer final : public IndexBuffer
     {
     public:
         OpenGLIndexBuffer(const uint32_t* indices, uint32_t count);
-        virtual ~OpenGLIndexBuffer();
+        ~OpenGLIndexBuffer() override;
+        OE_NON_COPYABLE(OpenGLIndexBuffer);
 
-        virtual uint32_t GetCount() const override
+        [[nodiscard]] uint32_t GetCount() const override
         {
             return m_Count;
         }
 
-        virtual void Bind() const override;
-        virtual void Unbind() const override;
+        void Bind() const override;
+        void Unbind() const override;
 
     private:
-        uint32_t m_RendererID;
+        uint32_t m_RendererID{0};
         uint32_t m_Count;
     };
 

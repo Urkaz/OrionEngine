@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Orion/Core/Core.h"
 #include "Orion/Renderer/Texture.h"
 
 #include <glad/glad.h>
@@ -7,28 +8,29 @@
 
 namespace Orion
 {
-    class OpenGLTexture2D : public Texture2D
+    class OpenGLTexture2D final : public Texture2D
     {
     public:
         OpenGLTexture2D(uint32_t width, uint32_t height);
         OpenGLTexture2D(const void* data, size_t size, bool srgb = false);
-        virtual ~OpenGLTexture2D();
+        ~OpenGLTexture2D() override;
+        OE_NON_COPYABLE(OpenGLTexture2D);
 
         // Takes ownership of nothing: `pixels` is only read. `channels` is 3 or 4.
         void Upload(const stbi_uc* pixels, int width, int height, int channels, bool srgb);
 
-        virtual uint32_t GetWidth() const override
+        [[nodiscard]] uint32_t GetWidth() const override
         {
             return m_Width;
         }
-        virtual uint32_t GetHeight() const override
+        [[nodiscard]] uint32_t GetHeight() const override
         {
             return m_Height;
         }
 
-        virtual void SetData(const void* data, uint32_t size) override;
+        void SetData(const void* data, uint32_t size) override;
 
-        virtual void Bind(uint32_t slot) const override;
+        void Bind(uint32_t slot) const override;
 
     private:
         std::string m_Path;

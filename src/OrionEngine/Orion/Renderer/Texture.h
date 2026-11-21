@@ -9,7 +9,9 @@ namespace Orion
     class Texture
     {
     public:
+        Texture()          = default;
         virtual ~Texture() = default;
+        OE_NON_COPYABLE(Texture);
 
         [[nodiscard]] virtual uint32_t GetWidth() const  = 0;
         [[nodiscard]] virtual uint32_t GetHeight() const = 0;

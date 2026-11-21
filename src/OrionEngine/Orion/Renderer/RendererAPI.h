@@ -1,7 +1,9 @@
 #pragma once
 
+#include "Orion/Core/Core.h"
 #include "Orion/Renderer/VertexArray.h"
 
+#include <cstdint>
 #include <glm/glm.hpp>
 
 namespace Orion
@@ -9,7 +11,7 @@ namespace Orion
     class RendererAPI
     {
     public:
-        enum class API
+        enum class API : uint8_t
         {
             None   = 0,
             OpenGL = 1,
@@ -23,7 +25,9 @@ namespace Orion
         };
 
     public:
+        RendererAPI()          = default;
         virtual ~RendererAPI() = default;
+        OE_NON_COPYABLE(RendererAPI);
 
         virtual void Init()                                                               = 0;
         virtual void SetViewPort(uint32_t x, uint32_t y, uint32_t width, uint32_t height) = 0;

@@ -17,27 +17,27 @@ namespace Orion
 
         m_VertexArray = VertexArray::Create();
 
-        Ref<VertexBuffer> vertexBuffer =
+        const Ref<VertexBuffer> vertexBuffer =
             VertexBuffer::Create(source->Vertices.data(),
                                  static_cast<uint32_t>(source->Vertices.size() * sizeof(Vertex)));
         vertexBuffer->SetLayout(Vertex::GetLayout());
         m_VertexArray->AddVertexBuffer(vertexBuffer);
 
-        Ref<IndexBuffer> indexBuffer =
+        const Ref<IndexBuffer> indexBuffer =
             IndexBuffer::Create(source->Indices.data(), static_cast<uint32_t>(source->Indices.size()));
         m_VertexArray->SetIndexBuffer(indexBuffer);
 
-        Ref<Texture2D> whiteTexture                 = Texture2D::Create(1, 1);
+        const Ref<Texture2D> whiteTexture           = Texture2D::Create(1, 1);
         constexpr std::array<uint8_t, 4> whitePixel = {255, 255, 255, 255};
         whiteTexture->SetData(whitePixel.data(), static_cast<uint32_t>(whitePixel.size()));
 
-        Ref<Texture2D> flatNormalTexture                 = Texture2D::Create(1, 1);
+        const Ref<Texture2D> flatNormalTexture           = Texture2D::Create(1, 1);
         constexpr std::array<uint8_t, 4> flatNormalPixel = {128, 128, 255, 255};
         flatNormalTexture->SetData(flatNormalPixel.data(), static_cast<uint32_t>(flatNormalPixel.size()));
 
-        constexpr size_t CheckerSize  = 8;
-        Ref<Texture2D> magentaTexture = Texture2D::Create(CheckerSize, CheckerSize);
-        constexpr auto magentaPixels  = [] {
+        constexpr size_t CheckerSize        = 8;
+        const Ref<Texture2D> magentaTexture = Texture2D::Create(CheckerSize, CheckerSize);
+        constexpr auto magentaPixels        = [] {
             constexpr size_t CheckerCell = 4;
             std::array<uint8_t, CheckerSize * CheckerSize * 4> pixels{};
             constexpr std::array<uint8_t, 4> Magenta = {255, 0, 255, 255};
@@ -74,15 +74,16 @@ namespace Orion
             Ref<Texture2D> texture = missing;
             if (const auto it = source->EmbeddedTextures.find(path); it != source->EmbeddedTextures.end())
             {
-                if (Ref<Texture2D> loaded = Texture2D::CreateFromMemory(it->second.data(), it->second.size(), srgb))
+                if (const Ref<Texture2D> loaded =
+                        Texture2D::CreateFromMemory(it->second.data(), it->second.size(), srgb))
                     texture = loaded;
             }
             else
             {
-                std::string filePath = ResolveTexturePath(source->Directory, path);
+                const std::string filePath = ResolveTexturePath(source->Directory, path);
                 if (FileSystem::Exists(filePath))
                 {
-                    if (Ref<Texture2D> loaded = Texture2D::Create(filePath, srgb))
+                    if (const Ref<Texture2D> loaded = Texture2D::Create(filePath, srgb))
                         texture = loaded;
                 }
                 else

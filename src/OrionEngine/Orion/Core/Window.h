@@ -4,6 +4,7 @@
 #include "Orion/Core/Events/Event.h"
 
 #include <functional>
+#include <utility>
 
 namespace Orion
 {
@@ -27,8 +28,8 @@ namespace Orion
          * @param width Window width in pixels (default 1280)
          * @param height Window height in pixels (default 720)
          */
-        WindowProps(const std::string& title = "Orion Engine", unsigned int width = 1280, unsigned int height = 720)
-            : Title(title), Width(width), Height(height)
+        explicit WindowProps(std::string title = "Orion Engine", unsigned int width = 1280, unsigned int height = 720)
+            : Title(std::move(title)), Width(width), Height(height)
         {}
     };
 
@@ -50,10 +51,9 @@ namespace Orion
          */
         using EventCallbackFn = std::function<void(Event&)>;
 
-        /**
-         * @brief Virtual destructor for proper cleanup of derived classes.
-         */
+        Window()          = default;
         virtual ~Window() = default;
+        OE_NON_COPYABLE(Window);
 
         /**
          * @brief Updates the window state and processes pending events.
@@ -67,14 +67,14 @@ namespace Orion
          *
          * @return unsigned int The window width in pixels.
          */
-        virtual unsigned int GetWidth() const = 0;
+        [[nodiscard]] virtual unsigned int GetWidth() const = 0;
 
         /**
          * @brief Retrieves the height of the window.
          *
          * @return unsigned int The window height in pixels.
          */
-        virtual unsigned int GetHeight() const = 0;
+        [[nodiscard]] virtual unsigned int GetHeight() const = 0;
 
         /**
          * @brief Sets the event callback function for the window.
@@ -95,7 +95,7 @@ namespace Orion
          *
          * @return bool True if VSync is enabled, false otherwise.
          */
-        virtual bool IsVSync() const = 0;
+        [[nodiscard]] virtual bool IsVSync() const = 0;
 
         /**
          * @brief Retrieves the native window pointer.
@@ -105,7 +105,7 @@ namespace Orion
          *
          * @return void* Pointer to the native window object.
          */
-        virtual void* GetNativeWindow() const = 0;
+        [[nodiscard]] virtual void* GetNativeWindow() const = 0;
 
         /**
          * @brief Factory method to create platform-specific window implementation.

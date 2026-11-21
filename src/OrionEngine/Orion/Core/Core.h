@@ -60,6 +60,15 @@ namespace Orion
 #define OE_BIND_EVENT_FN(fn)                                                                                           \
     [this](auto&&... args) -> decltype(auto) { return this->fn(std::forward<decltype(args)>(args)...); }
 
+// Deletes copy and move. For interfaces without data and for classes that own a resource (C++ Core Guidelines C.67)
+// NOLINTBEGIN(bugprone-macro-parentheses): a type name in a declaration cannot be wrapped in parentheses
+#define OE_NON_COPYABLE(Type)                                                                                          \
+    Type(const Type&)            = delete;                                                                             \
+    Type& operator=(const Type&) = delete;                                                                             \
+    Type(Type&&)                 = delete;                                                                             \
+    Type& operator=(Type&&)      = delete
+// NOLINTEND(bugprone-macro-parentheses)
+
 namespace Orion
 {
     template <typename T>

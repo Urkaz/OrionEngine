@@ -89,6 +89,7 @@ namespace Orion
             glm::mat4 ViewProjectionMatrix;
         };
         static UniquePtr<SceneData> s_SceneData;
+        static UniquePtr<RenderCommandQueue> s_CommandQueue;
     };
 
 } // namespace Orion

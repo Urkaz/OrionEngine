@@ -1,10 +1,13 @@
 #pragma once
 
+#include "Orion/Core/Core.h"
 #include "Orion/Renderer/Camera.h"
 #include "Orion/Renderer/Texture.h"
 
 namespace Orion
 {
+    struct Renderer2DStorage; // defined in Renderer2D.cpp
+
     class Renderer2D
     {
     public:
@@ -48,6 +51,9 @@ namespace Orion
                                     const Ref<Texture2D>& texture,
                                     float tilingFactor         = 1.0f,
                                     const glm::vec4& tintColor = glm::vec4(1.0f));
+
+    private:
+        static UniquePtr<Renderer2DStorage> s_Data;
     };
 
 } // namespace Orion

@@ -28,8 +28,10 @@ namespace Orion
         case GL_DEBUG_SEVERITY_NOTIFICATION:
             OE_CORE_LOG(Trace, "{}", message);
             return;
+        default:
+            OE_CORE_ASSERT(false, "Unknown OpenGL debug severity: {:#x}", severity);
+            return;
         }
-        OE_CORE_ASSERT(false, "Unknown severity level!");
     }
 
     void OpenGLRendererAPI::Init()
@@ -101,6 +103,7 @@ namespace Orion
         glDrawElementsBaseVertex(GL_TRIANGLES,
                                  static_cast<GLsizei>(indexCount),
                                  GL_UNSIGNED_INT,
+                                 // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast,performance-no-int-to-ptr): GL takes the byte offset as a pointer
                                  reinterpret_cast<const void*>(static_cast<uintptr_t>(firstIndex) * sizeof(uint32_t)),
                                  static_cast<GLint>(vertexOffset)
 

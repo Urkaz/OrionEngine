@@ -1,32 +1,34 @@
 #pragma once
 
+#include "Orion/Core/Core.h"
 #include "Orion/Renderer/Shader.h"
 
 #include <glm/glm.hpp>
 
 // TODO: Remove!
-typedef unsigned int GLenum;
+using GLenum = unsigned int;
 
 namespace Orion
 {
-    class OpenGLShader : public Shader
+    class OpenGLShader final : public Shader
     {
     public:
         OpenGLShader(std::string name, std::string vertexSrc, std::string fragmentSrc);
         OpenGLShader(std::string name, const std::string& source);
-        virtual ~OpenGLShader();
+        ~OpenGLShader() override;
+        OE_NON_COPYABLE(OpenGLShader);
 
-        virtual void Bind() const override;
-        virtual void Unbind() const override;
+        void Bind() const override;
+        void Unbind() const override;
 
-        virtual void SetInt(const std::string& name, int value) override;
-        virtual void SetFloat(const std::string& name, float value) override;
-        virtual void SetFloat3(const std::string& name, const glm::vec3& value) override;
-        virtual void SetFloat4(const std::string& name, const glm::vec4& value) override;
-        virtual void SetMat4(const std::string& name, const glm::mat4& value) override;
-        virtual void SetMat3(const std::string& name, const glm::mat3& value) override;
+        void SetInt(const std::string& name, int value) override;
+        void SetFloat(const std::string& name, float value) override;
+        void SetFloat3(const std::string& name, const glm::vec3& value) override;
+        void SetFloat4(const std::string& name, const glm::vec4& value) override;
+        void SetMat4(const std::string& name, const glm::mat4& value) override;
+        void SetMat3(const std::string& name, const glm::mat3& value) override;
 
-        virtual const std::string& GetName() const override;
+        [[nodiscard]] const std::string& GetName() const override;
 
         void UploadUniformInt(const std::string& name, int value);
         void UploadUniformFloat(const std::string& name, float value);

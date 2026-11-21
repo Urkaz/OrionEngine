@@ -11,7 +11,7 @@ namespace
     public:
         using Catch::EventListenerBase::EventListenerBase;
 
-        void testRunStarting(Catch::TestRunInfo const& /*testRunInfo*/) override
+        void testRunStarting(const Catch::TestRunInfo& /*testRunInfo*/) override
         {
 #ifdef OE_ENABLE_LOGS
             // No file sink: parallel ctest processes would truncate the same Orion.log

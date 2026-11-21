@@ -7,7 +7,9 @@
 
 namespace Orion
 {
-    static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
+    namespace
+    {
+    GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
     {
         switch (type)
         {
@@ -30,8 +32,9 @@ namespace Orion
             return 0;
         }
     }
+    } // namespace
 
-    OpenGLVertexArray::OpenGLVertexArray() : m_RendererID(0)
+    OpenGLVertexArray::OpenGLVertexArray()
     {
         OE_PROFILE_FUNCTION();
 
@@ -78,6 +81,7 @@ namespace Orion
                                   ShaderDataTypeToOpenGLBaseType(element.Type),
                                   element.Normalized ? GL_TRUE : GL_FALSE,
                                   static_cast<GLsizei>(layout.GetStride()),
+                                  // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast,performance-no-int-to-ptr): GL takes the byte offset as a pointer
                                   reinterpret_cast<const void*>(element.Offset));
             index++;
         }

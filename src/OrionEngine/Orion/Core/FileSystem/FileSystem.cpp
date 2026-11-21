@@ -47,6 +47,8 @@ namespace Orion
 
             const std::optional<VirtualPath::Parts> parts = VirtualPath::Split(*normalized);
             OE_CORE_ASSERT(parts, "Split cannot fail on a normalized path: \"{}\"", *normalized);
+            if (!parts)
+                return std::nullopt;
 
             const auto it = GetMounts().find(parts->Mount);
             if (it == GetMounts().end())

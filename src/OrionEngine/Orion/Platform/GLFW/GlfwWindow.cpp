@@ -20,7 +20,7 @@ namespace Orion
         }
     } // namespace
 
-    GlfwWindow::GlfwWindow(const WindowProps& props) : m_Window(nullptr), m_Context(nullptr), m_Data()
+    GlfwWindow::GlfwWindow(const WindowProps& props) : m_Context(nullptr), m_Data()
     {
         OE_PROFILE_FUNCTION();
 

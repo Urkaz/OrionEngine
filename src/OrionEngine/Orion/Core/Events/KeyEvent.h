@@ -10,7 +10,7 @@ namespace Orion
     class KeyEvent : public Event
     {
     public:
-        inline KeyCode GetKeyCode() const
+        [[nodiscard]] inline KeyCode GetKeyCode() const
         {
             return m_KeyCode;
         }
@@ -18,8 +18,9 @@ namespace Orion
         EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
 
     protected:
-        KeyEvent(KeyCode keycode) : m_KeyCode(keycode) {}
+        explicit KeyEvent(KeyCode keycode) : m_KeyCode(keycode) {}
 
+    private:
         KeyCode m_KeyCode;
     };
 
@@ -28,14 +29,14 @@ namespace Orion
     public:
         KeyPressedEvent(KeyCode keycode, int repeatCount) : KeyEvent(keycode), m_RepeatCount(repeatCount) {}
 
-        inline int GetRepeatCount() const
+        [[nodiscard]] inline int GetRepeatCount() const
         {
             return m_RepeatCount;
         }
 
-        std::string ToString() const override
+        [[nodiscard]] std::string ToString() const override
         {
-            return std::format("KeyPressedEvent: {} ({} repeats)", m_KeyCode, m_RepeatCount);
+            return std::format("KeyPressedEvent: {} ({} repeats)", GetKeyCode(), m_RepeatCount);
         }
 
         EVENT_CLASS_TYPE(KeyPressed)
@@ -47,11 +48,11 @@ namespace Orion
     class KeyReleasedEvent : public KeyEvent
     {
     public:
-        KeyReleasedEvent(KeyCode keycode) : KeyEvent(keycode) {}
+        explicit KeyReleasedEvent(KeyCode keycode) : KeyEvent(keycode) {}
 
-        std::string ToString() const override
+        [[nodiscard]] std::string ToString() const override
         {
-            return std::format("KeyReleasedEvent: {}", m_KeyCode);
+            return std::format("KeyReleasedEvent: {}", GetKeyCode());
         }
 
         EVENT_CLASS_TYPE(KeyReleased)
@@ -60,11 +61,11 @@ namespace Orion
     class KeyTypedEvent : public KeyEvent
     {
     public:
-        KeyTypedEvent(KeyCode keycode) : KeyEvent(keycode) {}
+        explicit KeyTypedEvent(KeyCode keycode) : KeyEvent(keycode) {}
 
-        std::string ToString() const override
+        [[nodiscard]] std::string ToString() const override
         {
-            return std::format("KeyTypedEvent: {}", m_KeyCode);
+            return std::format("KeyTypedEvent: {}", GetKeyCode());
         }
 
         EVENT_CLASS_TYPE(KeyTyped)

@@ -8,13 +8,13 @@ namespace Orion::Internal
 {
     void OpenFileRegistry::Add(const IFile* file, std::string virtualPath)
     {
-        std::lock_guard lock(m_Mutex);
+        const std::lock_guard lock(m_Mutex);
         m_Files.emplace_back(file, std::move(virtualPath));
     }
 
     void OpenFileRegistry::Remove(const IFile* file)
     {
-        std::lock_guard lock(m_Mutex);
+        const std::lock_guard lock(m_Mutex);
         auto it = std::ranges::find_if(m_Files, [file](const auto& entry) { return entry.first == file; });
         OE_CORE_ASSERT(it != m_Files.end(), "Removing a file that was never registered");
         if (it == m_Files.end())
@@ -26,7 +26,7 @@ namespace Orion::Internal
 
     std::vector<std::string> OpenFileRegistry::GetOpenPaths() const
     {
-        std::lock_guard lock(m_Mutex);
+        const std::lock_guard lock(m_Mutex);
         std::vector<std::string> paths;
         paths.reserve(m_Files.size());
         for (const auto& [file, path] : m_Files)

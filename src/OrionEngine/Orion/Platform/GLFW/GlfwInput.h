@@ -4,14 +4,14 @@
 
 namespace Orion
 {
-    class GlfwInput : public Input
+    class GlfwInput final : public Input
     {
     protected:
-        virtual bool IsKeyPressedImpl(KeyCode key) override;
-        virtual bool IsMouseButtonPressedImpl(MouseCode button) override;
-        virtual float GetMouseXImpl() override;
-        virtual float GetMouseYImpl() override;
-        virtual std::pair<float, float> GetMousePositionImpl() override;
-        virtual void SetCursorModeImpl(CursorMode mode) override;
+        bool IsKeyPressedImpl(KeyCode key) override;
+        bool IsMouseButtonPressedImpl(MouseCode button) override;
+        float GetMouseXImpl() override;
+        float GetMouseYImpl() override;
+        std::pair<float, float> GetMousePositionImpl() override;
+        void SetCursorModeImpl(CursorMode mode) override;
     };
 } // namespace Orion

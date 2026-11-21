@@ -34,6 +34,7 @@ namespace Orion
          * @brief Virtual destructor for proper cleanup.
          */
         virtual ~Application();
+        OE_NON_COPYABLE(Application);
 
         /**
          * @brief Dispatch an event through the layer stack.
@@ -104,11 +105,11 @@ namespace Orion
         static Application* s_Instance; ///< Singleton instance pointer
         friend int ::main(int argc, char** argv);
 
-        UniquePtr<Window> m_Window;   ///< Main application window
-        ImGuiLayer* m_ImGuiLayer; ///< ImGui overlay layer
-        LayerStack m_LayerStack;  ///< Stack of application layers
-        bool m_Running   = true;  ///< Application running state
-        bool m_Minimized = false; ///< Application minimized state
+        UniquePtr<Window> m_Window; ///< Main application window
+        ImGuiLayer* m_ImGuiLayer;   ///< ImGui overlay layer
+        LayerStack m_LayerStack;    ///< Stack of application layers
+        bool m_Running   = true;    ///< Application running state
+        bool m_Minimized = false;   ///< Application minimized state
 
         Timestep m_Timestep;          ///< Delta time for current frame
         float m_LastFrameTime = 0.0f; ///< Timestamp of last frame

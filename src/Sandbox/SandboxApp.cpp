@@ -14,7 +14,6 @@ public:
 #endif
         PushLayer(new Sandbox3D());
     };
-    ~Sandbox() override = default;
 };
 
 Orion::UniquePtr<Orion::Application> Orion::CreateApplication()

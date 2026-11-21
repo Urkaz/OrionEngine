@@ -16,13 +16,13 @@ namespace Orion
          * @brief Construct a new Timestep
          * @param time Time value in seconds (default 0.0f)
          */
-        Timestep(float time = 0.0f) : m_Time(time) {}
+        explicit Timestep(float time = 0.0f) : m_Time(time) {}
 
         /**
          * @brief Get the time value in seconds.
          * @return float Time in seconds.
          */
-        float GetSeconds() const
+        [[nodiscard]] float GetSeconds() const
         {
             return m_Time;
         }
@@ -31,18 +31,9 @@ namespace Orion
          * @brief Get the time value in milliseconds.
          * @return float Time in milliseconds.
          */
-        float GetMilliseconds() const
+        [[nodiscard]] float GetMilliseconds() const
         {
             return m_Time * 1000.0f;
-        }
-
-        /**
-         * @brief Implicit conversion operator to `float`.
-         * @return operator float Returns the time value in seconds.
-         */
-        operator float() const
-        {
-            return m_Time;
         }
 
     private:

@@ -2,6 +2,7 @@
 
 #include "Orion/Core/Core.h"
 
+#include <cstdint>
 #include <spdlog/spdlog.h>
 
 #ifdef OE_ENABLE_LOGS
@@ -30,7 +31,7 @@ namespace Orion
 
 namespace Orion
 {
-    enum class LogLevel
+    enum class LogLevel : uint8_t
     {
         Trace,
         Info,
@@ -87,7 +88,7 @@ namespace Orion
     inline void LogMessage(Orion::LogLevel level,
                            Ref<spdlog::logger>& logger,
                            spdlog::format_string_t<Args...> fmt,
-                           Args&&... args)
+                           const Args&... args)
     {
         if (!logger->should_log(ToSpdlogLevel(level)))
             return;

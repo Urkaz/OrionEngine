@@ -12,16 +12,16 @@ namespace Orion
     public:
         MouseMovedEvent(float x, float y) : m_MouseX(x), m_MouseY(y) {}
 
-        inline float GetX() const
+        [[nodiscard]] inline float GetX() const
         {
             return m_MouseX;
         }
-        inline float GetY() const
+        [[nodiscard]] inline float GetY() const
         {
             return m_MouseY;
         }
 
-        std::string ToString() const override
+        [[nodiscard]] std::string ToString() const override
         {
             return std::format("MouseMovedEvent: {}, {}", m_MouseX, m_MouseY);
         }
@@ -37,16 +37,16 @@ namespace Orion
     public:
         MouseScrolledEvent(float xOffset, float yOffset) : m_XOffset(xOffset), m_YOffset(yOffset) {}
 
-        inline float GetXOffset() const
+        [[nodiscard]] inline float GetXOffset() const
         {
             return m_XOffset;
         }
-        inline float GetYOffset() const
+        [[nodiscard]] inline float GetYOffset() const
         {
             return m_YOffset;
         }
 
-        std::string ToString() const override
+        [[nodiscard]] std::string ToString() const override
         {
             return std::format("MouseScrolledEvent: {}, {}", GetXOffset(), GetYOffset());
         }
@@ -60,25 +60,27 @@ namespace Orion
     class MouseButtonEvent : public Event
     {
     public:
-        inline MouseCode GetMouseButton() const
+        [[nodiscard]] inline MouseCode GetMouseButton() const
         {
             return m_Button;
         }
 
         EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput | EventCategoryMouseButton)
     protected:
-        MouseButtonEvent(MouseCode button) : m_Button(button) {}
+        explicit MouseButtonEvent(MouseCode button) : m_Button(button) {}
+
+    private:
         MouseCode m_Button;
     };
 
     class MouseButtonPressedEvent : public MouseButtonEvent
     {
     public:
-        MouseButtonPressedEvent(MouseCode button) : MouseButtonEvent(button) {}
+        explicit MouseButtonPressedEvent(MouseCode button) : MouseButtonEvent(button) {}
 
-        std::string ToString() const override
+        [[nodiscard]] std::string ToString() const override
         {
-            return std::format("MouseButtonPressedEvent: {}", m_Button);
+            return std::format("MouseButtonPressedEvent: {}", GetMouseButton());
         }
 
         EVENT_CLASS_TYPE(MouseButtonPressed)
@@ -87,11 +89,11 @@ namespace Orion
     class MouseButtonReleasedEvent : public MouseButtonEvent
     {
     public:
-        MouseButtonReleasedEvent(MouseCode button) : MouseButtonEvent(button) {}
+        explicit MouseButtonReleasedEvent(MouseCode button) : MouseButtonEvent(button) {}
 
-        std::string ToString() const override
+        [[nodiscard]] std::string ToString() const override
         {
-            return std::format("MouseButtonReleasedEvent: {}", m_Button);
+            return std::format("MouseButtonReleasedEvent: {}", GetMouseButton());
         }
 
         EVENT_CLASS_TYPE(MouseButtonReleased)

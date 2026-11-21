@@ -6,12 +6,11 @@ class Sandbox3D : public Orion::Layer
 {
 public:
     Sandbox3D();
-    virtual ~Sandbox3D() override = default;
 
-    virtual void OnAttach() override;
-    virtual void OnUpdate(Orion::Timestep ts) override;
-    virtual void OnImGuiRender() override;
-    virtual void OnEvent(Orion::Event& e) override;
+    void OnAttach() override;
+    void OnUpdate(Orion::Timestep ts) override;
+    void OnImGuiRender() override;
+    void OnEvent(Orion::Event& e) override;
 
 private:
     void DrawNodeTree(const Orion::MeshSource& source, uint32_t nodeIndex);

@@ -1,10 +1,13 @@
 ---
 Checks: 'clang-analyzer-*,cppcoreguidelines-*,modernize-*,bugprone-*,performance-*,readability-non-const-parameter,misc-const-correctness,misc-use-anonymous-namespace,google-explicit-constructor,-modernize-use-trailing-return-type,-bugprone-exception-escape,-cppcoreguidelines-pro-bounds-constant-array-index,-cppcoreguidelines-pro-type-union-access,-cppcoreguidelines-macro-usage,-cppcoreguidelines-avoid-magic-numbers,-bugprone-easily-swappable-parameters,-clang-diagnostic-ignored-gch,-clang-diagnostic-unknown-warning-option'
 WarningsAsErrors: ''
-HeaderFilterRegex: 'src/(OrionEngine|Sandbox)/.*\.(h|hpp)$'
+HeaderFilterRegex: 'src[/\\](OrionEngine|Sandbox)[/\\].*\.(h|hpp)$'
 FormatStyle:     none
 CheckOptions:
   # do { } while (false) is the idiomatic way to make a macro behave as a single statement (asserts, logs)
   - key:   cppcoreguidelines-avoid-do-while.IgnoreMacros
+    value: true
+  # Constant products (std::array<float, 5 * 4>) cannot overflow silently: it would be a compile error
+  - key:   bugprone-implicit-widening-of-multiplication-result.IgnoreConstantIntExpr
     value: true
 ...

@@ -2,6 +2,7 @@
 
 #include "Orion/Core/Core.h"
 
+#include <cstdint>
 #include <string>
 
 namespace Orion
@@ -19,7 +20,7 @@ namespace Orion
      * @enum EventType
      * @brief All possible event types recognized by the engine.
      */
-    enum class EventType
+    enum class EventType : uint8_t
     {
         None = 0,
         WindowClose,
@@ -45,7 +46,7 @@ namespace Orion
      *
      * Categories are used for quick filtering of events (e.g., input vs application events).
      */
-    enum EventCategory
+    enum EventCategory : uint8_t
     {
         None                     = 0,
         EventCategoryApplication = BIT(0),
@@ -105,25 +106,25 @@ namespace Orion
          * @brief Get the concrete event type.
          * @return EventType
          */
-        virtual EventType GetEventType() const = 0;
+        [[nodiscard]] virtual EventType GetEventType() const = 0;
 
         /**
          * @brief Get the event's name as a C string.
          * @return const char*
          */
-        virtual const char* GetName() const = 0;
+        [[nodiscard]] virtual const char* GetName() const = 0;
 
         /**
          * @brief Get the category bitmask for the event.
          * @return int Bitmask of EventCategory values.
          */
-        virtual int GetCategoryFlags() const = 0;
+        [[nodiscard]] virtual int GetCategoryFlags() const = 0;
 
         /**
          * @brief String representation used for logging/debugging.
          * @return std::string
          */
-        virtual std::string ToString() const
+        [[nodiscard]] virtual std::string ToString() const
         {
             return GetName();
         }
@@ -139,6 +140,13 @@ namespace Orion
         }
 
         bool Handled = false; ///< Set to true by an event handler to stop propagation
+
+    protected:
+        // Polymorphic base with data: only derived classes can copy or move (C++ Core Guidelines C.67)
+        Event(const Event&)            = default;
+        Event& operator=(const Event&) = default;
+        Event(Event&&)                 = default;
+        Event& operator=(Event&&)      = default;
     };
 
     /**
@@ -156,7 +164,9 @@ namespace Orion
          * @brief Construct the dispatcher for a given event.
          * @param event Reference to the event to dispatch.
          */
-        EventDispatcher(Event& event) : m_Event(event) {}
+        explicit EventDispatcher(Event& event) : m_Event(event) {}
+        ~EventDispatcher() = default;
+        OE_NON_COPYABLE(EventDispatcher);
 
         /**
          * @brief Dispatch the stored event if it matches the type T.

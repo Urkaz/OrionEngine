@@ -12,6 +12,7 @@
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
 #include <assimp/types.h>
+#include <cstdint>
 #include <span>
 
 namespace Orion
@@ -116,6 +117,7 @@ namespace Orion
                 return;
             }
 
+            // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast): compressed data is raw bytes, reading them is allowed
             const auto* bytes = reinterpret_cast<const uint8_t*>(texture->pcData);
             const auto data   = Internal::MakeSpan(bytes, texture->mWidth);
             source.EmbeddedTextures[path].assign(data.begin(), data.end());

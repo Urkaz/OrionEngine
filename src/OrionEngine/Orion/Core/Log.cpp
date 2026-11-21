@@ -49,7 +49,7 @@ namespace Orion
 
     void WriteLog(LogLevel level, spdlog::logger& logger, spdlog::string_view_t fmt, spdlog::fmt_lib::format_args args)
     {
-        std::string message = spdlog::fmt_lib::vformat(fmt, args);
+        const std::string message = spdlog::fmt_lib::vformat(fmt, args);
         logger.log(ToSpdlogLevel(level), message);
         OE_PROFILE_LOG_MESSAGE(message, LogLevelColor(level));
     }

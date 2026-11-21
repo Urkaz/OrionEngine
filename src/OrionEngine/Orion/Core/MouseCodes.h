@@ -4,7 +4,7 @@
 
 namespace Orion
 {
-    using MouseCode = std::uint16_t;
+    using MouseCode = std::uint8_t;
 
     namespace Mouse
     {

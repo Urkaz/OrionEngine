@@ -9,6 +9,10 @@
 #include "Orion/Renderer/Shader.h"
 #include "Orion/Renderer/VertexArray.h"
 
+#include <array>
+#include <cstdint>
+#include <format>
+#include <string>
 #include <glm/ext/matrix_transform.hpp>
 #include <glm/fwd.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -19,7 +23,7 @@ Sandbox3D::Sandbox3D() : Layer("Sandbox3D"), m_Camera(45.0f, 1280.f / 720.f, 0.1
 void Sandbox3D::OnAttach()
 {
     // Each face: bottom-left, bottom-right, top-right, top-left as seen from OUTSIDE the cube -> counter-clockwise -> front face.
-    float vertices[4 /*vertex per face*/ * (3 /*position*/ + 3 /*color*/) * 6 /*faces*/] = {
+    constexpr std::array<float, 4 /*vertex per face*/ * (3 /*position*/ + 3 /*color*/) * 6 /*faces*/> vertices = {
         // clang-format off
         // +Z (front) red
         -0.5f,   -0.5f,   0.5f,    0.9f,   0.2f,   0.2f,
@@ -54,7 +58,7 @@ void Sandbox3D::OnAttach()
         // clang-format on
     };
 
-    uint32_t indices[6 /*indices*/ * 6 /*faces*/];
+    std::array<uint32_t, 6 /*indices*/ * 6 /*faces*/> indices{};
     for (uint32_t face = 0; face < 6; ++face)
     {
         const uint32_t v = face * 4;
@@ -71,17 +75,20 @@ void Sandbox3D::OnAttach()
 
     m_CubeVA = Orion::VertexArray::Create();
 
-    Orion::Ref<Orion::VertexBuffer> vb = Orion::VertexBuffer::Create(vertices, sizeof(vertices));
+    const Orion::Ref<Orion::VertexBuffer> vb =
+        Orion::VertexBuffer::Create(vertices.data(), static_cast<uint32_t>(vertices.size() * sizeof(float)));
     vb->SetLayout({{Orion::ShaderDataType::Float3, "a_Position"}, {Orion::ShaderDataType::Float3, "a_Color"}});
     m_CubeVA->AddVertexBuffer(vb);
 
-    Orion::Ref<Orion::IndexBuffer> ib = Orion::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
+    const Orion::Ref<Orion::IndexBuffer> ib =
+        Orion::IndexBuffer::Create(indices.data(), static_cast<uint32_t>(indices.size()));
     m_CubeVA->SetIndexBuffer(ib);
 
     m_CubeShader = Orion::Shader::Create("assets://shaders/Cube.glsl");
 
 
-    Orion::Ref<Orion::MeshSource> source = Orion::AssimpMeshImporter::Import("assets://models/Sponza/Sponza.gltf");
+    const Orion::Ref<Orion::MeshSource> source =
+        Orion::AssimpMeshImporter::Import("assets://models/Sponza/Sponza.gltf");
     if (!source)
         return;
     m_Model      = Orion::MakeRef<Orion::MeshRenderData>(source);
@@ -166,6 +173,7 @@ void Sandbox3D::OnImGuiRender()
 {
     ImGui::Begin("Camera");
 
+    // NOLINTBEGIN(cppcoreguidelines-pro-type-vararg): ImGui::Text is printf-style
     ImGui::Text("%.2f ms (%.0f FPS)",
                 static_cast<double>(m_FrameTime * 1000.0f),
                 static_cast<double>(1.0f / m_FrameTime));
@@ -179,6 +187,7 @@ void Sandbox3D::OnImGuiRender()
                 static_cast<double>(m_Camera.GetYaw()),
                 static_cast<double>(m_Camera.GetPitch()));
     ImGui::Text("Move speed: %.2f u/s (mouse wheel)", static_cast<double>(m_Camera.GetMoveSpeed()));
+    // NOLINTEND(cppcoreguidelines-pro-type-vararg)
 
     float fov = m_Camera.GetFOV();
     if (ImGui::SliderFloat("FOV", &fov, 10.0f, 120.0f))
@@ -223,11 +232,13 @@ void Sandbox3D::OnImGuiRender()
     ImGui::Separator();
 
     const Orion::MeshSource& source = *m_Model->GetSource();
+    // NOLINTBEGIN(cppcoreguidelines-pro-type-vararg): ImGui::Text is printf-style
     ImGui::Text("Vertices: %zu", source.Vertices.size());
     ImGui::Text("Indices: %zu", source.Indices.size());
     ImGui::Text("Triangles: %zu", source.Indices.size() / 3);
     ImGui::Text("Submeshes: %zu", source.Submeshes.size());
     ImGui::Text("Nodes: %zu", source.Nodes.size());
+    // NOLINTEND(cppcoreguidelines-pro-type-vararg)
 
     ImGui::Separator();
 
@@ -249,15 +260,14 @@ void Sandbox3D::DrawNodeTree(const Orion::MeshSource& source, uint32_t nodeIndex
     if (node.Children.empty())
         flags |= ImGuiTreeNodeFlags_Leaf;
 
-    if (ImGui::TreeNodeEx(reinterpret_cast<void*>(static_cast<uintptr_t>(nodeIndex)),
-                          flags,
-                          "%s  (%zu submeshes)",
-                          node.Name.c_str(),
-                          node.Submeshes.size()))
+    // The node index is the ImGui ID: names can repeat. Pop it after TreePop, which pops the node's own ID
+    ImGui::PushID(static_cast<int>(nodeIndex));
+    const std::string label = std::format("{}  ({} submeshes)", node.Name, node.Submeshes.size());
+    if (ImGui::TreeNodeEx(label.c_str(), flags))
     {
-
         for (const uint32_t child : node.Children)
             DrawNodeTree(source, child);
         ImGui::TreePop();
     }
+    ImGui::PopID();
 }

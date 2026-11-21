@@ -2,6 +2,7 @@
 // Macro to disable a specific warning for a single file.
 // -------------------------
 #if defined(_MSC_VER)
+    // NOLINTNEXTLINE(bugprone-macro-parentheses): "disable : (4996)" is not valid pragma syntax
     #define DISABLE_WARNING_FILE(msvc_warning, gcc_warning) __pragma(warning(disable : msvc_warning))
 #elif defined(__GNUC__) || defined(__clang__)
     #define DO_PRAGMA(x) _Pragma(#x)

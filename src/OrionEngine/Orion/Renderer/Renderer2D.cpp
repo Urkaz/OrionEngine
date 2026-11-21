@@ -5,6 +5,8 @@
 #include "Orion/Renderer/Shader.h"
 #include "Orion/Renderer/VertexArray.h"
 
+#include <array>
+#include <cstdint>
 #include <glm/gtc/matrix_transform.hpp>
 
 namespace Orion
@@ -16,7 +18,7 @@ namespace Orion
         Ref<Texture2D> WhiteTexture;
     };
 
-    static UniquePtr<Renderer2DStorage> s_Data;
+    UniquePtr<Renderer2DStorage> Renderer2D::s_Data;
 
     void Renderer2D::Init()
     {
@@ -25,15 +27,17 @@ namespace Orion
         s_Data                  = MakeUnique<Renderer2DStorage>();
         s_Data->QuadVertexArray = VertexArray::Create();
 
-        float squareVertices[5 * 4] = {-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.5f,  -0.5f, 0.0f, 1.0f, 0.0f,
-                                       0.5f,  0.5f,  0.0f, 1.0f, 1.0f, -0.5f, 0.5f,  0.0f, 0.0f, 1.0f};
+        constexpr std::array<float, 5 * 4> squareVertices = {-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.5f,  -0.5f, 0.0f, 1.0f, 0.0f,
+                                                             0.5f,  0.5f,  0.0f, 1.0f, 1.0f, -0.5f, 0.5f,  0.0f, 0.0f, 1.0f};
 
-        const Ref<VertexBuffer> squareVB = VertexBuffer::Create(squareVertices, sizeof(squareVertices));
+        const Ref<VertexBuffer> squareVB =
+            VertexBuffer::Create(squareVertices.data(), static_cast<uint32_t>(squareVertices.size() * sizeof(float)));
         squareVB->SetLayout({{ShaderDataType::Float3, "a_Position"}, {ShaderDataType::Float2, "a_TexCoord"}});
         s_Data->QuadVertexArray->AddVertexBuffer(squareVB);
 
-        uint32_t squareIndices[6]       = {0, 1, 2, 2, 3, 0};
-        const Ref<IndexBuffer> squareIB = IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
+        constexpr std::array<uint32_t, 6> squareIndices = {0, 1, 2, 2, 3, 0};
+        const Ref<IndexBuffer> squareIB =
+            IndexBuffer::Create(squareIndices.data(), static_cast<uint32_t>(squareIndices.size()));
         s_Data->QuadVertexArray->SetIndexBuffer(squareIB);
 
         s_Data->WhiteTexture                = Texture2D::Create(1, 1);
@@ -57,7 +61,7 @@ namespace Orion
         OE_PROFILE_FUNCTION();
 
         const glm::mat4 viewProjection = camera.GetProjectionMatrix() * viewMatrix;
-        Renderer::Submit([camera, viewProjection]() {
+        Renderer::Submit([viewProjection]() {
             s_Data->TextureShader->Bind();
             s_Data->TextureShader->SetMat4("u_ViewProjection", viewProjection);
         });

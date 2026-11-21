@@ -1,9 +1,11 @@
 #pragma once
 
 #include "Orion/Core/Assert.h"
+#include "Orion/Core/Core.h"
 
 #include <cstdint>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace Orion
@@ -59,15 +61,15 @@ namespace Orion
     struct BufferElement
     {
         std::string Name;
-        ShaderDataType Type;
-        uint32_t Size;
-        size_t Offset;
-        bool Normalized;
+        ShaderDataType Type = ShaderDataType::None;
+        uint32_t Size       = 0;
+        size_t Offset       = 0;
+        bool Normalized     = false;
 
         BufferElement() = default;
 
-        BufferElement(ShaderDataType type, const std::string& name, bool normalized = false)
-            : Name(name), Type(type), Size(ShaderDataTypeSize(type)), Offset(0), Normalized(normalized)
+        BufferElement(ShaderDataType type, std::string name, bool normalized = false)
+            : Name(std::move(name)), Type(type), Size(ShaderDataTypeSize(type)), Normalized(normalized)
         {}
 
         [[nodiscard]] uint32_t GetComponentCount() const
@@ -125,11 +127,11 @@ namespace Orion
         {
             return m_Elements.end();
         }
-        std::vector<BufferElement>::const_iterator begin() const
+        [[nodiscard]] std::vector<BufferElement>::const_iterator begin() const
         {
             return m_Elements.begin();
         }
-        std::vector<BufferElement>::const_iterator end() const
+        [[nodiscard]] std::vector<BufferElement>::const_iterator end() const
         {
             return m_Elements.end();
         }
@@ -160,7 +162,9 @@ namespace Orion
     class VertexBuffer
     {
     public:
+        VertexBuffer()          = default;
         virtual ~VertexBuffer() = default;
+        OE_NON_COPYABLE(VertexBuffer);
 
         virtual void Bind() const   = 0;
         virtual void Unbind() const = 0;
@@ -174,7 +178,9 @@ namespace Orion
     class IndexBuffer
     {
     public:
+        IndexBuffer()          = default;
         virtual ~IndexBuffer() = default;
+        OE_NON_COPYABLE(IndexBuffer);
 
         virtual void Bind() const   = 0;
         virtual void Unbind() const = 0;

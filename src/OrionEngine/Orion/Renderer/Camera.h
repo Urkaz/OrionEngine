@@ -20,6 +20,13 @@ namespace Orion
         }
 
     protected:
+        // Polymorphic base with data: only derived classes can copy or move (C++ Core Guidelines C.67)
+        Camera(const Camera&)            = default;
+        Camera& operator=(const Camera&) = default;
+        Camera(Camera&&)                 = default;
+        Camera& operator=(Camera&&)      = default;
+
+    private:
         glm::mat4 m_ProjectionMatrix = glm::mat4(1.0f);
     };
 } // namespace Orion

@@ -19,15 +19,18 @@ namespace Orion
 
         glfwMakeContextCurrent(m_WindowHandle);
         const GLADloadproc loader = [](const char* name) -> void* {
+            // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast): GLAD wants the function pointer as void*
             return reinterpret_cast<void*>(glfwGetProcAddress(name));
         };
         [[maybe_unused]] const int status = gladLoadGLLoader(loader);
         OE_ASSERT(status, "Failed to initialize GLAD!");
 
         auto& capabilities    = RendererAPI::GetCapabilities();
+        // NOLINTBEGIN(cppcoreguidelines-pro-type-reinterpret-cast): glGetString returns the text as const GLubyte*
         capabilities.Vendor   = reinterpret_cast<const char*>(glGetString(GL_VENDOR));
         capabilities.Renderer = reinterpret_cast<const char*>(glGetString(GL_RENDERER));
         capabilities.Version  = reinterpret_cast<const char*>(glGetString(GL_VERSION));
+        // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast)
 
         OE_CORE_LOG(Info, "OpenGL Info:");
         OE_CORE_LOG(Info, "   Vendor: {0}", capabilities.Vendor);

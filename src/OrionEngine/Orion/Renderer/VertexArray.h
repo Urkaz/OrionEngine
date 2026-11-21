@@ -10,7 +10,9 @@ namespace Orion
     class VertexArray
     {
     public:
+        VertexArray()          = default;
         virtual ~VertexArray() = default;
+        OE_NON_COPYABLE(VertexArray);
 
         virtual void Bind() const   = 0;
         virtual void Unbind() const = 0;

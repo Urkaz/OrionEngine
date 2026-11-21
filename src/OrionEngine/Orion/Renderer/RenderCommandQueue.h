@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Orion/Core/Core.h"
+
 #include <cstddef>
 #include <cstdint>
 
@@ -17,9 +19,8 @@ namespace Orion
 
         explicit RenderCommandQueue(uint32_t capacity = DefaultCapacity);
         ~RenderCommandQueue();
-        // Disable copy and assignment: prevents accidental copying of the command queue, which could lead to double deletion of the buffer and other issues.
-        RenderCommandQueue(const RenderCommandQueue&)            = delete;
-        RenderCommandQueue& operator=(const RenderCommandQueue&) = delete;
+        // A copy would delete the same buffer twice
+        OE_NON_COPYABLE(RenderCommandQueue);
 
         void* Allocate(RenderCommandFn func, uint32_t size);
 

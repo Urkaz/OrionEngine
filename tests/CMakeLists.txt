@@ -38,6 +38,10 @@ if(ENABLE_WARNINGS)
 endif()
 target_set_compiler_flags(TARGET ${TEST_NAME})
 
+if(ENABLE_CLANG_TIDY)
+    add_clang_tidy_to_target(${TEST_NAME})
+endif()
+
 include(Catch)
 catch_discover_tests(${TEST_NAME})
 

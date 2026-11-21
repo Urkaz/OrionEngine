@@ -8,7 +8,7 @@ namespace Orion
     class Layer
     {
     public:
-        Layer(std::string name = "Layer");
+        explicit Layer(std::string name = "Layer");
         virtual ~Layer();
 
         virtual void OnAttach() {}
@@ -23,6 +23,13 @@ namespace Orion
         }
 
     protected:
+        // Polymorphic base with data: only derived classes can copy or move (C++ Core Guidelines C.67)
+        Layer(const Layer&)            = default;
+        Layer& operator=(const Layer&) = default;
+        Layer(Layer&&)                 = default;
+        Layer& operator=(Layer&&)      = default;
+
+    private:
         std::string m_DebugName;
     };
 } // namespace Orion

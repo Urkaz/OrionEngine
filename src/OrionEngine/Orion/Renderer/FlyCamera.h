@@ -24,7 +24,7 @@ namespace Orion
         }
         [[nodiscard]] glm::mat4 GetViewProjectionMatrix() const
         {
-            return m_ProjectionMatrix * m_ViewMatrix;
+            return GetProjectionMatrix() * m_ViewMatrix;
         }
 
         [[nodiscard]] const glm::vec3& GetPosition() const

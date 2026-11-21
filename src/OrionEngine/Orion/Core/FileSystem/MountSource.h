@@ -21,8 +21,8 @@ namespace Orion
 
         // nullptr if the file does not exist or cannot be opened. Never asserts.
         [[nodiscard]] virtual UniquePtr<IFile> Open(std::string_view relativePath, FileMode mode) = 0;
-        [[nodiscard]] virtual bool Exists(std::string_view relativePath) const                = 0;
-        [[nodiscard]] virtual bool IsReadOnly() const                                         = 0;
+        [[nodiscard]] virtual bool Exists(std::string_view relativePath) const                    = 0;
+        [[nodiscard]] virtual bool IsReadOnly() const                                             = 0;
     };
 
 } // namespace Orion

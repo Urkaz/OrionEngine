@@ -1,3 +1,4 @@
+#include "Orion/Core/Core.h"
 #include "Orion/Core/LayerStack.h"
 
 #include <catch2/catch_test_macros.hpp>
@@ -16,12 +17,13 @@ namespace
 
         ~SpyLayer() override
         {
-            m_Journal.push_back("~" + m_DebugName);
+            m_Journal.push_back("~" + GetName());
         }
+        OE_NON_COPYABLE(SpyLayer);
 
         void OnDetach() override
         {
-            m_Journal.push_back("detach " + m_DebugName);
+            m_Journal.push_back("detach " + GetName());
         }
 
     private:
