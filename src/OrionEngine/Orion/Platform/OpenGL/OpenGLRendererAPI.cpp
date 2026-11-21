@@ -100,12 +100,13 @@ namespace Orion
                                         uint32_t firstIndex,
                                         uint32_t vertexOffset)
     {
-        glDrawElementsBaseVertex(GL_TRIANGLES,
-                                 static_cast<GLsizei>(indexCount),
-                                 GL_UNSIGNED_INT,
-                                 // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast,performance-no-int-to-ptr): GL takes the byte offset as a pointer
-                                 reinterpret_cast<const void*>(static_cast<uintptr_t>(firstIndex) * sizeof(uint32_t)),
-                                 static_cast<GLint>(vertexOffset)
+        glDrawElementsBaseVertex(
+            GL_TRIANGLES,
+            static_cast<GLsizei>(indexCount),
+            GL_UNSIGNED_INT,
+            // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast,performance-no-int-to-ptr): GL takes the byte offset as a pointer
+            reinterpret_cast<const void*>(static_cast<uintptr_t>(firstIndex) * sizeof(uint32_t)),
+            static_cast<GLint>(vertexOffset)
 
         );
     }

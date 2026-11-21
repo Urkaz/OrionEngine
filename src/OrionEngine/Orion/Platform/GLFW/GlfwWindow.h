@@ -56,11 +56,11 @@ namespace Orion
             bool VSync;
             EventCallbackFn EventCallback;
 
-            explicit WindowData(std::string title    = "",
-                       unsigned int width            = 0,
-                       unsigned int height           = 0,
-                       bool vsync                    = false,
-                       EventCallbackFn eventCallback = EventCallbackFn())
+            explicit WindowData(std::string title             = "",
+                                unsigned int width            = 0,
+                                unsigned int height           = 0,
+                                bool vsync                    = false,
+                                EventCallbackFn eventCallback = EventCallbackFn())
                 : Title(std::move(title)), Width(width), Height(height), VSync(vsync),
                   EventCallback(std::move(eventCallback))
             {}

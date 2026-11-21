@@ -9,29 +9,29 @@ namespace Orion
 {
     namespace
     {
-    GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
-    {
-        switch (type)
+        GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
         {
-        case ShaderDataType::Float:
-        case ShaderDataType::Float2:
-        case ShaderDataType::Float3:
-        case ShaderDataType::Float4:
-        case ShaderDataType::Mat3:
-        case ShaderDataType::Mat4:
-            return GL_FLOAT;
-        case ShaderDataType::Int:
-        case ShaderDataType::Int2:
-        case ShaderDataType::Int3:
-        case ShaderDataType::Int4:
-            return GL_INT;
-        case ShaderDataType::Bool:
-            return GL_BOOL;
-        default:
-            OE_CORE_ASSERT(false, "Unknown ShaderDataType!");
-            return 0;
+            switch (type)
+            {
+            case ShaderDataType::Float:
+            case ShaderDataType::Float2:
+            case ShaderDataType::Float3:
+            case ShaderDataType::Float4:
+            case ShaderDataType::Mat3:
+            case ShaderDataType::Mat4:
+                return GL_FLOAT;
+            case ShaderDataType::Int:
+            case ShaderDataType::Int2:
+            case ShaderDataType::Int3:
+            case ShaderDataType::Int4:
+                return GL_INT;
+            case ShaderDataType::Bool:
+                return GL_BOOL;
+            default:
+                OE_CORE_ASSERT(false, "Unknown ShaderDataType!");
+                return 0;
+            }
         }
-    }
     } // namespace
 
     OpenGLVertexArray::OpenGLVertexArray()
@@ -76,13 +76,14 @@ namespace Orion
         for (const auto& element : layout)
         {
             glEnableVertexAttribArray(index);
-            glVertexAttribPointer(index,
-                                  static_cast<GLint>(element.GetComponentCount()),
-                                  ShaderDataTypeToOpenGLBaseType(element.Type),
-                                  element.Normalized ? GL_TRUE : GL_FALSE,
-                                  static_cast<GLsizei>(layout.GetStride()),
-                                  // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast,performance-no-int-to-ptr): GL takes the byte offset as a pointer
-                                  reinterpret_cast<const void*>(element.Offset));
+            glVertexAttribPointer(
+                index,
+                static_cast<GLint>(element.GetComponentCount()),
+                ShaderDataTypeToOpenGLBaseType(element.Type),
+                element.Normalized ? GL_TRUE : GL_FALSE,
+                static_cast<GLsizei>(layout.GetStride()),
+                // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast,performance-no-int-to-ptr): GL takes the byte offset as a pointer
+                reinterpret_cast<const void*>(element.Offset));
             index++;
         }
 

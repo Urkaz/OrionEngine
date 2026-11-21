@@ -27,8 +27,9 @@ namespace Orion
         s_Data                  = MakeUnique<Renderer2DStorage>();
         s_Data->QuadVertexArray = VertexArray::Create();
 
-        constexpr std::array<float, 5 * 4> squareVertices = {-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.5f,  -0.5f, 0.0f, 1.0f, 0.0f,
-                                                             0.5f,  0.5f,  0.0f, 1.0f, 1.0f, -0.5f, 0.5f,  0.0f, 0.0f, 1.0f};
+        constexpr std::array<float, 5 * 4> squareVertices = {-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.5f, -0.5f,
+                                                             0.0f,  1.0f,  0.0f, 0.5f, 0.5f, 0.0f, 1.0f,
+                                                             1.0f,  -0.5f, 0.5f, 0.0f, 0.0f, 1.0f};
 
         const Ref<VertexBuffer> squareVB =
             VertexBuffer::Create(squareVertices.data(), static_cast<uint32_t>(squareVertices.size() * sizeof(float)));

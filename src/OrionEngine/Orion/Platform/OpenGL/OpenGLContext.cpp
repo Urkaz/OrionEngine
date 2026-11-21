@@ -25,7 +25,7 @@ namespace Orion
         [[maybe_unused]] const int status = gladLoadGLLoader(loader);
         OE_ASSERT(status, "Failed to initialize GLAD!");
 
-        auto& capabilities    = RendererAPI::GetCapabilities();
+        auto& capabilities = RendererAPI::GetCapabilities();
         // NOLINTBEGIN(cppcoreguidelines-pro-type-reinterpret-cast): glGetString returns the text as const GLubyte*
         capabilities.Vendor   = reinterpret_cast<const char*>(glGetString(GL_VENDOR));
         capabilities.Renderer = reinterpret_cast<const char*>(glGetString(GL_RENDERER));

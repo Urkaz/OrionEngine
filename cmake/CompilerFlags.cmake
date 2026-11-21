@@ -14,9 +14,14 @@
 # Unset counts as enabled, so third-party targets, which never set it, keep their exceptions.
 # This file must be included from the root CMakeLists.txt before any dependency is added.
 if(MSVC)
-    string(REPLACE "/EHsc" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+    string(
+        REPLACE "/EHsc"
+                ""
+                CMAKE_CXX_FLAGS
+                "${CMAKE_CXX_FLAGS}")
     add_compile_options(
-        "$<$<AND:$<COMPILE_LANGUAGE:CXX>,$<NOT:$<STREQUAL:$<TARGET_PROPERTY:ORION_ENABLE_EXCEPTIONS>,OFF>>>:/EHsc>")
+        "$<$<AND:$<COMPILE_LANGUAGE:CXX>,$<NOT:$<STREQUAL:$<TARGET_PROPERTY:ORION_ENABLE_EXCEPTIONS>,OFF>>>:/EHsc>"
+    )
 endif()
 
 # ENABLE_EXCEPTIONS: keep C++ exceptions for this target (only OrionTests: Catch2 aborts a failed REQUIRE by throwing).
@@ -37,7 +42,8 @@ function(target_set_compiler_flags)
 
     if(NOT TARGET_SET_COMPILER_FLAGS_ENABLE_EXCEPTIONS)
         # MSVC: drops the /EHsc added above
-        set_target_properties(${TARGET_SET_COMPILER_FLAGS_TARGET} PROPERTIES ORION_ENABLE_EXCEPTIONS OFF)
+        set_target_properties(${TARGET_SET_COMPILER_FLAGS_TARGET} PROPERTIES ORION_ENABLE_EXCEPTIONS
+                                                                             OFF)
         list(
             APPEND
             MSVC_FLAGS
